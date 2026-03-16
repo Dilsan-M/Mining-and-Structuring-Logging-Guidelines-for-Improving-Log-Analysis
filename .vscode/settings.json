@@ -1,0 +1,43 @@
+{
+  "latex-workshop.linting.chktex.enabled": true,
+  "latex-workshop.linting.chktex.exec.path": "C:\\Users\\Dilsan.Mahadeva\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\chktex.exe",
+  "latex-workshop.latex.tools": [
+    {
+      "name": "pdflatex-local",
+      "command": "C:\\Users\\Dilsan.Mahadeva\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\pdflatex.exe",
+      "cwd": "%DIR%",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "%DOC%"
+      ]
+    },
+    {
+      "name": "biber-local",
+      "command": "C:\\Users\\Dilsan.Mahadeva\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64\\biber.exe",
+      "cwd": "%DIR%",
+      "args": [
+        "%DOCFILE%"
+      ]
+    }
+  ],
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "pdflatex-local + biber + pdflatex*2",
+      "tools": [
+        "pdflatex-local",
+        "biber-local",
+        "pdflatex-local",
+        "pdflatex-local"
+      ]
+    },
+    {
+      "name": "pdflatex-local",
+      "tools": [
+        "pdflatex-local"
+      ]
+    }
+  ],
+  "latex-workshop.latex.recipe.default": "pdflatex-local + biber + pdflatex*2"
+}
