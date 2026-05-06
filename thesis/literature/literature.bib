@@ -1,79 +1,469 @@
-@string{ieee-oakland    = "IEEE Symposium on Security and Privacy"}
-@string{acm-ccs         = "ACM Conference on Computer and Communications Security (CCS)"}
-@string{isoc-ndss       = "Symposium on Network and Distributed System Security (NDSS)"}
-@string{raid            = "Symposium on Recent Advances in Intrusion Detection (RAID)"}
-@string{esorics         = "European Symposium on Research in Computer Security (ESORICS)"}
-@string{acsac           = "Annual Computer Security Applications Conference (ACSAC)"}
-@string{usenix-security = "USENIX Security Symposium"}
-@string{usenix-nsdi     = "USENIX Symposium on Networked Systems Design and Implementation (NSDI)"}
-@string{usenix-hotbots  = "USENIX Workshop on Hot Topics in Understanding Botnet"}
-@string{usenix-leet     = "USENIX Workshop on Large-Scale Exploits and Emergent Threats (LEET)"}
-@string{usenix-woot     = "USENIX Workshop on Offensive Technologies (WOOT)"}
-@string{usenix-sruti    = "USENIX Workshop on Steps to Reducing Unwanted Traffic on the Internet (SRUTI)"}
-@string{usenix-atc      = "USENIX Annual Technical Conference"}
-@string{acm-popl        = "ACM Symposium on Principles of Programming Languages (POPL)"}
-@string{ieee-infocom-mc = "IEEE Conference on Computer Communications (INFOCOM)"}
-@string{ieee-dcs        = "IEEE Conference on Distributed Computing Systems"}
-@string{acm-imc         = "ACM SIGCOMM Conference on Internet Measurement"}
-@string{dimva           = "Detection of Intrusions and Malware, and Vulnerability Assessment (DIMVA)"}
-
-% article		{author, title, journal, year}[volume, number, pages, month, note]
-% inproceedings	{author, title, booktitle, year}[editor, volume oder number, series, pages, address, month, organization, publisher, note]
-% manual		{title, address}[author, organization, edition, month, year, note]
-% misc			{}[author, title, howpublished, month, year, note]
-% techreport	{author, title, institution, year}[type, note, number, address, month]
-% As of now you can use the url and urldate on every type to ease the inclusion of urls
-
-@article{Xie:2008:SBS,
- author = {Y. Xie and F. Yu and K. Achan and R. Panigrahy and G. Hulten and I. Osipkov},
- title = {{Spamming Botnets: Signatures and Characteristics}},
- journal = {ACM SIGCOMM Computer Communication Review},
- volume = {38},
- number = {4},
- year = {2008},
+@INPROCEEDINGS{khan2022guideliensforassessingtheaccuracy,
+  author={Khan, Zanis Ali and Shin, Donghwan and Bianculli, Domenico and Briand, Lionel},
+  booktitle={2022 IEEE/ACM 44th International Conference on Software Engineering (ICSE)}, 
+  title={Guidelines for Assessing the Accuracy of Log Message Template Identification Techniques}, 
+  year={2022},
+  volume={},
+  number={},
+  pages={1095-1106},
+  keywords={Measurement;Analytical models;Benchmark testing;Anomaly detection;Guidelines;Software engineering;logs;template identification;metrics},
+  doi={10.1145/3510003.3510101}
 }
 
-@inproceedings{Newsome:05:DTA,
-  author    = {J. Newsome and D. Song},
-  title     = {{Dynamic Taint Analysis for Automatic Detection, Analysis,
-               and SignatureGeneration of Exploits on Commodity Software}},
-  booktitle = isoc-ndss,
-  year      = {2005},
+@misc{gholamian2022comprehensivesurveyloggingsoftware,
+      title={A Comprehensive Survey of Logging in Software: From Logging Statements Automation to Log Mining and Analysis}, 
+      author={Sina Gholamian and Paul A. S. Ward},
+      year={2022},
+      eprint={2110.12489v2},
+      archivePrefix={arXiv},
+      primaryClass={cs.SE},
+      url={https://arxiv.org/abs/2110.12489}, 
 }
 
-@misc{msc:correctuse,
-  	author={{Rohde \& Schwarz}},
-  	title={{D}er korrekte {U}mgang mit {G}r\"{o}\ss{}en,\ {E}inheiten und {G}leichungen},
-  	url={http://www.rohde-schwarz.de/ps/rus/tools/show_8437_document/Der_korrekte_Umgang.pdf},
-  	urldate={\today}
+@INPROCEEDINGS{zhu2015learningtolog,
+  author={Zhu, Jieming and He, Pinjia and Fu, Qiang and Zhang, Hongyu and Lyu, Michael R. and Zhang, Dongmei},
+  booktitle={2015 IEEE/ACM 37th IEEE International Conference on Software Engineering}, 
+  title={Learning to Log: Helping Developers Make Informed Logging Decisions}, 
+  year={2015},
+  volume={1},
+  number={},
+  pages={415-425},
+  keywords={Feature extraction;Software systems;Context;Data mining;Runtime;Syntactics},
+  doi={10.1109/ICSE.2015.60}
 }
 
-@inproceedings{AviramSSHDSVAHD16,
-  author       = {Nimrod Aviram and
-                  Sebastian Schinzel and
-                  Juraj Somorovsky and
-                  Nadia Heninger and
-                  Maik Dankel and
-                  Jens Steube and
-                  Luke Valenta and
-                  David Adrian and
-                  J. Alex Halderman and
-                  Viktor Dukhovni and
-                  Emilia K{\"{a}}sper and
-                  Shaanan Cohney and
-                  Susanne Engels and
-                  Christof Paar and
-                  Yuval Shavitt},
-  editor       = {Thorsten Holz and
-                  Stefan Savage},
-  title        = {{DROWN:} Breaking {TLS} Using SSLv2},
-  booktitle    = {25th {USENIX} Security Symposium, {USENIX} Security 16, Austin, TX,
-                  USA, August 10-12, 2016},
-  pages        = {689--706},
-  publisher    = {{USENIX} Association},
-  year         = {2016},
-  url          = {https://www.usenix.org/conference/usenixsecurity16/technical-sessions/presentation/aviram},
-  timestamp    = {Mon, 01 Feb 2021 08:43:18 +0100},
-  biburl       = {https://dblp.org/rec/conf/uss/AviramSSHDSVAHD16.bib},
-  bibsource    = {dblp computer science bibliography, https://dblp.org}
+@inproceedings{fu2014wheredodeveloperslog,
+    author = {Fu, Qiang and Zhu, Jieming and Hu, Wenlu and Lou, Jian-Guang and Ding, Rui and Lin, Qingwei and Zhang, Dongmei and Xie, Tao},
+    title = {Where Do Developers Log? An Empirical Study on Logging Practices in Industry},
+    year = {2014},
+    isbn = {9781450327688},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    url = {https://doi.org/10.1145/2591062.2591175},
+    doi = {10.1145/2591062.2591175},
+    abstract = {System logs are widely used in various tasks of software system management. It is crucial to avoid logging too little or too much. To achieve so, developers need to make informed decisions on where to log and what to log in their logging practices during development. However, there exists no work on studying such logging practices in industry or helping developers make informed decisions. To fill this significant gap, in this paper, we systematically study the logging practices of developers in industry, with focus on where developers log. We obtain six valuable findings by conducting source code analysis on two large industrial systems (2.5M and 10.4M LOC, respectively) at Microsoft. We further validate these findings via a questionnaire survey with 54 experienced developers in Microsoft. In addition, our study demonstrates the high accuracy of up to 90\% F-Score in predicting where to log.},
+    booktitle = {Companion Proceedings of the 36th International Conference on Software Engineering},
+    pages = {24–33},
+    numpages = {10},
+    keywords = {Logging practice, automatic logging, developer survey},
+    location = {Hyderabad, India},
+    series = {ICSE Companion 2014}
 }
+
+@INPROCEEDINGS{peccia2015industrypracticesandeventlogging,
+  author={Pecchia, Antonio and Cinque, Marcello and Carrozza, Gabriella and Cotroneo, Domenico},
+  booktitle={2015 IEEE/ACM 37th IEEE International Conference on Software Engineering}, 
+  title={Industry Practices and Event Logging: Assessment of a Critical Software Development Process}, 
+  year={2015},
+  volume={2},
+  number={},
+  pages={169-178},
+  keywords={Software;Inspection;Programming;Encoding;Industries;Runtime;Source code analysis;Event logging;Development process;Coding practices;Industry domain},
+  doi={10.1109/ICSE.2015.145}
+}
+
+@INPROCEEDINGS{gholamian2021whatdistributedsystemssay,
+  author={Gholamian, Sina and Ward, Paul A. S.},
+  booktitle={2021 40th International Symposium on Reliable Distributed Systems (SRDS)}, 
+  title={What Distributed Systems Say: A Study of Seven Spark Application Logs}, 
+  year={2021},
+  volume={},
+  number={},
+  pages={222-232},
+  keywords={Costs;Runtime;Benchmark testing;Software systems;Supercomputers;Sparks;Reliability;logging statement;log verbosity level;log4j;logging cost analysis;information gain;entropy;distributed systems;system failure;Spark},
+  doi={10.1109/SRDS53918.2021.00030}
+}
+
+@INPROCEEDINGS{shang2014understandingloglinesusingdevelopmentknowledge,
+  author={Shang, Weiyi and Nagappan, Meiyappan and Hassan, Ahmed E. and Jiang, Zhen Ming},
+  booktitle={2014 IEEE International Conference on Software Maintenance and Evolution}, 
+  title={Understanding Log Lines Using Development Knowledge}, 
+  year={2014},
+  volume={},
+  number={},
+  pages={21-30},
+  keywords={Web search;Electronic mail;Context;Google;Software systems;Knowledge engineering;Engines;Software maintenance;Software Logs;Program understanding},
+  doi={10.1109/ICSME.2014.24}
+}
+
+@INPROCEEDINGS{mizouchi2019padla,
+  author={Mizouchi, Tsuyoshi and Shimari, Kazumasa and Ishio, Takashi and Inoue, Katsuro},
+  booktitle={2019 IEEE/ACM 27th International Conference on Program Comprehension (ICPC)}, 
+  title={PADLA: A Dynamic Log Level Adapter Using Online Phase Detection}, 
+  year={2019},
+  volume={},
+  number={},
+  pages={135-138},
+  keywords={Java;Costs;Heuristic algorithms;Software systems;Performance analysis;Recording;Planning;Servers;Phase detection;Monitoring;Dynamic Analysis, Log Level, Log4j, Phase Detection, Performance Anomaly},
+  doi={10.1109/ICPC.2019.00029}
+}
+
+@Article{chen2017characterizingloggingpractices,
+    author={Chen, Boyuan and (Jack) Jiang, Zhen Ming},
+    title={Characterizing logging practices in Java-based open source software projects -- a replication study in Apache Software Foundation},
+    journal={Empirical Software Engineering},
+    year={2017},
+    month={2},
+    day={01},
+    volume={22},
+    number={1},
+    pages={330-374},
+    abstract={Log messages, which are generated by the debug statements that developers insert into the code at runtime, contain rich information about the runtime behavior of software systems. Log messages are used widely for system monitoring, problem diagnoses and legal compliances. Yuan et al. performed the first empirical study on the logging practices in open source software systems. They studied the development history of four C/C++ server-side projects and derived ten interesting findings. In this paper, we have performed a replication study in order to assess whether their findings would be applicable to Java projects in Apache Software Foundations. We examined 21 different Java-based open source projects from three different categories: server-side, client-side and supporting-component. Similar to the original study, our results show that all projects contain logging code, which is actively maintained. However, contrary to the original study, bug reports containing log messages take a longer time to resolve than bug reports without log messages. A significantly higher portion of log updates are for enhancing the quality of logs (e.g., formatting {\&} style changes and spelling/grammar fixes) rather than co-changes with feature implementations (e.g., updating variable names).},
+    issn={1573-7616},
+    doi={10.1007/s10664-016-9429-5},
+    url={https://doi.org/10.1007/s10664-016-9429-5}
+}
+
+@article{chen2021asurveyofsoftwareloginstrumentation,
+    author = {Chen, Boyuan and Jiang, Zhen Ming (Jack)},
+    title = {A Survey of Software Log Instrumentation}, 
+    year = {2021},
+    issue_date = {May 2022},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    volume = {54},
+    number = {4},
+    issn = {0360-0300},
+    url = {https://doi.org/10.1145/3448976},
+    doi = {10.1145/3448976},
+    abstract = {Log messages have been used widely in many software systems for a variety of purposes during software development and field operation. There are two phases in software logging: log instrumentation and log management. Log instrumentation refers to the practice that developers insert logging code into source code to record runtime information. Log management refers to the practice that operators collect the generated log messages and conduct data analysis techniques to provide valuable insights of runtime behavior. There are many open source and commercial log management tools available. However, their effectiveness highly depends on the quality of the instrumented logging code, as log messages generated by high-quality logging code can greatly ease the process of various log analysis tasks (e.g., monitoring, failure diagnosis, and auditing). Hence, in this article, we conducted a systematic survey on state-of-the-art research on log instrumentation by studying 69 papers between 1997 and 2019. In particular, we have focused on the challenges and proposed solutions used in the three steps of log instrumentation: (1) logging approach; (2) logging utility integration; and (3) logging code composition. This survey will be useful to DevOps practitioners and researchers who are interested in software logging.},
+    journal = {ACM Comput. Surv.},
+    month = {5},
+    articleno = {90},
+    numpages = {34},
+    keywords = {Systematic survey, instrumentation, software logging}
+}
+
+@article{he2021asurveyonautomatedloganalysis,
+    author = {He, Shilin and He, Pinjia and Chen, Zhuangbin and Yang, Tianyi and Su, Yuxin and Lyu, Michael R.},
+    title = {A Survey on Automated Log Analysis for Reliability Engineering},
+    year = {2021},
+    issue_date = {July 2022},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    volume = {54},
+    number = {6},
+    issn = {0360-0300},
+    url = {https://doi.org/10.1145/3460345},
+    doi = {10.1145/3460345},
+    abstract = {Logs are semi-structured text generated by logging statements in software source code. In recent decades, software logs have become imperative in the reliability assurance mechanism of many software systems, because they are often the only data available that record software runtime information. As modern software is evolving into a large scale, the volume of logs has increased rapidly. To enable effective and efficient usage of modern software logs in reliability engineering, a number of studies have been conducted on automated log analysis. This survey presents a detailed overview of automated log analysis research, including how to automate and assist the writing of logging statements, how to compress logs, how to parse logs into structured event templates, and how to employ logs to detect anomalies, predict failures, and facilitate diagnosis. Additionally, we survey work that releases open-source toolkits and datasets. Based on the discussion of the recent advances, we present several promising future directions toward real-world and next-generation automated log analysis.},
+    journal = {ACM Comput. Surv.},
+    month = {7},
+    articleno = {130},
+    numpages = {37},
+    keywords = {logging, log parsing, log mining, log compression, log analysis, Log}
+}
+
+@InProceedings{kimmo2003comprehensivelogcompression,
+    author={H{\"a}t{\"o}nen, Kimmo and Boulicaut, Jean Fran{\c{c}}ois and Klemettinen, Mika and Miettinen, Markus and Masson, Cyrille},
+    editor="Kambayashi, Yahiko and Mohania, Mukesh and W{\"o}{\ss}, Wolfram",
+    title="Comprehensive Log Compression with Frequent Patterns",
+    booktitle="Data Warehousing and Knowledge Discovery",
+    year="2003",
+    publisher="Springer Berlin Heidelberg",
+    address="Berlin, Heidelberg",
+    pages="360--370",
+    abstract="In this paper we present a comprehensive log compression (CLC) method that uses frequent patterns and their condensed representations to identify repetitive information from large log files generated by communications networks. We also show how the identified information can be used to separate and filter out frequently occurring events that hide other, unique or only a few times occurring events. The identification can be done without any prior knowledge about the domain or the events. For example, no pre-defined patterns or value combinations are needed. This separation makes it easier for a human observer to perceive and analyse large amounts of log data. The applicability of the CLC method is demonstrated with real-world examples from data communication networks.",
+    isbn="978-3-540-45228-7"
+}
+
+@INPROCEEDINGS{chen2017characterizinganddetectingantipatterns,
+  author={Chen, Boyuan and Jiang, Zhen Ming},
+  booktitle={2017 IEEE/ACM 39th International Conference on Software Engineering (ICSE)}, 
+  title={Characterizing and Detecting Anti-Patterns in the Logging Code}, 
+  year={2017},
+  volume={},
+  number={},
+  pages={71-81},
+  keywords={Tools;Open source software;Software systems;Runtime;Computer crashes;Data mining;anti-patterns;logging code;logging practices;empirical studies;software maintenance},
+  doi={10.1109/ICSE.2017.15}
+}
+
+@inproceedings{he2022anempiricalsutdyofloganalysisatmicrosoft,
+    author = {He, Shilin and Zhang, Xu and He, Pinjia and Xu, Yong and Li, Liqun and Kang, Yu and Ma, Minghua and Wei, Yining and Dang, Yingnong and Rajmohan, Saravanakumar and Lin, Qingwei},
+    title = {An Empirical Study of Log Analysis at Microsoft},
+    year = {2022},
+    isbn = {9781450394130},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    url = {https://doi.org/10.1145/3540250.3558963},
+    doi = {10.1145/3540250.3558963},
+    abstract = {Logs are crucial to the management and maintenance of software systems. In recent years, log analysis research has achieved notable progress on various topics such as log parsing and log-based anomaly detection. However, the real voices from front-line practitioners are seldom heard. For example, what are the pain points of log analysis in practice? In this work, we conduct a comprehensive survey study on log analysis at Microsoft. We collected feedback from 105 employees through a questionnaire of 13 questions and individual interviews with 12 employees. We summarize the format, scenario, method, tool, and pain points of log analysis. Additionally, by comparing the industrial practices with academic research, we discuss the gaps between academia and industry, and future opportunities on log analysis with four inspiring findings. Particularly, we observe a huge gap exists between log anomaly detection research and failure alerting practices regarding the goal, technique, efficiency, etc. Moreover, data-driven log parsing, which has been widely studied in recent research, can be alternatively achieved by simply logging template IDs during software development. We hope this paper could uncover the real needs of industrial practitioners and the unnoticed yet significant gap between industry and academia, and inspire interesting future directions that converge efforts from both sides.},
+    booktitle = {Proceedings of the 30th ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering},
+    pages = {1465–1476},
+    numpages = {12},
+    keywords = {Empirical Study, Log Analysis, Software Reliability},
+    location = {Singapore, Singapore},
+    series = {ESEC/FSE 2022}
+}
+
+@INPROCEEDINGS{yuan2012characterzingloggingpractices,
+  author={Yuan, Ding and Park, Soyeon and Zhou, Yuanyuan},
+  booktitle={2012 34th International Conference on Software Engineering (ICSE)}, 
+  title={Characterizing Logging Practices in Open-Source Software}, 
+  year={2012},
+  volume={},
+  number={},
+  pages={102-112},
+  keywords={Open source software;Servers;History;Production;Programming;Printing;log message;log quality;empirical study;failure diagnosis},
+  doi={10.1109/ICSE.2012.6227202}
+}
+
+@article{yuan2012improvingsoftwarediagnosibilty,
+    author = {Yuan, Ding and Zheng, Jing and Park, Soyeon and Zhou, Yuanyuan and Savage, Stefan},
+    title = {Improving Software Diagnosability via Log Enhancement},
+    year = {2012},
+    issue_date = {February 2012},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    volume = {30},
+    number = {1},
+    issn = {0734-2071},
+    url = {https://doi.org/10.1145/2110356.2110360},
+    doi = {10.1145/2110356.2110360},
+    abstract = {Diagnosing software failures in the field is notoriously difficult, in part due to the fundamental complexity of troubleshooting any complex software system, but further exacerbated by the paucity of information that is typically available in the production setting. Indeed, for reasons of both overhead and privacy, it is common that only the run-time log generated by a system (e.g., syslog) can be shared with the developers. Unfortunately, the ad-hoc nature of such reports are frequently insufficient for detailed failure diagnosis. This paper seeks to improve this situation within the rubric of existing practice. We describe a tool, LogEnhancer that automatically “enhances” existing logging code to aid in future post-failure debugging. We evaluate LogEnhancer on eight large, real-world applications and demonstrate that it can dramatically reduce the set of potential root failure causes that must be considered while imposing negligible overheads.},
+    journal = {ACM Trans. Comput. Syst.},
+    month = {2},
+    articleno = {4},
+    numpages = {28},
+    keywords = {Log, debugging, failure diagnostics, program analysis, software diagnosability}
+}
+
+@Article{fu2022anempiricalstudy,
+author={Fu, Ying
+and Yan, Meng
+and Xu, Zhou
+and Xia, Xin
+and Zhang, Xiaohong
+and Yang, Dan},
+title={An empirical study of the impact of log parsers on the performance of log-based anomaly detection},
+journal={Empirical Software Engineering},
+year={2022},
+month={11},
+day={08},
+volume={28},
+number={1},
+pages={6},
+abstract={Log-based anomaly detection plays an essential role in the fast-emerging Artificial Intelligence for IT Operations (AIOps) of software systems. Many log-based anomaly detection methods have been proposed. Due to the variety and unstructured characteristics of logs, log parsing is the first necessary step for parsing logs into structured ones in log-based anomaly detection methods. Prior studies have found that the effectiveness of log parsing will impact the performance of log-based anomaly detection. However, few studies comprehensively investigate whether better log parsing implies better anomaly detection. In this paper, we conduct a comprehensively empirical study to investigate the impact of six state-of-the-art log parsers belonging to four categories (including heuristic-based, frequency-based, clustering-based, and subsequence-based) on six state-of-the-art log-based anomaly detection methods (including machine-learning-based and deep-learning-based methods). Experimental results on three public datasets show that (1) High parsing accuracy does not definitely imply high anomaly detection performance. Both parsing accuracy and the number of parsed event templates should be considered when choosing log parsers for anomaly detection. (2) The log parsers have an impact on the efficiency of anomaly detection methods. With the increase in the number of parsed event templates, the efficiency of anomaly detection decreases. In detail, the heuristic-based parsers have less impact on the efficiency of anomaly detection methods, followed by frequency-based parsers. (3) All the anomaly detection methods perform more effectively and efficiently with the heuristic-based log parsers. Thus, the heuristic-based log parsers are recommended for a new practitioner on anomaly detection. We believe that our work, with the evaluation results and the corresponding findings, can help researchers and practitioners better understand the impact of log parsers on anomaly detection and provide guidelines for choosing a suitable log parser for their anomaly detection method.},
+issn={1573-7616},
+doi={10.1007/s10664-022-10214-6},
+url={https://doi.org/10.1007/s10664-022-10214-6}
+}
+
+@INPROCEEDINGS{rong2020canyoucaputreinformation,
+  author={Rong, Guoping and Xu, Yangchen and Gu, Shenghui and Zhang, He and Shao, Dong},
+  booktitle={2020 IEEE International Conference on Software Maintenance and Evolution (ICSME)}, 
+  title={Can You Capture Information As You Intend To? A Case Study on Logging Practice in Industry}, 
+  year={2020},
+  volume={},
+  number={},
+  pages={12-22},
+  keywords={Industries;Companies;Tools;Software systems;Software;Interviews;Guidelines;logging practice;developer;intentions and concerns;inconsistencies},
+  doi={10.1109/ICSME46990.2020.00012}
+}
+
+@article{fu2024endtoendlogstatement,
+title = {End-to-end log statement generation at block-level},
+journal = {Journal of Systems and Software},
+volume = {216},
+pages = {112146},
+year = {2024},
+issn = {0164-1212},
+doi = {10.1016/j.jss.2024.112146},
+url = {https://www.sciencedirect.com/science/article/pii/S0164121224001912},
+author = {Ying Fu and Meng Yan and Pinjia He and Chao Liu and Xiaohong Zhang and Dan Yang},
+keywords = {Log statement, End-to-end, Block-level, Deep learning},
+}
+
+@inproceedings{mastropaolo2022usingdeeplearning,
+author = {Mastropaolo, Antonio and Pascarella, Luca and Bavota, Gabriele},
+title = {Using deep learning to generate complete log statements},
+year = {2022},
+isbn = {9781450392211},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3510003.3511561},
+doi = {10.1145/3510003.3511561},
+abstract = {Logging is a practice widely adopted in several phases of the software lifecycle. For example, during software development log statements allow engineers to verify and debug the system by exposing fine-grained information of the running software. While the benefits of logging are undisputed, taking proper decisions about where to inject log statements, what information to log, and at which log level (e.g., error, warning) is crucial for the logging effectiveness. In this paper, we present LANCE (Log stAtemeNt reCommEnder), the first approach supporting developers in all these decisions. LANCE features a Text-To-Text-Transfer-Transformer (T5) model that has been trained on 6,894,456 Java methods. LANCE takes as input a Java method and injects in it a full log statement, including a human-comprehensible logging message and properly choosing the needed log level and the statement location. Our results show that LANCE is able to (i) properly identify the location in the code where to inject the statement in 65.9\% of Java methods requiring it; (ii) selecting the proper log level in 66.2\% of cases; and (iii) generate a completely correct log statement including a meaningful logging message in 15.2\% of cases.},
+booktitle = {Proceedings of the 44th International Conference on Software Engineering},
+pages = {2279–2290},
+numpages = {12},
+keywords = {empirical study, logging, machine learning on code},
+location = {Pittsburgh, Pennsylvania},
+series = {ICSE '22}
+}
+
+@INPROCEEDINGS{harty2021loggingpracticewithmobileanalytics,
+  author={Harty, Julian and Zhang, Haonan and Wei, Lili and Pascarella, Luca and Aniche, Maurício and Shang, Weiyi},
+  booktitle={2021 IEEE/ACM 8th International Conference on Mobile Software Engineering and Systems (MobileSoft)}, 
+  title={Logging Practices with Mobile Analytics: An Empirical Study on Firebase}, 
+  year={2021},
+  volume={},
+  number={},
+  pages={56-60},
+  keywords={Debugging;Mobile handsets;Libraries;Internet;Interviews;Open source software;Monitoring;mobile analytics;mobile software development;logging engineering;software monitoring;empirical software engineering},
+  doi={10.1109/MobileSoft52590.2021.00013}
+}
+
+@article{observationforllm,
+ author={Maderamitla, Prasad and Rao Katragadda, Subba},
+ title={Observability for LLM apps: what to log, privacy-safe telemetry, KPIs},
+ volume={5}, 
+ url={https://al-kindipublishers.org/index.php/fcsai/article/view/12101},
+ DOI={10.32996/jcsts.2026.5.4.2}, 
+ abstract={
+Large Language Model (LLM) applications increasingly form an integral part of enterprise software architecture, enabling conversational interfaces, intelligent assistant applications, and autonomous decision-support systems. While these applications provide tremendous flexibility and capability, their probabilistic nature, prompt dependency, and complex orchestration pipelines create new challenges for monitoring and reliability engineering. The traditional approach to observability, relying on logs, metrics, and traces, is found to be inadequate to measure semantic correctness, behavioral consistency, and governance risks associated with LLM applications. This study explores the concept of observability in large language model (LLM) applications from three different viewpoints: auditable data selection, privacy-preserving telemetry construction, and meaningful operational key performance indicator (KPI) definition. Following the best practices of software observability and MLOps, the study proposes a conceptual framework for model-agnostic observability in LLMs that covers the interaction layer, execution layer, performance layer, and safety layer. In particular, the study focuses on the application of privacy by design, including metadata-centric logging, selective redaction, and controlled access to telemetry data. Furthermore, this paper introduces a well-defined set of operational key performance indicators (KPIs) specific to large language model (LLM) applications, including reliability, performance efficiency, measures of output quality, and safety compliance. The above-mentioned parts of the framework enable the development of a well-structured framework for detecting faults, managing costs, as well as ensuring the reliability of LLMs. The above-mentioned framework makes it easier to implement LLMs at the enterprise level.
+}, 
+number={4}, 
+journal={Frontiers in Computer Science and Artificial Intelligence}, 
+year={2026}, 
+month={2}, 
+pages={10–14}
+}
+
+@Article{zhang2022studyingloggingpractice,
+author={Zhang, Haonan
+and Tang, Yiming
+and Lamothe, Maxime
+and Li, Heng
+and Shang, Weiyi},
+title={Studying logging practice in test code},
+journal={Empirical Software Engineering},
+year={2022},
+month={4},
+day={07},
+volume={27},
+number={4},
+pages={83},
+abstract={Logging is widely used in modern software development to record run-time information for software systems and plays a significant role in software testing. Although the research area of logging has attracted much attention, little attention is paid to the practice of test logging (i.e., the logging involved in test files). To fill this knowledge gap, we conduct this empirical study to explore and disclose the practice of test logging. This study examines 21 open-source subjects with {\$}{\backslash}sim {\$}70K logging statements, of which {\$}{\backslash}sim {\$}48K are production logging statements and {\$}{\backslash}sim {\$}22K are test logging statements. We organize our study by answering four research questions, and as a result, (1) we have yielded five findings to reveal the differences between test and production logging statements, (2) we have disclosed four findings regarding the differences between the maintenance efforts of test and production logging statements, (3) we have identified four reasons why developers use test log, and (4) we have uncovered the relationship between test logging and production logging. To the best of our knowledge, this is the first study that quantitatively and qualitatively analyzes the logging practices in test and production code, providing developers and researchers with insight into this topic.},
+issn={1573-7616},
+doi={10.1007/s10664-022-10139-0},
+url={https://doi.org/10.1007/s10664-022-10139-0}
+}
+
+@misc{jeanderson2021logbasedsoftwaremonitoringsystematic,
+      title={Log-based software monitoring: a systematic mapping study}, 
+      author={Jeanderson Barros Cândido and Maurício Finavaro Aniche and Arie van Deursen},
+      year={2021},
+      eprint={1912.05878},
+      archivePrefix={arXiv},
+      primaryClass={cs.SE},
+      url={https://arxiv.org/abs/1912.05878}, 
+}
+
+@inproceedings{liu2022uniparser,
+author = {Liu, Yudong and Zhang, Xu and He, Shilin and Zhang, Hongyu and Li, Liqun and Kang, Yu and Xu, Yong and Ma, Minghua and Lin, Qingwei and Dang, Yingnong and Rajmohan, Saravan and Zhang, Dongmei},
+title = {UniParser: A Unified Log Parser for Heterogeneous Log Data},
+year = {2022},
+isbn = {9781450390965},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3485447.3511993},
+doi = {10.1145/3485447.3511993},
+abstract = {Logs provide first-hand information for engineers to diagnose failures in large-scale online service systems. Log parsing, which transforms semi-structured raw log messages into structured data, is a prerequisite of automated log analysis such as log-based anomaly detection and diagnosis. Almost all existing log parsers follow the general idea of extracting the common part as templates and the dynamic part as parameters. However, these log parsing methods, often neglect the semantic meaning of log messages. Furthermore, high diversity among various log sources also poses an obstacle in the generalization of log parsing across different systems. In this paper, we propose UniParser to capture the common logging behaviours from heterogeneous log data. UniParser utilizes a Token Encoder module and a Context Encoder module to learn the patterns from the log token and its neighbouring context. A Context Similarity module is specially designed to model the commonalities of learned patterns. We have performed extensive experiments on 16 public log datasets and our results show that UniParser outperforms state-of-the-art log parsers by a large margin. 1},
+booktitle = {Proceedings of the ACM Web Conference 2022},
+pages = {1893–1901},
+numpages = {9},
+keywords = {Log parsing, deep learning, heterogeneous log data, log parser},
+location = {Virtual Event, Lyon, France},
+series = {WWW '22}
+}
+
+@Article{batoun2024aliteraturereview,
+author={Batoun, Mohamed Amine
+and Sayagh, Mohammed
+and Aghili, Roozbeh
+and Ouni, Ali
+and Li, Heng},
+title={A literature review and existing challenges on software logging practices},
+journal={Empirical Software Engineering},
+year={2024},
+month={6},
+day={18},
+volume={29},
+number={4},
+pages={103},
+abstract={Software logging is the practice of recording different events and activities that occur within a software system, which are useful for different activities such as failure prediction and anomaly detection. While previous research focused on improving different aspects of logging practices, the goal of this paper is to conduct a systematic literature review and the existing challenges of practitioners in software logging practices. In this paper, we focus on the logging practices that cover the steps from the instrumentation of a software system, the storage of logs, up to the preprocessing steps that prepare log data for further follow-up analysis. Our systematic literature review (SLR) covers 204 research papers and a quantitative and qualitative analysis of 20,766 and 149 questions on StackOverflow (SO). We observe that 53{\%} of the studies focus on improving the techniques that preprocess logs for analysis (e.g., the practices of log parsing, log clustering and log mining), 37{\%} focus on how to create new log statements, and 10{\%} focus on how to improve log file storage. Our analysis of SO topics reveals that five out of seven identified high-level topics are not covered by the literature and are related to dependency configuration of logging libraries, infrastructure related configuration, scattered logging, context-dependant usage of logs and handling log files.},
+issn={1573-7616},
+doi={10.1007/s10664-024-10452-w},
+url={https://doi.org/10.1007/s10664-024-10452-w}
+}
+
+@inproceedings{li2021whereshallwelog,
+author = {Li, Zhenhao and Chen, Tse-Hsun (Peter) and Shang, Weiyi},
+title = {Where shall we log? studying and suggesting logging locations in code blocks},
+year = {2021},
+isbn = {9781450367684},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3324884.3416636},
+doi = {10.1145/3324884.3416636},
+abstract = {Developers write logging statements to generate logs and record system execution behaviors to assist in debugging and software maintenance. However, deciding where to insert logging statements is a crucial yet challenging task. On one hand, logging too little may increase the maintenance difficulty due to missing important system execution information. On the other hand, logging too much may introduce excessive logs that mask the real problems and cause significant performance overhead. Prior studies provide recommendations on logging locations, but such recommendations are only for limited situations (e.g., exception logging) or at a coarse-grained level (e.g., method level). Thus, properly helping developers decide finer-grained logging locations for different situations remains an unsolved challenge. In this paper, we tackle the challenge by first conducting a comprehensive manual study on the characteristics of logging locations in seven open-source systems. We uncover six categories of logging locations and find that developers usually insert logging statements to record execution information in various types of code blocks. Based on the observed patterns, we then propose a deep learning framework to automatically suggest logging locations at the block level. We model the source code at the code block level using the syntactic and semantic information. We find that: 1) our models achieve an average of 80.1\% balanced accuracy when suggesting logging locations in blocks; 2) our cross-system logging suggestion results reveal that there might be an implicit logging guideline across systems. Our results show that we may accurately provide finer-grained suggestions on logging locations, and such suggestions may be shared across systems.},
+booktitle = {Proceedings of the 35th IEEE/ACM International Conference on Automated Software Engineering},
+pages = {361–372},
+numpages = {12},
+location = {Virtual Event, Australia},
+series = {ASE '20}
+}
+
+@ARTICLE{gu2023loggingpracticesinsoftwareengineering,
+  author={Gu, Shenghui and Rong, Guoping and Zhang, He and Shen, Haifeng},
+  journal={IEEE Transactions on Software Engineering}, 
+  title={Logging Practices in Software Engineering: A Systematic Mapping Study}, 
+  year={2023},
+  volume={49},
+  number={2},
+  pages={902-923},
+  keywords={Software systems;Codes;Systematics;Task analysis;Runtime;Industries;Maintenance engineering;Logging practices;log;systematic mapping;empirical study},
+  doi={10.1109/TSE.2022.3166924}
+}
+
+@INPROCEEDINGS{rong2023howdodevelopers,
+  author={Rong, Guoping and Gu, Shenghui and Shen, Haifeng and Zhang, He and Kuang, Hongyu},
+  booktitle={2023 IEEE/ACM 45th International Conference on Software Engineering (ICSE)}, 
+  title={How Do Developers' Profiles and Experiences Influence their Logging Practices? An Empirical Study of Industrial Practitioners}, 
+  year={2023},
+  volume={},
+  number={},
+  pages={855-867},
+  keywords={Training;Surveys;Systematics;Source coding;Companies;Software systems;Behavioral sciences;Logging practice;Intention;Concern;Fulfill},
+  doi={10.1109/ICSE48619.2023.00080}
+}
+
+@inproceedings{chen2020studyingtheuseofjavaloggingutilities,
+author = {Chen, Boyuan and Jiang, Zhen Ming (Jack)},
+title = {Studying the use of Java logging utilities in the wild},
+year = {2020},
+isbn = {9781450371216},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3377811.3380408},
+doi = {10.1145/3377811.3380408},
+abstract = {Software logging is widely used in practice. Logs have been used for a variety of purposes like debugging, monitoring, security compliance, and business analytics. Instead of directly invoking the standard output functions, developers usually prefer to use logging utilities (LUs) (e.g., SLF4J), which provide additional functionalities like thread-safety and verbosity level support, to instrument their source code. Many of the previous research works on software logging are focused on the log printing code. There are very few works studying the use of LUs, although new LUs are constantly being introduced by companies and researchers. In this paper, we conducted a large-scale empirical study on the use of Java LUs in the wild. We analyzed the use of 3, 856 LUs from 11,194 projects in GitHub and found that many projects have complex usage patterns for LUs. For example, 75.8\% of the large-sized projects have implemented their own LUs in their projects. More than 50\% of these projects use at least three LUs. We conducted further qualitative studies to better understand and characterize the complex use of LUs. Our findings show that different LUs are used for a variety of reasons (e.g., internationalization of the log messages). Some projects develop their own LUs to satisfy project-specific logging needs (e.g., defining the logging format). Multiple uses of LUs in one project are pretty common for large and very largesized projects mainly for context like enabling and configuring the logging behavior for the imported packages. Interviewing with 13 industrial developers showed that our findings are also generally true for industrial projects and are considered as very helpful for them to better configure and manage the logging behavior for their projects. The findings and the implications presented in this paper will be useful for developers and researchers who are interested in developing and maintaining LUs.},
+booktitle = {Proceedings of the ACM/IEEE 42nd International Conference on Software Engineering},
+pages = {397–408},
+numpages = {12},
+keywords = {empirical software engineering, logging code, logging practices},
+location = {Seoul, South Korea},
+series = {ICSE '20}
+}
+
+@article{li2024gostatic,
+author = {Li, Yichen and Huo, Yintong and Zhong, Renyi and Jiang, Zhihan and Liu, Jinyang and Huang, Junjie and Gu, Jiazhen and He, Pinjia and Lyu, Michael R.},
+title = {Go Static: Contextualized Logging Statement Generation},
+year = {2024},
+issue_date = {July 2024},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {1},
+number = {FSE},
+url = {https://doi.org/10.1145/3643754},
+doi = {10.1145/3643754},
+abstract = {Logging practices have been extensively investigated to assist developers in writing appropriate logging statements for documenting software behaviors. Although numerous automatic logging approaches have been proposed, their performance remains unsatisfactory due to the constraint of the single-method input, without informative programming context outside the method. Specifically, we identify three inherent limitations with single-method context: limited static scope of logging statements, inconsistent logging styles, and missing type information of logging variables.To tackle these limitations, we propose SCLogger, the first contextualized logging statement generation approach with inter-method static contexts. First, SCLogger extracts inter-method contexts with static analysis to construct the contextualized prompt for language models to generate a tentative logging statement. The contextualized prompt consists of an extended static scope and sampled similar methods, ordered by the chain-of-thought (COT) strategy. Second, SCLogger refines the access of logging variables by formulating a new refinement prompt for language models, which incorporates detailed type information of variables in the tentative logging statement.The evaluation results show that SCLogger surpasses the state-of-the-art approach by 8.7\% in logging position accuracy, 32.1\% in level accuracy, 19.6\% in variable precision, and 138.4\% in text BLEU-4 score. Furthermore, SCLogger consistently boosts the performance of logging statement generation across a range of large language models, thereby showcasing the generalizability of this approach.CCS Concepts: • Software and its engineering → Maintaining software.},
+journal = {Proc. ACM Softw. Eng.},
+month = {7},
+articleno = {28},
+numpages = {22},
+keywords = {code generation, software maintenance, large language models}
+}
+
