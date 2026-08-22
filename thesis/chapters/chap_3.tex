@@ -1,217 +1,131 @@
-\chapter{Implementation} \label{chap:impl}
+\chapter{Methodology} \label{chap:methodology}
+This chapter describes 
 
-\section{Duties and Agreements}
+This chapter descirbes the setup for running the expirment with an overview of our experiment pipeline shown in Figure including data preparation,
+MIA feature .... and how we aggretgate the feature.
 
-To successfully write your thesis, you should definitely respect some rules. They are explained in the following sections.
+This chapter introduces the importance of software logging and challenges of inconsistent logging pracitces and log data. 
+Based on these challenges, the motivation and problem are described for this research.
+Afterwards, the next chapter describes goals and research questions about logging practices and guidelines.
+Followed up by the strucutre of this thesis.
 
-\subsection{Rules for Students}
-At the beginning of your thesis, estimate the complexity of the work you are going to have. Take into account that you will have problems with certain aspects of your thesis that will consume a lot of time. Consider times for recreation and delays you can not influence, for instance, asking your supervisor, waiting for orders to be shipped, complex problems during the implementation phase, and so on~\dots
-
-For some students it is a good idea to agree upon a rough plan (with their supervisor) on how to make progress on their thesis and what goals to achieve. Milestones might help to control your progress. If you fail to meet a milestone in time, contact your supervisor on why this happened or when to expect it to be fulfilled.
-
-If you have a problem, try to solve it on your own twice over. Some things just take time. In case you fail to solve it on your own, write an email to your supervisor and tell him/her about your problem and what you did to solve it. Make an appointment if necessary. Please do not jump right into his office, supervisors have other stuff to do, too.
-
-For quotations, either use ``quotation'' or \enquote{quotation}. For some words, you should use a tilde to link them, for example, when referring to chapter~\ref{chap:conclusion} you should use it. Or use \autoref{chap:conclusion}. This prevents words from being separated by a line break or some other rare circumstances. Use BibTeX within your thesis and learn the different citation options~\cite{Xie:2008:SBS,Newsome:05:DTA}.
-
-One last piece of advice. Do not try to attend courses in parallel to your thesis. You should take this seriously and not think that writing a thesis is done quickly.
-
-\subsection{Rules for Supervisors}
-\enquote{With great power comes great responsibility} \texttt{:-)}
-
-\begin{itemize}
-\item It is very important, that if you want specific things to be done that you send these important instructions by mail. Your student might be in a moment of confusion when telling him/her.
-\item Attend the \enquote{Colloquium} and give your student the feeling, that this is important to you, too.
-\item Offer your students the opportunity to talk to you right after the \enquote{Colloquium}. While discussing things, tell your student to write down the results of this discussion and tell him/her to send you this summary by mail to ensure (if necessary), you did not talk at cross purposes.
-\item Last but not least: Please be gentle to your students \texttt{:-)}
-\end{itemize}
-
-\section{Hints on Typesetting}
-To get this template running, we recommend using \href{https://code.visualstudio.com/download}{VSCode} and \href{https://code.visualstudio.com/docs/devcontainers/tutorial}{Remote Containers}.
-
-\subsection{Structuring Text, English Hints}
-Another text about the following sections \dots
-
-\subsubsection{Text }
-Always try to structure your text in a manner that makes sense. Either use indentations, itemize or enumeration environments.
-
-This sentence will have an indentation at the beginning. Now an enumeration starts:
-
-\begin{enumerate}
-\item One.
-\item Two.
-\item Three.
-\end{enumerate}
-
-\noindent Sometimes you do not want an indentation. Use the \texttt{noindent} command in such a case.
-\paragraph{One} Is the first number.
-
-\paragraph{Two} Is the second number.
-
-\paragraph{Glossary}
-Use the glossary package for acronyms.
-In addition, the glossay package can help you to avoid typing the same word in different ways.
-For example students tend to mix-up the writing of the word \emph{User-Agent} in different ways: user-agent, User-Agent, user agent, User agent.
-This inconsistency can be avoided by just using the glossary entry: \gls{ua}.
-
-\subsubsection{English Hints}
-
-\begin{itemize}
-\item Use an active voice and avoid using passive wherever possible.
-\item \emph{Always} use the present tense (especially when you refer to content that occurs later in your text). For example:
-	\begin{itemize}
-	\item \emph{wrong}: The next chapter \emph{will} explain \dots
-	\item \emph{correct}: The next chapter explains \dots
-	\end{itemize}
-\item Either use American English or British English, but do not mix (e.\,g. summarize vs. summarise, analyze vs. analyse, \dots). American English is preferred.
-\item Do not use filler words.
-	\begin{itemize}
-	\item omit: \enquote{some kind of} and others \dots
-	\end{itemize}
-\item Never use a comma before \enquote{that}.
-\item For enumerations, always use a comma before \enquote{and}: \enquote{\dots module 1, module 2, and module 3.}.
-\item The title of your thesis is capitalized except for words like and, or, with, the, a \dots
-\item \emph{Always} address the reader using the third person: \enquote{As one can see from \dots} and not \enquote{As you can see \dots}.
-\item All tables, figures have to be explained very briefly in the text itself.
-\item Always use correct quantifications:
-	\begin{itemize}
-	\item \emph{wrong}: \dots a small amount of runs \dots
-	\item \emph{correct}: \dots at most three runs \dots
-	\end{itemize}
-\item Never use \enquote{I}. Depersonalize your sentences or use \enquote{we} if necessary.
-\item Read \emph{The Elements of Style} by William Strunk, Jr., which is for example available at \url{http://www.crockford.com/wrrrld/style.html}. The (short) book provides an overview of typical errors and helps you to significantly improve your English.
-\end{itemize}
-
-\subsubsection{General Hints}
-\begin{itemize}
- \item Use non-breaking small space for some abbreviation
- \begin{itemize}
- \item z.\,B.
- \item u.\,a.
- \item e.\,g.
- \end{itemize}
- \item Use a non-breaking space just before references, parentheses and so which shall not begin at the beginning of a new line. This sentence will not break~here~(and~here).
- \item Did you notice the overfull horizontal box (hbox)? You should avoid these! Underfull boxes are not that bad. But only fix them when most of the section, paragraph etc is ready. Otherwise you have to fix them more than once. You can tell \LaTeX\ when to break a word if it does not do it correctly. Just put a \textbackslash- at the corresponding position in the world. Vertical overfull boxes (vbox) occur if the document uses \verb|\flushbottom| instead of \verb|\raggedbottom|. That way, \LaTeX\ ensures that each page ends with the last sentence in the last line (except for the final line in a section). To enforce this, \LaTeX\ sometimes has to add extra vertical space between, e.\,g., paragraphs. Overfull vertical boxes are hard to fix, as additional content needs to be added or even has to be removed sometimes. Keep in mind that any changes to the type area (Satzspiegel) might produce many additional over- or underfull boxes (and of course it will fix other boxes).
- \item Read \url{ftp://ftp.dante.de/tex-archive/info/german/l2tabu/l2tabu.pdf}. Really, read it.
- \item You can find many more good information at \url{http://www.dante.de/CTAN/info/lshort/german/l2kurz.pdf}
- \item The KomaScript guide is very useful: \url{ftp://ftp.dante.de/pub/tex/macros/latex/contrib/koma-script/scrguide.pdf}
-\end{itemize}
+\section{Research Design}
 
 
-\subsection{Formulas, Figures, Tables, Definitions}
+\section{Developer Study}
 
-\subsubsection{Formulas}
+\section{Liturature Guideline Collection}
+1: 
+- collect all from google scholar
+HowToLog
+Logging Guideline
+Logging Practice
+Logging Survey 
+What To Log
+Where To Log 
+from 2020 literature
 
-Using the method shown in Table~XX for all three functions yields.
-\begin{align}
-f_a^4 &= \mathrm{\texttt{0x2C79}} = \mathrm{abc} + \mathrm{ac} + \mathrm{ad} + \mathrm{bc} + \mathrm{a} + \mathrm{b} + \mathrm{d} + \mathrm{1} \\
-f_b^4 &= \mathrm{\texttt{0x6671}} = \mathrm{abd} + \mathrm{acd} + \mathrm{bcd} + \mathrm{ab} + \mathrm{ac} + \mathrm{bc} + \mathrm{a} + \mathrm{b} + \mathrm{d} + \mathrm{1}\\
-\begin{split}
-f_c^5 &= \mathrm{\texttt{0x7907287B}} = \mathrm{cde} + \mathrm{abde} + \mathrm{ade} + \mathrm{de} + \mathrm{abce} + \mathrm{bce} + \mathrm{ce} + \mathrm{be} + \mathrm{bcd}\\
-&\hspace{2.75cm}+ \mathrm{acd} +\mathrm{bd} + \mathrm{d} + \mathrm{bc} + \mathrm{ab} + \mathrm{b} + \mathrm{1}
-\end{split}
-\end{align}
+- check literature references for more literature orignal literature
 
-When typesetting formulas, pay special notice on constants, variables, and units:
-
- \begin{align}
-  \mathcal{F}_{\omega}\{x(t)\} = \int^{\infty}_{-\infty} x(t) \;\mathrm{e}^{-\mathrm{j} \omega t}\,\mathrm{d}t
-  \tag{Fourier-Transformation} %optional
-  \end{align}
-
-The use of constants, variables and units is explained by \enquote{Rohde \& Schwarz} in their famous document \enquote{Der korrekte Umgang mit Gr\"{o}\ss{}en, Einheiten und Gleichungen}~\cite{msc:correctuse}. These rules are in compliance with ISO-31. Consequently, always typeset the following in italics:
-
-\begin{itemize}
-\item Variables like $k$, $x$, \dots
-\item Functions like $f(x)$,\dots
-\item Physical constants like $c_0$, \dots
-\item Indices that are variables or physical units, like $a_{i, j}$ or $c_V$.
-\end{itemize}
+- extract important information check catalogue
 
 
-\subsubsection{Fontawesome}
 
-In case you need some extra symbols, we recommend using Fontawesome \faChrome{}, \faFirefox{}, \faSafari{}.
-
-\subsubsection{Figures}
-
-Figures and tables are important to explain things. Here are some rules that apply, when using figures:
-
-\begin{itemize}
-\item Whenever possible use vector graphics (eps, pdf, svg, \ldots) instead of bitmap graphics (jpg, gif, \ldots).
-\item All figures should have the same font and size (do not scale them or the size will change) and ``style'' (line strength, arrow heads, \ldots).
-\item Some employees of the chair need all figures in \texttt{.eps}. However, do \emph{not} convert your \texttt{.jpg} and \texttt{.png} to \texttt{.eps}, instead use a \emph{wrapper} program to wrap these file types into the \texttt{.eps} format. As a consequence, you are forced to use \texttt{latex} to typeset your document instead of \texttt{pdflatex}. Appropriate wrapper programs can be found here:
-\begin{itemize}
-\item Windows: \href{https://wiki.crypto.rub.de/WikiCosy/img_auth.php/6/60/JPG-PNGtoEPS.rar}{click}
-\item Linux/Mac: \href{http://imgtops.sourceforge.net/}{click}
-\end{itemize}
-\item \textbf{Always} try to use your own figures, so you do not run into copyright problems and it is easier for us, to reuse these figures for papers. You might want to have a look at these tools to create your own figures:
-	\begin{itemize}
-	\item Windows: MS Visio (available via MSDNAA), Graphviz, Gnuplot \dots
-	\item Linux: xfig/jfig, IPE, Graphviz, Gnuplot \dots
-	\item Mac: IPE, Graphviz, Gnuplot, OmniGraffle (commercial, academic licensing available) \dots
-	\end{itemize}
-\end{itemize}
-
-There are many possibilities on how to include figures, here is just one example on how to do it. In case you need further assistance, please google for \texttt{l2picfaq}.
+\section{Open-sorce Repository Guideline Collection}
+2:
+FULL LIST scarped list
+OPTList remove forks and same result for different queries 
+OPTListwMetaData samefile including MetaData
+MetaList remove github removed repo , Date included , exclude/include + comments
+Prompts for search:
 
 
-% THIS IS A COOL AND DIRTY HACK FOR PDFLATEX USERS :-)
-% LATEX USERS ARE NOT ABLE TO USE THIS
-% TYPESET THIS DOCUMENT USING BOTH METHODS AND SEE THE DIFFERENCE
+1. Broad High-Recall Query (Recommended Starting Point)
+Use this directly in GitHub search:
+("logging guidelines" OR "logging best practices" OR "logging standards" OR "logging conventions" OR "logging policy") (path:/docs/ OR path:/.github/ OR filename:README.md OR path:**/CONTRIBUTING.md)
+This will retrieve repositories containing explicit logging guidance documents.
+2. Query Focused on “What to Log”
+("what to log" OR "log levels" OR "when to log" OR "structured logging" OR "sensitive information")
+("logging" OR "application logs")
+(path:/docs/ OR filename:README.md)
+Useful for extracting actionable recommendations such as:
+what events should be logged,
+log levels,
+sensitive data handling,
+tracing,
+observability.
+3. Engineering Handbook / Internal Standards Query
+Many mature projects store logging guidance inside engineering standards rather than standalone logging docs.
+(logging observability tracing telemetry)
+("engineering standards" OR handbook OR conventions OR practices OR guidelines)
+4. Query for Structured Logging Practices
+("structured logging" OR "correlation id" OR "trace id")
+("best practices" OR guidelines OR standards)
+This is especially useful for distributed systems and microservices research.
+5. Query for Security/Sensitive Logging Guidance
+(logging OR logs)
+("sensitive data" OR PII OR GDPR OR credentials)
+("guidelines" OR "best practices")
+This often reveals high-quality operational logging rules.
+6. Query for Log Levels and Severity Policies
+("log level" OR ERROR OR WARN OR INFO OR DEBUG)
+(logging guidelines OR logging conventions)
+This helps extract recommendations about:
+severity assignment,
+verbosity,
+debugging practices,
+production logging.
+7. Query Targeting Large Mature OSS Projects
+You can restrict by stars:
+("logging guidelines" OR "logging best practices")
+stars:>1000
+Or by language/domain:
+("logging guidelines")
+language:Java
+("structured logging")
+language:Go
+8. Query for Wiki/Markdown-Based Guidance
+Many repositories store guidelines in markdown files:
+(logging OR observability)
+extension:md
+(guidelines OR practices OR standards)
+9. Query for Operational Observability Guidance
+Modern repositories may avoid the term “logging” and instead use:
+observability,
+telemetry,
+diagnostics,
+tracing.
+Use:
+(observability OR telemetry OR diagnostics OR tracing)
+(logging guidelines OR standards OR practices)
+10. Query for Logging Anti-Patterns / Smells
+Very useful for building your catalogue of “avoid these” rules.
+("logging smells" OR "bad logging practices" OR "logging anti-patterns")
 
-\subsubsection{Tables}
+- Get Queriy via QA
+- Scrap Data (only limited 5 page or search is not precise)
+- Check Duplicated via different Query remove or merge and forks)
+- using cosinesimilarity removing 100% duplicates
+- Remove not exisiting projects
+- get meta data and sort the most important one and recent most developers
+- extract information to catalgoue
 
-There are many possibilities on how to create and include tables. From a typographic point of view, \textit{one should avoid any vertical lines}, cf. Table~\ref{tab1}.
+-include/exclude repos
+-resulted in almost 215 repos
+-filter not needed we use all 
+-extracted what to log, where to log, how to log, log verbosity
+exclusive reference, project type, language, field LLM
+PROMPT:
+
+"Give me all logging guidelines and pracitces related to what to log, where to log,
+ how to log and log level verbosility from these repositories and also give me the projecttype specific in language and field:"
+
+ Also less devs repo interesting because of different and more guidelines
+(-internal categorization)
 
 
-\begin{table}[htbp]
-	\centering
-	\begin{minipage}{\textwidth} % only needed for footnotes, otherwise footnotes will not appear
-	\renewcommand{\footnoterule}{}
- 	\renewcommand{\thefootnote}{\alph{footnote}}
-	\centering
-	\caption[This is the short caption for the \textit{List of Tables}.]{Captions for tables are \emph{always above} the table and give a short but informative description of the table. Always use full sentences here and end them with a full stop.}
-	\label{tab1}
-	\begin{tabular}{@{}lccc@{}} \toprule
-	& & \multicolumn{2}{c}{Component}\\
-	\cmidrule{3-4}
-	Amount\footnote{This is a footnote inside a table, you need a minipage for this to work.} & Price & Description & Role \\
-	\midrule
-	23 & 1.234 \$ & good stuff & important\\
-	\midrule
-	multirow example & \multirow{2}{*}{x} & \multirow{2}{*}{y} & \multirow{2}{*}{XXX} \\
-	the other row & & &\\
-	\midrule
-	42 & 43.123,13\footnote{This is another footnote inside a table.} & good stuff & important\\
-	\bottomrule
-	\end{tabular}
-	\end{minipage}
-\end{table}
+\section{Guideline Classification}
 
-\subsection{Glossaries}
+\section{Comparison and Gap Analysis}
 
-The \texttt{glossaries} package in LaTeX allows you to create glossaries and lists of acronyms in your document. This is particularly useful in academic writing, where it is important to ensure consistency in the use of terminology.
-
-To create an acronym using \texttt{glossaries}, you first need to define it using the \texttt{newacronym} command. For example, \code|\newacronym{ua}{UA}{User-Agent}| defines the acronym \enquote{UA} with the corresponding expansion \enquote{User-Agent}.
-
-To create a glossary entry, you can use the \texttt{newglossaryentry} command. For example, \code|\newglossaryentry{xss}{name={XSS}, description={Cross-Site-Scripting...}}| creates a glossary entry with the label \enquote{xss}, the name \enquote{XSS}, and the description \enquote{Cross-Site-Scripting...}.
-
-To reference an acronym or glossary entry in your text, you can use the \texttt{gls} command. For example, \code|The \gls{sso} system enables...| will produce \enquote{The Single Sign-On (SSO) system enables...}.
-
-Glossaries are important in academic writing because they help ensure consistency in the use of terminology. 
-By defining acronyms and glossary entries up front, students can ensure they are using the correct terminology throughout their thesis. This helps to prevent variations such as \enquote{Single Sign-On}, \enquote{Single-Sign-On}, or \enquote{Single-Sign On}, which can be confusing for readers and detract from the clarity of the writing.
-
-\subsection{Listings}
-
-\subsubsection{Listings}
-
-We recommend using the \href{https://de.overleaf.com/learn/latex/Code_Highlighting_with_minted}{minted} package for code highlighting.
-
-\begin{minted}{python}
-def myFunction(param):
-	return param + 1
-
-myFunction(5)
-\end{minted}
-
-You should thoroughly document your code using comments and (best case) by using a documentation system like Doxygen. Please ask your supervisor for additional rules (e.\,g. which repository system to use, etc.). Regularly commit your changes and backup your data!
+\section{Threats to Validity}

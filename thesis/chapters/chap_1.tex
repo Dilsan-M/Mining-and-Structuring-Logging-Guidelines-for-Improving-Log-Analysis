@@ -1,43 +1,205 @@
 \chapter{Introduction} \label{chap:intro}
-Always start a chapter with a short but informative text about the following sections Point out the relevance of the sections and create interconnections between them Never ever just write a single sentence here Furthermore,\ you are strongly advised to respect the hints given in this template
+
+%Always start a chapter with a short but informative text about the following sections Point out the relevance of the sections and create interconnections between them Never ever just write a single sentence here Furthermore,\ you are strongly advised to respect the hints given in this template
+The first chapter introduces the importance of software logging and challenges of inconsistent logging pracitces and log data. 
+Based on these challenges, the motivation and problem are described for this research.
+Afterwards, the next chapter describes goals and research questions about logging practices and guidelines.
+Followed up by the strucutre of this thesis.
 
 \section{Motivation}
-What is the motivation to deal with this subject?
-Why is this topic interesting and relevant from research perspective?
-Which interesting problems do you expect?
+Modern software systems generate large amounts of log data, which provides valuable insights about runtime behaviour.
+Logs are widely used for debugging, system monitoring, anomaly detection, failure diagnosis and root cause analysis.
+In large scale and distributed software systems, the amount of generated log data can become very fast too large for efficient manual inspection.
+As a result, automated log analysis techniques have become very important for supporting developers and
+operators in analysing system behaviour and identifying relevant events \cite{dai2022logram} \cite{zhu2019toolsandbenchmarksforautomatedlogparsing}.
+The effectiveness of automated log analysis does not only depend on the analysis technique.
+It also depends on the quality and consistency of the log data that is provided as input.
+The latest studies show that such inconsistencies can reduce accuracy and reliability \cite{khan2022guideliensforassessingtheaccuracy} \cite{gholamian2022comprehensivesurveyloggingsoftware} \cite{chen2021asurveyofsoftwareloginstrumentation}.
+Automated techniques generally require log messages to contain useful information and to follow structures that can be processed reliably.
+Inconsistent message formats, missing contextual information, unsuitable log levels or poorly placed log statements can make the analysis more difficult
+and may reduce the quality of the generated log data.
+\\
+This creates an important problem because the quality of logs are already influenced by developers individually.
+Developers have to decide what information should be logged, where logging statements should be placed,
+how log messages should be created and which log level should be used \cite{he2021asurveyonautomatedloganalysis} \cite{chen2017characterizinganddetectingantipatterns}.
+Even in the industry logs are still inconistent \cite{he2022anempiricalsutdyofloganalysisatmicrosoft}.
+These decisions are often made during software development and may differ between individual developers, teams, projects, programming languages and application domains.
+This makes the investigation of logging guidelines an interesting research problem.
+It is unclear which logging recommendations are suggested, how detailed or specific they are,
+whether different sources provide similar guidance and which areas of logging receive the most attention.
+Moreover, it is also relevant to investigate whether guidelines exist for the different decisions developers face when implementing logging
+and whether these recommendations could support the generation of logs that are more suitable for automated analysis. 
+\\
+Consequently, even software systems that generate large amounts of log data may not necessarily generate logs that are well suited for later automated analysis.
+Existing research has investigated different approaches for improving automated log analysis,
+for example through more effective parsing and analysis techniques.
+However, improving the analysis method alone does not solve problems that already exist in the input data.
+If important information is missing or logging statements are implemented inconsistently,
+an analysis technique can only process the information that has originally been recorded.
+There are open source projects \cite{yuan2012characterzingloggingpractices} and even grey literature \cite{url_medium_logging_best_practices_2022} \cite{url_loggly_logging_scale_2022} for logging guidelines and pracites,
+but these are not sufficient practices and guidelines.
+Therefore, it is also relevant to investigate how log data can be improved at its source
+by considering the logging practices used during software development.
+\\
+The motivation for this thesis is additionally supported by observations from industrial software projects,
+where logging structures and conventions can be inconsistent or only partially documented.
+Especially in larger projects involving several developers and software components, incomplete
+or unclear logging guidance can result in different logging styles within the same system.
+A more structured understanding of existing logging guidelines could therefore support more consistent logging practices
+and provide a foundation for improving the quality of generated log data.
+\\
+Based on this motivation, this thesis investigates existing logging guidelines and practices
+and structures them into a catalogue according to relevant logging decisions.
 
-Do not abbreviate \enquote{e.\,g.\/} within a sentence,\ always write \enquote{for example} However,\ within in parentheses you are allowed to abbreviate and use,\ e.\,g.,\ and, i.\,e.,\ as shown here: with a comma right before and after it In addition to that,\ ensure correct spacing by using \texttt{\textbackslash,} in between
+%Do not abbreviate \enquote{e.\,g.\/} within a sentence,\ always write \enquote{for example} However,\ within in parentheses you are allowed to abbreviate and use,\ e.\,g.,\ and, i.\,e.,\ as shown here: with a comma right before and after it In addition to that,\ ensure correct spacing by using \texttt{\textbackslash,} in between
 
-\section{Related Work}
-List related work \emph{and} the result of this work. What is the relevance of this work concerning your thesis? If necessary,\ \emph{emphasize} some words in your text, for example words like \emph{not} or \emph{and} are sometimes crucial for understanding.
+\section{Problem Statement}
+Automated log analysis techniques are widely used to help developers understand and maintain
+software systems. These techniques are commonly applied for tasks such as debugging, system
+monitoring, anomaly detection and root cause analysis. Most automated log analysis methods as-
+sume that log data are structured, consistent, and contain enough information to support analysis.
+In practice, this assumption often does not preserve this condition.
+\\
+Log messages are usually written manually by developers, often without clear or standardised
+logging guidelines. As a result, log formats and message contents vary across software projects,
+development teams and programming languages. While some log messages contain detailed and
+structured information, others lack important context or follow inconsistent formats. This incon-
+sistency makes it complicated for automated tools and reduces the reliability of log analysis.
+Although many existing studies focus on improving log analysis techniques, such as log parsing
+or anomaly detection, less attention is given to how log data is created in the first place. The
+quality of the input logs is often taken for granted. When log data are inconsistent, incomplete or
+poorly structured, even advanced automated analysis techniques may fail to produce accurate and
+meaningful results.
+\\
+Logging guidelines and logging practices have the potential to improve log quality by providing
+what should be logged, when logging should occur, how log messages should be structured. In
+practice, however, developers often rely on personal experience or make logging decisions on the
+spot without a systematic and reusable manner. Logging rules are rarely documented in a clear and
+reusable way and are often spread across documentation and source code. This makes it difficult to
+identify common practices or apply them consistently across different projects and programming
+languages.
+\\
+As a result, the developers could not refer to a guideline or standard to keep logs consistent. 
+Without a systematic approach to collecting and organising
+logging guidelines, opportunities to improve log quality and strengthen automated log analysis
+remain limited. Addressing this missing reference is important for increasing the reliability and effectiveness of
+automated log analysis in real-world software systems. 
+Because of that a catalogue with logging guidelines is needed to improve log quality and to keep uniformed
+logs sustainable.
 
-%\textbf{Hint:} Do not manually cite author names, use \code|\citeauthor{Newsome:05:DTA}|, for example, \enquote{\citeauthor{Newsome:05:DTA}}.
-%It takes also care if multiple authors are used, for example, \code|\citeauthor{AviramSSHDSVAHD16}| becomes \enquote{\citeauthor{AviramSSHDSVAHD16}}.
-%You could also get the full list of authors by using the command \code|\citeauthor*{AviramSSHDSVAHD16}| (\enquote{\citeauthor*{AviramSSHDSVAHD16}}) but this should only be used in rare cases.
 
-%Similarly, use \code|\citeyear{Newsome:05:DTA}| to get the year (\enquote{\citeyear{Newsome:05:DTA}}).
+\section{Goals and Research Questions}
+%logging practices and develop logging guidelines 
+%first part logging practices from industry
+%second part guidelines from
+%RQ1 more focus logging practice -> survey
+%RQ2 Documented -> mining Opens source
+%RQ3 -> Open Coding idenftify sorting
+%RQ4 -> What, where actual guideline
+As there is no specific defined guidelines for logs, the goal is to create such foundation of logging guidelines into a catalouge 
+to improve the log quality. This catalogue contains aspects of what to log, where to log, how to log and which log verbosity to use.
+This improves log statements at their source and make the resulting log data more suitable for automated log analysis.
+\\  
+To archieve this goal, we need to seperate it into two aspects: first, collecting all existing guidelines from scientific literature and
+second, collecting all exisiting guidelines from open-source projects. Together we merge them into one big catalogue by classifying the
+guidelines, and sort and order it. Resulting into a catalogue with all guidelines needed for a good quality of log data.
+\\
+Therefore, this thesis formulates the research questions, which are presented in Table \ref{table:t1rq}, followed up with detailed research objectives
+in Table \ref{table:t2ro}. 
 
-\textbf{Tools:}
-We do not make any strict guidelines regarding the tools that can be used to manage the related work.
-You can freely choose your own methodology and tools.
+\begin{table}[H]
+\centering
+\begin{tabular}{|c | p{0.6\linewidth}|}
+ \hline
+ \textbf{RQ1} & What logging practices and challenges do software developers encounter in software development and maintenance? \\
+ \hline
+ \textbf{RQ2} & What logging guidelines are documented in literature and open-source software repositories? \\
+ \hline
+ \textbf{RQ3} & What themes and characteristics emerge from the identified logging guidelines? \\
+ \hline
+ \textbf{RQ4} & To what extent do the identified logging guidelines address the practices and challenges reported by software developers? \\
+ \hline
+\end{tabular}
+\caption{Research Questions}
+\label{table:t1rq}
+\end{table}
 
-According to our experience, the following tools can be used as a starting point to find relevant papers:
-\begin{itemize}
-    \item Search Engines: \href{https://scholar.google.com}{Google Scholar}, \href{https://www.webofknowledge.com/}{Web of Science}, \href{https://dl.acm.org/}{ACM Digital Library}, \href{https://ieeexplore.ieee.org/Xplore/home.jsp}{IEEExplore}, and \emph{\{Search Engine\}} + \emph{\{Conference name\} proceedings}
-    \item Management Tools: \href{https://www.it-services.ruhr-uni-bochum.de/services/software/citavi.html.de}{Citavi}, \href{https://www.zotero.org/}{Zotero}, \href{https://www.mendeley.com/}{Mendeley}, and \href{https://www.jabref.org/}{JabRef}.
-\end{itemize}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c | p{0.6\linewidth}|}
+ \hline
+ \textbf{RO1} & Investigation of logging practices and challenges encountered by software developers  \\
+ \hline
+ \textbf{RO2} & Collection of logging guidelines and practices from academic literature \\
+ \hline
+ \textbf{RO3} & Collection of logging guidelines and practices from open-source software repositories\\
+ \hline
+ \textbf{RO4} & Analysis and classification of logging guideline themes and characteristics \\
+ \hline
+ \textbf{RO5} & Evaluation of how well identified logging guidelines address developer practices and challenges \\
+ \hline
+\end{tabular}
+\caption{Research Objectives}
+\label{table:t2ro}
+\end{table}
 
+\textbf{RQ1} investigates the logging practices and challenges encountered by software developers during software development and maintenance.
+Receive insights regarding logging practies and challenges show how software developers struggle to implement consistent logging statements (\textbf{RO1}).
+\\
+Industry practices are investigated through a survey to collect from software developers. The survey focuses on log implementation, log analysis and 
+fault localization practices.
+Understanding these practices and challenges from real world industry provides a reference for exisiting and missing logging guidelines.
+\\
 
-\section{Contribution}
+\textbf{RQ2} focuses on identify logging guidelines from literature and open-source repositories.
+In literature logging guidelines are verfied through researchers and shows missing log quality(\textbf{RO2}).
+\\
+But logging guidelines from open-source repositories are often implicit and not clearly documented. 
+Therefore, different search queries and collection strategies are needed, because of different results in terms of relevance and coverage (\textbf{RO3}).
+Covering academic literature and open-source repositoires provides a balanced logging guideline from academical view and real world usage.
+By backtracing research papers this creates enough references for the academical perspective.
+Using different search queries covers the most open-source repositories.
+The collection aims to archieve sufficient coverage while maintaining relvance of the identified results.
+This resulting collection forms the empirical basis for developing a structured catalogue of logging guidelines from open-source software repositories and academical literature.
+\\
 
-When writing the Introduction section of your thesis, it is important to include a contributions subsection where you can directly state the key results and contributions of your work. Unlike a novel or thriller, your thesis is not meant to keep the reader in suspense. It is important to declare your results and key contributions directly in the introduction.
+\textbf{RQ3} examines the themes and characteristics that results from the identified logging guidelines.
+Classifying the collected guidelines according to their themes, pattern and characteristics supports the creation of a structured and reusable guideline catalogue (\textbf{RO4}).
+This includes aspects such as what information should be logged, where logging should occur, how logs should be strucutured and what log verbosity should be used.
+\\
+Analysing different characteristics such as specifictiy, programming language and project type helps better to 
+classify particular guidelines for particular language or project type. By structuring this guideline in this way
+the catalogue provides language, project specific guidelines and also common guidelines, which can apply for any 
+language and software project.
+\\
 
-One common mistake is to hide the interesting parts of your work in the introduction, hoping to build suspense and keep the reader engaged. This is not necessary in academic writing. Instead, you should clearly state your key results and contributions so that readers can understand the significance of your work right from the start.
+\textbf{RQ4} investigates the extent to which the identified logging guidelines address the practices and challenges mentioned by software developers.
+The findings from the developer study are compared with the logging guidelines identified and classified from open-source software repositories (\textbf{RO5}).
+\\
+This comparison makes it possible to determine which developer practices
+and challenges are sufficiently addressed by existing guidelines.
+The analysis therefore connects real-world developer experiences with the recommendations found in software projects.
+Similar accordance can indicate guidelines that are particularly relevant to practical software development,
+while gaps may reveal logging challenges for which existing guidance is insufficient.
+This comparison contributes to assessing the practical relevance and coverage of the collected logging guidelines
+and helps identify opportunities for improving future logging guidance.
 
-The contributions subsection should provide a clear and concise summary of what you have achieved in your research. You should highlight the new knowledge or insights that your work has contributed to the field, as well as any practical applications or implications. This is an opportunity to convince readers that your work is important and worth their time.
+%\section{Contribution}
+%When writing the Introduction section of your thesis, it is important to include a contributions subsection where you can directly state the key results and contributions of your work. Unlike a novel or thriller, your thesis is not meant to keep the reader in suspense. It is important to declare your results and key contributions directly in the introduction.
+%One common mistake is to hide the interesting parts of your work in the introduction, hoping to build suspense and keep the reader engaged. This is not necessary in academic writing. Instead, you should clearly state your key results and contributions so that readers can understand the significance of your work right from the start.
+%The contributions subsection should provide a clear and concise summary of what you have achieved in your research. You should highlight the new knowledge or insights that your work has contributed to the field, as well as any practical applications or implications. This is an opportunity to convince readers that your work is important and worth their time.
+%Remember that the contributions subsection should not be overly technical or detailed. Its purpose is to provide a high-level overview of your work and its significance, not to get into the nitty-gritty of your research methods or results. Keep your writing clear and concise, focusing on the key contributions that your work has made to the field.
 
-Remember that the contributions subsection should not be overly technical or detailed. Its purpose is to provide a high-level overview of your work and its significance, not to get into the nitty-gritty of your research methods or results. Keep your writing clear and concise, focusing on the key contributions that your work has made to the field.
 
 \section{Organization of this Thesis}
-Please give a general overview on how your thesis is divided into sections and chapters~\dots
-
+%Please give a general overview on how your thesis is divided into sections and chapters~\dots
+Following the introduction, Chapter 2,\textit{Background}, explains the core understand about logging to understand subsequent chapters.
+Even related work is included here to understand current research.
+\\
+Chapter 3, \textit{Methodology}, explains how the research is investigated. Therefore, it will be explained in detail, how 
+logging guidelines are collected for literature search and open-source project. This includes search queries for the open-source and 
+classification of both catalogues.
+\\
+Chapter 5, \textit{Results}, contains the classificaton and results of the catalogue. Hereby, detailed analysis is given, how each catalogue has evaluated. 
+\\
+Finally, \textit{Conclusion} deals with the interpretation and usage of the catalogue. Moreover, it discusses problems that may occur for future. 

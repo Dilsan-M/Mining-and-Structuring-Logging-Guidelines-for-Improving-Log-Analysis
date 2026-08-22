@@ -1,5 +1,13 @@
 \chapter{Background} \label{chap:background}
 
+  2.1 Software Logging
+   2.2 Logging Practices and Decisions
+   2.3 Automated Log Analysis
+   2.4 Existing Logging Guidelines
+   2.5 Mining Software Repositories
+   2.6 Related Work
+   2.7 Research Gap
+
 The Background chapter of your thesis is an important part of your work, providing your readers with the necessary context and information to understand the problem you are addressing. To write a good Background chapter, it is important to remember that you should only describe the background that is necessary for your readers to know.
 You don't need to explain everything that you cover during the thesis's processing time.
 
@@ -13,3 +21,60 @@ You should also describe any important terms or concepts that readers may not be
 
 A good way to approach the Background chapter is to think about it as an introduction to the problem you are addressing. This means providing enough context for readers to understand the importance of your research question and why it is worth investigating.
 Remember to keep your writing clear and concise, focusing on the key points that will help readers understand the background of your work.
+
+\section{Software Logging}
+
+
+\section{Logging Guidelines and Practices}
+
+\section{Automated Log Analysis}
+
+\section{Logging in Open-Source Software}
+
+\section{Related Work}
+Recommendations for logging exist in academic literature, industrial documentation, open-source projects and grey literature.
+However, these recommendations are distributed across many different sources and can vary considerably in their scope
+and level of detail. Some guidelines describe general logging principles, whereas others focus on particular technologies,
+programming languages or application domains. Furthermore, practical logging knowledge may be documented inside software
+repositories without being systematically collected or compared with recommendations from research.
+
+
+Modern software systems generate large amounts of log data that collect information about their runtime behaviour.
+Log data are important for understanding how software systems operate and are used for tasks such as debugging,
+system monitoring, anomaly detection and root cause analysis. Inspecting log data from large scale
+and distributed systems is time consuming. As the volume of log data increases, automated processes for log analysis methods are introduced, including log parsing \cite{9134790}\cite{8804456}.
+This approach transforms unstructured log messages into structured data that can be later used for automated log analysis.
+
+The performance of a strong automated log analysis depends on the quality and consistency of the written log data.
+In practice, most logs are written without a clear logging guideline, which leads to inconsistent formats, different structures and results in a variety of logs,
+which is counterproductive for automation. The latest studies show that such inconsistencies can reduce accuracy and reliability \cite{9793976}\cite{gholamian2021comprehensive}\cite{chen2021survey}. 
+These challenges highlight the problem and motivate research on logging guidelines and practices to better support automated log analysis.
+Moreover, logging approaches to automate and improve logging practices have been examined \cite{he2021survey} \cite{7985651} and it shows there is still no approach,
+nether in industry \cite{he2022empirical} or open source project \cite{yuan2012characterizing}, transform log messages into a guideline conform structure.
+It is also important to note that a considerable amount of 'grey' literature \cite{medium_logging_best_practices_2022} \cite{loggly_logging_scale_2022} presents general logging practices
+and guidelines, which are often written by individual practitioners without a guarantee of academic or industry background.
+
+
+
+List related work \emph{and} the result of this work. What is the relevance of this work concerning your thesis? If necessary,\ \emph{emphasize} some words in your text, for example words like \emph{not} or \emph{and} are sometimes crucial for understanding.
+
+%\textbf{Hint:} Do not manually cite author names, use \code|\citeauthor{Newsome:05:DTA}|, for example, \enquote{\citeauthor{Newsome:05:DTA}}.
+%It takes also care if multiple authors are used, for example, \code|\citeauthor{AviramSSHDSVAHD16}| becomes \enquote{\citeauthor{AviramSSHDSVAHD16}}.
+%You could also get the full list of authors by using the command \code|\citeauthor*{AviramSSHDSVAHD16}| (\enquote{\citeauthor*{AviramSSHDSVAHD16}}) but this should only be used in rare cases.
+
+%Similarly, use \code|\citeyear{Newsome:05:DTA}| to get the year (\enquote{\citeyear{Newsome:05:DTA}}).
+
+\textbf{Tools:}
+We do not make any strict guidelines regarding the tools that can be used to manage the related work.
+You can freely choose your own methodology and tools.
+
+According to our experience, the following tools can be used as a starting point to find relevant papers:
+\begin{itemize}
+    \item Search Engines: \href{https://scholar.google.com}{Google Scholar}, \href{https://www.webofknowledge.com/}{Web of Science}, \href{https://dl.acm.org/}{ACM Digital Library}, \href{https://ieeexplore.ieee.org/Xplore/home.jsp}{IEEExplore}, and \emph{\{Search Engine\}} + \emph{\{Conference name\} proceedings}
+    \item Management Tools: \href{https://www.it-services.ruhr-uni-bochum.de/services/software/citavi.html.de}{Citavi}, \href{https://www.zotero.org/}{Zotero}, \href{https://www.mendeley.com/}{Mendeley}, and \href{https://www.jabref.org/}{JabRef}.
+\end{itemize}
+
+\section{Research Gap}
+
+
+
