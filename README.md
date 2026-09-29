@@ -1,5 +1,14 @@
 Mining and Structuring Logging Guidelines for Improving Log Analysis
 
+## Viewing the Catalogue
+
+There are two main ways to inspect the final logging guideline catalogue:
+
+- **Excel catalogue:** Use **`5.Final Result`** to inspect the final catalogue data, including the consolidated guidelines, dimensions, themes, source information, and related catalogue fields.
+- **Visual catalogue:** Use **`logging_catalogue`** for a visual and more convenient representation of the catalogue. This view is intended for browsing the catalogue and exploring its guidelines by dimension and theme.
+
+The Excel workbook should be used when the underlying catalogue data or mappings need to be examined directly, while `logging_catalogue` provides the corresponding visual representation.
+
 This repository contains the research artefacts, processing scripts, and catalogue developed for the Master's thesis “Mining and Structuring Logging Guidelines for Improving Log Analysis.”
 
 The project investigates how logging is performed in practice, which logging recommendations appear in academic literature and open-source repositories, and how these recommendations can be structured into a reusable logging guideline catalogue.
