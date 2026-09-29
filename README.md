@@ -270,15 +270,6 @@ Year: 2026
 Institution: Ruhr University Bochum
 Citation
 
-If you use this repository or the resulting catalogue in academic work, please cite the thesis.
-
-@mastersthesis{mahadeva2026loggingguidelines,
-  author = {Dilsan Mahadeva},
-  title  = {Mining and Structuring Logging Guidelines for Improving Log Analysis},
-  school = {Ruhr University Bochum},
-  year   = {2026}
-}
-
 Contact
 
 For questions regarding the dataset, processing pipeline, or catalogue, please use the repository's GitHub issue tracker.
