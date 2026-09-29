@@ -1,9 +1,581 @@
-\chapter{Conclusion} \label{chap:conclusion}
+\chapter{Discussion and Conclusion} \label{chap:conclusion}
 
-Writing a good conclusion is an essential part of any academic work. It is your final chance to leave a lasting impression on the reader and make sure that your work is remembered for its contribution to the field. While many students may be tempted to simply summarize their results in the conclusion, this approach is often too simplistic and fails to provide the reader with any real insight or understanding of the significance of your work.
+This chapter discusses the main findings of the thesis in relation to the four research questions,
+reflects on the contribution of the resulting logging guideline catalogue
+and considers the study's limitations.
+Finally, it outlines directions for future research and further development of the catalogue.
 
-To write a good conclusion, it is important to not only summarize your results but also to explain what the reader can learn from your thesis. This means highlighting the key insights and contributions that your work has made to the field. What have you discovered that is new and important? What have you contributed to the existing body of knowledge? How does your work relate to other studies in the field?
+\section{Discussion of Findings}
 
-In addition to highlighting your contributions, a good conclusion should also identify areas for future work. What questions remain unanswered? What new avenues of research have been opened up by your work? What are the key challenges that need to be addressed in order to make further progress in the field?
+The results of this thesis show that software logging is not a single uniform practice or decision.
+Instead, logging involves decisions concerning the information that should be recorded,
+the locations and scopes in which logging should occur, the way logging should be implemented
+and the level of detail at which information should be emitted. The developer study, 
+academic literature and open-source repository analysis provide complementary perspectives on these decisions.
+\\
+A central observation across the study is that logging guidance is highly contextual.
+Individual recommendations may apply to particular frameworks, programming languages,
+architectural environments, security requirements or operational scenarios. 
+At the same time, the collected recommendations can be organised according to recurring higher-level logging concerns. 
+The resulting catalogue therefore distinguishes between the specific guideline as the primary unit of actionable knowledge 
+and the theme as an organisational abstraction used to structure and analyse the catalogue.
 
-By providing these insights and identifying future directions for research, your conclusion will not only leave a lasting impression on the reader but also provide a valuable resource for future scholars looking to build on your work. Remember, a good conclusion is not just a summary of your results but a thoughtful reflection on the significance of your work and its contribution to the field.
+\subsection{Developer Practices and Challenges}
+
+The developer study addressed \hyperref[table:t1rq]{\textbf{RQ1}} by examining practical logging behaviour,
+log analysis and fault localisation.
+\\
+The responses indicate that logging forms a regular but varying part of software development work.
+Among respondents who reported implementing logging, the median estimated proportion of development 
+time spent on logging was 10\%, although the individual estimates varied considerably. 
+This variation suggests that the amount of effort associated with logging depends strongly 
+on the development context and individual developers' responsibilities.
+\\
+Regarding the information being logged, event reporting was the most 
+frequently represented category among the respondents, followed by state 
+information and execution tracing. This corresponds to the practical role 
+of logs as records of relevant events and application behaviour. 
+However, the responses also demonstrate that developers do not rely on a single form of logging. 
+Different types of information are combined according to the purpose for which the logs are created.
+\\
+The reported logging mechanisms further illustrate the heterogeneity of practical logging. 
+Print statements and established logging frameworks were both commonly reported, while project-specific, 
+external and internally developed logging solutions were also present. Logging practice is therefore 
+not limited to dedicated logging frameworks but can involve multiple implementation mechanisms 
+depending on the development environment.
+\\
+The responses concerning the selection of logging information show that developers 
+consider several contextual criteria, including system impact, security implications, 
+the affected part of the system, event frequency, compliance requirements and previous incidents. 
+This supports the view that logging decisions cannot always be reduced to universal rules. 
+The usefulness of a logging recommendation may depend on the operational and technical context in which it is applied.
+\\
+An important finding is that deciding \textit{what} information to log appeared 
+more problematic than deciding \textit{how} to implement logging technically 
+for part of the surveyed group. This distinction is relevant for the guideline catalogue. 
+Frameworks and tools may well document technical logging mechanisms, 
+while determining which information is useful in a particular situation remains more 
+dependent on developer judgement and system context.
+\\
+The log-analysis results additionally show that logs are used primarily for debugging, 
+failure identification and fault localisation. All respondents to the corresponding 
+question reported debugging or resolving failures as a reason for analysing logs, 
+while identifying failures and locating faults were also frequently reported purposes. 
+Logs therefore serve not merely as operational records but as an important source of 
+diagnostic information during maintenance.
+\\
+At the same time, the survey indicates that analysing logs can itself create difficulties.
+Some respondents perceived logs as overwhelming, and analysing unfamiliar logs was commonly 
+reported as an activity performed only occasionally. Respondents also tended to perceive 
+structured log information as easier to analyse. These observations support logging 
+recommendations focused on structure, consistency and contextual information: 
+producing additional log output is not necessarily useful if the resulting information is difficult to interpret.
+\\
+The fault-localisation responses reinforce this point. Respondents reported that 
+fault localisation can require substantial time and knowledge about the application, 
+architecture, technologies and project domain. Faults involving interactions between 
+system components were perceived as particularly difficult. Logs were generally regarded 
+as useful for fault localisation. Still, the responses indicate that log information alone 
+does not necessarily provide all of the contextual knowledge required to understand a failure.
+\\
+Overall, the developer study suggests that logging should be considered part of a broader 
+diagnostic process rather than simply inserting log statements. Useful logging requires 
+decisions about relevant content, sufficient context and appropriate representation, 
+while subsequent analysis also depends on architectural and domain knowledge.
+\\
+Several practices reported in the developer study also appear in the final 
+guideline catalogue. Practices on selecting log content correspond to guidelines 
+within the \textit{What to log} dimension, including event reporting, state information and execution tracing.
+The reported use of logging frameworks and different technical logging mechanisms 
+is reflected in themes such as \textit{Logging utility integration} and \textit{Logging approach}, 
+while recommendations concerning structured and readable log messages are represented within 
+\textit{Logging code composition} and related implementation guidance. The catalogue therefore 
+contains recommendations corresponding to several of the practical logging activities reported 
+by the surveyed developers.
+\\
+The reported challenges are not represented as challenges themselves, but the catalogue contains 
+guidance relevant to several areas in which developers reported difficulty. The difficulty of 
+deciding which information to record relates directly to the \textit{What to log} dimension. 
+Concerns about overwhelming or difficult-to-interpret log information are addressed by 
+recommendations concerning message composition, structured representations and log-level selection. 
+Difficulties in understanding behaviour across system components  
+may also relate to recommendations on execution tracing, logging scope, and contextual logging information.
+\\
+The comparison therefore shows that the final catalogue covers several areas corresponding to 
+both the practices and the difficulties reported in the developer study. However, the existence 
+of related guidance does not demonstrate that a practical challenge is fully resolved. 
+The survey findings indicate that applying logging guidance remains dependent on the technical, 
+architectural and operational context in which developers work.
+
+\subsection{Logging Guidance in Academic Literature}
+
+\hyperref[table:t1rq]{\textbf{RQ2}} investigated recommendations documented in academic software-logging research.
+\\
+The literature analysis identified recommendations addressing the 
+four central dimensions used throughout this thesis: \textit{what to log}, \textit{where to log},
+\textit{how to log}, and \textit{log levels and verbosity}. In addition to providing individual
+recommendations, previous research provided conceptual classifications that could be used as
+the deductive foundation of the catalogue.
+\\
+The literature-derived categories demonstrate that previous logging research has already 
+investigated several important aspects of instrumentation. The \textit{what to log} dimension
+distinguishes between state information, execution tracing and event reporting. 
+Research on logging locations identifies assertion checks, return-value checks, exception handling, 
+logic branches and observing points as locations at which logging may occur. Existing work on 
+log instrumentation additionally distinguishes between logging approaches, utility integration and 
+logging-code composition. Finally, commonly used logging levels provide a standard starting 
+point for analysing verbosity recommendations.
+\\
+These classifications proved useful as an initial analytical framework. 
+However, the open-source material showed that they were not sufficient to represent the complete 
+range of collected recommendations. The need to introduce additional inductive themes is therefore 
+an important result of the study. The literature-derived classifications remain useful as conceptual 
+foundations, but practical open-source guidance extends beyond these initial categories.
+\\
+The retained academic recommendations were manually compared with the final
+consolidated open-source catalogue. The comparison showed substantial semantic
+overlap between the actionable academic recommendations and the practical guidance
+identified in the collected open-source sources. Some recommendations were only
+partially represented because individual aspects, conditions or sub-recommendations
+of the academic guidance were not identified completely in the catalogue.
+\\
+The partially represented recommendations indicate that similar logging concerns
+appear in academic and practical guidance, while the full scope or specific
+conditions of an academic recommendation are not always expressed in the
+corresponding open-source guidelines. In particular, assertion-check logging
+remained part of the literature-derived classification but was not observed in the
+collected open-source guidance.
+
+\subsection{Open-Source Logging Guidelines}
+
+\hyperref[table:t1rq]{\textbf{RQ3}} investigated logging guidance documented in open-source repositories and
+related practical sources.
+\\
+The repository analysis resulted in a substantially larger and more heterogeneous body of logging guidance
+than the academic recommendation set. After extraction, normalisation and validation, 2.289 source-level 
+guideline occurrences were retained. A further 58 extracted entries were classified as \texttt{NO\_GUIDELINE} 
+because no sufficiently supported actionable recommendation could be derived from the corresponding content.
+\\
+The 2.289 source-level occurrences represent individual appearances of logging guidance within the collected corpus. 
+They therefore include recommendations that occur independently in more than one repository or source. 
+Semantic consolidation reduced these occurrences to 2.127 canonical guidelines.
+\\
+The comparatively small reduction from 2.289 source-level occurrences to 2.127 canonical guidelines is noteworthy. 
+It indicates that, although equivalent recommendations occur repeatedly, the collected corpus also contains a large 
+amount of context-specific and distinct guidance. Logging documentation in open-source projects therefore cannot be 
+reduced to a small number of universally repeated rules.
+\\
+This result also supports the conservative consolidation strategy used in this thesis. 
+Recommendations concerning the same general topic were retained separately when they differed in their required action, 
+scope, condition, or restriction. This preserves distinctions that may be important when the catalogue is used in a practical development context.
+\\
+The semantic consolidation was subsequently subjected to final manual validation against the source Content. 
+This review showed that similar or identical normalised wording did not always represent the same underlying recommendation. 
+Where a consolidated group contained distinct actions, conditions, scopes or technical concerns, the affected source occurrences were separated. 
+If an equivalent canonical guideline already existed elsewhere in the catalogue, the occurrence was reassigned to that guideline rather than creating an additional duplicate recommendation. 
+A new canonical guideline was retained only where no sufficiently equivalent guideline was already represented in the catalogue.
+\\
+The repository material also demonstrated that logging recommendations are not restricted to dedicated 
+guideline documents. Actionable guidance was found in documentation, configuration descriptions, 
+examples and source-code-related material. Practical examples containing code, configuration, input, 
+usage or program output were consequently retained separately as Example Reasons where applicable. 
+This allows the catalogue to preserve both the normalised recommendation and the practical context in which the behaviour was demonstrated.
+\\
+The open-source findings therefore provide a complementary perspective to academic literature. 
+Academic work generally formulates logging concepts at a broader level, while repository guidance 
+frequently describes concrete actions required within particular tools, frameworks and technical environments. 
+The catalogue preserves these specific recommendations rather than replacing them with only generalised rules.
+
+\subsection{Themes within the Logging Guideline Catalogue}
+
+\hyperref[table:t1rq]{\textbf{RQ4}} examined the themes represented within the logging guideline catalogue.
+\\
+The final codebook contained 28 themes across the four dimensions \textit{what to log}, \textit{where to log}, \textit{how to log}, and \textit{log levels and verbosity}. 
+Seventeen themes were derived from previous literature, and eleven additional themes emerged inductively from the collected guideline content.
+Of the 28 retained themes, 27 were represented by at least one guideline in the collected corpus, while \textit{Assertion-check logging} remained unrepresented.
+\\
+An important result of the thematic analysis was that the initial classification required further refinement before the final distribution could be determined. 
+This was particularly visible for broad themes such as \textit{Logging approach}. 
+In the initial classification, 794 source-level guideline occurrences had been assigned to this theme. 
+During validation, these occurrences were re-examined against the complete deductive--inductive codebook and, where necessary, against their source Content.
+\\
+After this review, 378 occurrences remained assigned to \textit{Logging approach}, while other existing themes better represented 416. 
+Of the reassigned occurrences, 149 remained within the \textit{How to log} dimension but were moved to more specific themes.
+In contrast, 267 were reassigned to themes belonging to another high-level logging dimension.
+\\
+Subsequent manual validation of the consolidated mapping resulted in four further
+assignment changes, leaving 374 source-level occurrences assigned to
+\textit{Logging approach} in the final catalogue.
+\\
+This refinement demonstrates an important distinction between broad thematic similarity and specific guideline meaning. 
+A recommendation may initially appear to concern a general logging approach. At the same time, its original Content more precisely describes, for example, a logging utility, message composition, destination, logging scope or verbosity decision. 
+The final theme distribution therefore reflects the validated assignments rather than the initial AI-assisted classification.
+\\
+The validation of \textit{Logging approach} also illustrates why the size of a theme should not by itself be interpreted as evidence that it represents one homogeneous body of recommendations. 
+Themes provide an organisational and analytical abstraction, whereas the individual guideline remains the more specific actionable unit. 
+The original Content was therefore consulted where the normalised guideline alone did not provide sufficient information to distinguish between possible themes.
+\\
+Comparable classification inconsistencies identified in other parts of the catalogue were corrected using the same principle. 
+Where another theme already present in the final codebook represented the original recommendation more precisely, the source-level occurrence was reassigned accordingly. 
+This procedure did not alter the deductive or inductive origin of the themes. It only reconsidered the assignment of individual guidelines.
+\\
+Within \textit{What to log}, event reporting remained an important category alongside state information and execution tracing. 
+The additional inductive theme \textit{Sensitive-data exclusion} demonstrates that practical guidance also defines information that should not be recorded. 
+This extends the content-focused view of logging beyond deciding what information to capture to defining boundaries on permissible log content.
+\\
+The \textit{Where to log} dimension showed an important difference between literature-derived and repository-derived concepts. 
+The literature-based codebook contains specific program locations such as assertion checks, return-value checks, exception handling, logic branches and observing points. 
+Several of these themes were represented by comparatively few guidelines in the collected corpus, and assertion-check logging was not represented by a source-level guideline in the final classification.
+\\
+In contrast, inductively derived themes such as \textit{Logging scope} and \textit{Log destination} occurred more prominently in the repository guidance. 
+This indicates that practical documentation can interpret where not only as a location in source-code control flow, but also as an architectural or operational concern involving the subsystem to which logging applies or the destination to which log records are emitted.
+\\
+The \textit{How to log} dimension remained an important part of the catalogue after validation. 
+Its deductive themes distinguish between the overall logging approach, the integration of logging utilities and the composition of logging code. 
+Additional inductive themes capture lifecycle management, verification and the protection of sensitive information. 
+Reassigning many initially broad \textit{Logging approach} occurrences to these and other themes increased the specificity of the final classification.
+\\
+The \textit{Log levels and verbosity} dimension similarly extends beyond the six conventional severity levels used as deductive categories. 
+The inductive theme \textit{Log level selection} represents recommendations concerned with choosing, configuring or changing an appropriate logging level rather than prescribing one particular severity for a specific event. 
+The additional \textit{Custom verbosity scale} theme captures project-specific verbosity systems that do not map directly to the conventional INFO, DEBUG, WARN, ERROR, FATAL, TRACE hierarchy.
+\\
+The emergence of eleven inductive themes therefore represents a central finding of RQ4. 
+The literature-derived categories provide a meaningful analytical foundation.
+Still, practical logging documentation includes additional concerns related to sensitive-data handling, logging scope and destination, storage and retention, logger placement, configuration location, lifecycle management, verification and project-specific verbosity concepts.
+\\
+The thematic distribution should nevertheless be interpreted descriptively. 
+A frequently represented theme is not necessarily more important, effective or correct than a less frequent theme. 
+Some logging practices are inherently specialised and apply only to particular technical environments. 
+The reported counts therefore indicate which concerns were represented within the collected corpus rather than ranking the quality or importance of individual logging practices.
+\\
+Overall, the thematic analysis shows that the initial literature-derived structure provides a useful basis for organising logging guidance but requires extension and validation when applied to heterogeneous practical repository material. 
+The combination of deductive themes, inductively identified themes and source-level validation provides a thematic structure that remains connected to the specific recommendations represented by the individual canonical guidelines.
+
+\section{Contribution and Implications}
+
+This thesis makes contributions at both the empirical and artefact level.
+\\
+First, the developer study provides practical observations about logging implementation, 
+log analysis and fault localisation. Although the sample is limited, the responses show 
+how developers use logging in practice and which contextual factors influence logging decisions. 
+These observations complement the guideline analysis by demonstrating the activities for which logging 
+information is eventually consumed.
+\\
+Second, the thesis provides a structured synthesis of logging recommendations identified in academic literature. 
+The literature analysis not only identifies individual recommendations but also provides the deductive 
+foundation for classifying the larger guideline corpus.
+\\
+Third, the study contributes a large catalogue of logging guidance derived from 
+open-source repository material. The catalogue contains both source-level occurrences 
+and semantically consolidated canonical guidelines. Maintaining these two analytical 
+levels is important because they support different uses of the data. Source-level 
+occurrences preserve information about how recommendations appear across projects, 
+while canonical guidelines provide a less repetitive representation suitable for practical exploration.
+\\
+Fourth, the hybrid deductive--inductive codebook extends existing logging classifications. 
+Rather than forcing every recommendation into the literature-derived categories, additional 
+themes were introduced where recurring practical concepts were underrepresented. 
+The final structure therefore connects established research terminology with additional 
+concerns emerging from repository documentation.
+\\
+Fifth, the catalogue preserves traceability. Normalised guidelines remain linked to their 
+source content, source metadata and consolidation mapping. Where technically 
+relevant code or configuration material was identified, the corresponding example 
+can additionally be preserved as an Example Reason. This traceability matters
+because normalisation and consolidation necessarily abstract from the
+original material's exact wording.
+\\
+The catalogue's practical contribution therefore extends beyond the final list of recommendations. 
+Its structure enables exploration by logging dimension, theme, and contextual metadata. 
+A developer investigating a particular logging problem can use these properties to narrow 
+the catalogue while retaining access to the specific recommendation and its source context.
+\\
+The findings also have implications for logging research. The large representation of 
+implementation-oriented recommendations suggests that practical logging guidance contains 
+substantial operational knowledge that is not necessarily visible when logging is studied only 
+through high-level instrumentation decisions. At the same time, the small representation of some 
+literature-derived themes suggests that concepts prominent in empirical logging research may not 
+always be explicitly formulated as recommendations in open-source guideline documents.
+\\
+The relationship between the developer study and the catalogue additionally highlights the 
+importance of contextual retrieval. Developers require guidance for specific decisions and 
+scenarios rather than merely a list of abstract logging principles. This suggests that the 
+catalogue should be viewed as a structured knowledge base whose individual entries can later 
+support more context-sensitive retrieval mechanisms.
+
+\section{Threats to Validity}
+
+Several threats to validity need to be considered when interpreting the findings of
+this thesis. The threats are discussed in terms of internal validity, external
+validity, construct validity, and conclusion validity.
+
+\subsection{Internal Validity}
+
+Internal validity concerns whether the procedures used during data collection and
+analysis may have introduced systematic errors into the results. In this study,
+potential threats arise particularly from the identification, transformation,
+classification and consolidation of logging guidelines.
+\\
+AI-assisted processing was used at several stages of open-source catalogue
+construction, including contextual tagging, guideline normalisation, thematic
+classification, and the identification of semantically equivalent recommendations.
+These processing stages may introduce interpretation, classification or
+transformation errors.
+\\
+Several measures were applied to reduce this risk. The original repository content
+was retained throughout the processing pipeline so that transformed guidelines could
+be compared with their source material. A random sample of normalised guidelines was
+manually reviewed, \texttt{NO\_GUIDELINE} entries were investigated, theme assignments
+were checked, and recurring classification problems identified during validation were
+examined across related entries. The consolidation mapping was additionally checked
+to ensure that every retained source-level guideline remained represented in the
+final catalogue.
+\\
+Manual summarisation of recommendations extracted from academic literature also
+involves researcher interpretation. This risk was reduced by retaining the original
+publication references and by preserving the meaning, direction, conditions and
+restrictions of the source recommendation during summarisation.
+\\
+Semantic consolidation introduces a further potential source of error. Overly
+aggressive consolidation could combine guidelines that express different
+recommendations or apply under different conditions, whereas overly conservative
+consolidation may retain guidelines that could reasonably be represented by one
+canonical guideline. The study therefore followed a conservative strategy:
+guidelines were retained separately where their recommended actions, conditions or
+restrictions differed or where semantic equivalence remained uncertain. The original
+source-level entries were retained through the consolidation mapping so that these
+decisions remained traceable.
+\\
+This risk was further reduced by manually reviewing the final multi-occurrence consolidation groups against their source Content 
+and by reassigning source occurrences where another existing canonical guideline represented the underlying recommendation more accurately.
+\\
+Despite these measures, individual processing or classification errors cannot be
+completely excluded.
+
+\subsection{External Validity}
+
+External validity concerns the extent to which the findings can be generalised beyond
+the datasets investigated in this thesis.
+\\
+The developer study was conducted within a single industry organisation operating in
+the aviation domain. The responses therefore reflect a particular organisational and
+technical environment and cannot be assumed to represent software developers or
+industrial software development in general. Additional studies involving developers
+from other organisations, application domains and technical environments would be
+required to assess whether the observed practices and challenges occur more broadly.
+\\
+The defined GitHub collection similarly limits the open-source dataset procedure.
+The selected search terminology influenced repository selection,
+GitHub search ranking and the fixed search-result boundary. The resulting catalogue
+therefore represents the logging guidance identified within the collected repository
+corpus rather than all logging guidance available in open-source software.
+\\
+The searches were also performed at a specific point in time. Repository content,
+project activity, availability and GitHub search results may change over time.
+Consequently, the open-source dataset should be interpreted as a snapshot of the
+guidance available through the defined search procedure at the time of collection.
+\\
+The academic literature collection does not constitute an exhaustive systematic
+review of all software logging research. Google Scholar was used as the main search
+platform, together with a defined publication period and backward snowballing from
+relevant publications. Publications using different terminology or not surfaced by
+the search procedure may therefore have been missed.
+\\
+Accordingly, the coverage comparison should be interpreted only with respect to
+the selected academic recommendation set and the collected open-source corpus.
+The observed overlap does not demonstrate that all logging recommendations
+documented in the wider academic literature are represented in the catalogue,
+particularly because the literature collection was not exhaustive and some
+retained recommendations were not fully represented.
+
+\subsection{Construct Validity}
+
+Construct validity concerns whether the concepts investigated in the thesis are
+represented adequately by the data and classifications used in the analysis.
+\\
+A central limitation is that logging practices are not always documented explicitly.
+The repository search and guideline-identification process primarily captures
+practices that are expressed as identifiable recommendations, requirements, examples,
+or demonstrated practices. Logging decisions that remain implicit in source code or
+that are described using terminology not covered by the search strategy may therefore
+be underrepresented.
+\\
+The classification of guidelines into themes also requires interpretation. The
+literature-derived themes provided the initial structure, while additional themes
+were introduced when the existing classification did not adequately represent the
+collected guideline content. Different researchers could potentially choose different
+theme names, boundaries or levels of abstraction. This risk was reduced by applying
+the literature-derived classification first, reviewing newly introduced themes and
+merging overlapping inductive themes where they represented the same underlying
+concept.
+\\
+The broad \textit{Logging approach} theme represents a particular construct-validity
+consideration. It contains different implementation-oriented recommendations that
+share a common higher-level logging concern. Guidelines assigned to this theme are
+therefore not assumed to be semantically equivalent. The individual guideline remains
+the specific actionable unit, while the theme provides a broader analytical
+classification.
+\\
+The developer study introduces an additional construct-validity limitation because
+the survey relies on self-reported behaviour. Estimates concerning development
+effort, logging practices, log-analysis activities, and fault-localisation effort may
+differ from actual behaviour because of recall bias or different interpretations of
+the survey questions.
+\\
+The resulting thematic structure should therefore be understood as an empirically
+derived organisation of the collected logging guidance rather than as the only
+possible taxonomy of software logging.
+
+\subsection{Conclusion Validity}
+
+Conclusion validity concerns whether the available evidence supports the conclusions drawn from the collected data.
+\\
+The number of valid responses in the developer study decreased across the
+questionnaire because partial responses were retained. Although 26 responses were
+recorded overall, considerably fewer participants reached the later sections of the
+questionnaire. Findings based on small numbers of responses should therefore be
+interpreted as descriptive and exploratory observations rather than as estimates that
+can be generalised to a wider developer population.
+\\
+The thematic results are also primarily descriptive. The number of guidelines or
+source occurrences assigned to a theme indicates how frequently that concern was
+represented within the collected corpus, but it does not measure the importance,
+effectiveness or correctness of the corresponding logging practice. Some logging
+concerns may naturally generate more explicit documentation than others.
+\\
+Themes containing only a small number of guidelines are particularly sensitive to
+individual classification errors. Although manual validation was used to investigate
+such cases, exact counts for small categories should therefore be interpreted with
+greater caution.
+\\
+Similarly, the academic coverage analysis is limited to the literature and
+open-source corpora collected in this study.The substantial overlap observed
+between the retained academic recommendations and the consolidated catalogue
+should not be interpreted as evidence that the catalogue covers all logging
+recommendations documented in academic research. The literature collection was
+not exhaustive, and some recommendations were only partially represented in the
+collected open-source guidance.
+\\
+The conclusions of the thesis are therefore restricted to patterns observed within
+the collected developer responses, academic literature, and open-source repository
+corpus. Frequency and coverage results are used descriptively and are not intended to
+establish universal rankings or causal relationships between logging practices.
+
+\section{Future Work}
+
+The limitations identified in this study, together with the resulting logging
+guideline catalogue, provide several opportunities for future research and further
+development.
+\\
+First, the developer study could be extended to a larger and more diverse sample.
+Including developers from several organisations, application domains, project sizes,
+and programming environments would make it possible to examine whether the logging
+practices and challenges observed in this study also occur in other development
+contexts. Such an extension could provide a broader view of industrial logging
+practices beyond the organisation investigated in this thesis.
+\\
+Second, the academic literature collection could be expanded into a broader systematic
+literature review. Additional research databases could be included alongside a more 
+extensive search and selection procedure. This would allow the academic coverage analysis to be repeated
+against a larger literature corpus and could reveal additional logging recommendations
+not identified in the literature set used in this study.
+\\
+Third, the open-source repository collection could be extended beyond the current
+GitHub snapshot. Repeating the repository search at later points in time could support
+an analysis of how logging guidance develops and changes across software
+projects. Future studies could also include additional software-development platforms
+or publicly available technical documentation to broaden the range of
+open-source guidance considered.
+\\
+Fourth, the thematic classification could be refined as additional data becomes
+available. In particular, broad themes such as \textit{Logging approach} could be
+examined for stable recurring subthemes. Such refinement should remain data-driven
+and should only introduce additional themes where conceptually distinct and recurring
+forms of guidance can be identified, rather than splitting a theme because it
+contains a large number of guidelines.
+\\
+A further extension would be semantic retrieval. Since the individual
+guidelines remain specific while themes provide broader organisational categories,
+vector-based retrieval or a retrieval-augmented language model could be used to
+identify guidelines that are relevant to a developer's concrete logging problem. For
+example, a developer could describe a logging scenario and retrieve semantically
+related recommendations together with their associated examples and source context.
+\\
+Such a retrieval system would represent an application built on top of the catalogue
+rather than a replacement for the catalogue itself. The catalogue would continue to
+provide the structured and traceable knowledge base, while semantic retrieval could
+improve access to contextually relevant recommendations.
+\\
+Future work could also evaluate the practical usefulness of the catalogue with
+software practitioners. Developers could, for example, perform logging-design,
+maintenance or debugging tasks with and without access to the catalogue. Such an
+evaluation could provide evidence regarding the usability and discoverability of the
+catalogue and whether access to the collected guidelines supports practical logging
+decisions.
+\\
+Finally, future research could investigate conflicting or context-dependent logging
+recommendations in more detail. Two guidelines may address the same logging concern
+while remaining appropriate under different technical or operational conditions.
+Explicitly representing applicability conditions, limitations, and relationships
+between recommendations could therefore increase the catalogue's practical value
+and support more context-sensitive use of the collected logging guidance.
+
+\section{Conclusion}
+This thesis investigated software logging from three complementary perspectives: 
+developer practices, academic research and guidance documented in open-source
+repositories and related practical sources.
+\\
+The developer study showed that logging supports debugging, failure identification, 
+and fault localisation, but also requires contextual decisions about which information 
+to record and how to interpret it later. The responses further 
+demonstrate that effective log analysis depends not only on the existence of log data 
+but also on its structure, context and the developer's knowledge of the underlying system.
+\\
+The academic literature provided both explicit logging recommendations and an
+established conceptual foundation for organising logging decisions. The literature
+collection contained 31 academic publications, while tool-focused and other
+non-prescriptive material was retained as supporting evidence where relevant.
+The literature-derived concepts formed the deductive starting point for analysing
+the larger open-source corpus.
+\\
+The actionable academic recommendations were manually compared with the final
+consolidated open-source catalogue. The comparison showed substantial semantic
+overlap between academic recommendations and the practical guidance identified in
+the collected open-source sources. Some recommendations were only partially
+represented because individual aspects or conditions of the academic guidance were
+not identified completely in the collected corpus.
+\\
+The repository analysis demonstrated that practical logging guidance is 
+extensive and heterogeneous. From the validated source-level catalogue, 2.289 
+guideline occurrences were identified and subsequently consolidated into 2.127 
+canonical guidelines while preserving provenance and source-level traceability.
+\\
+The thematic analysis resulted in 28 themes across the four dimensions 
+\textit{what to log}, \textit{where to log}, \textit{how to log}, and 
+\textit{log levels and verbosity}. Seventeen themes were derived from 
+previous literature, and eleven additional themes emerged from the collected guideline content.
+\\
+The catalogue distribution shows that implementation-oriented guidance 
+makes up the largest part of the collected corpus. At the same time, the inductive 
+themes demonstrate that practical logging guidance extends beyond the initial literature-derived
+classification, particularly regarding logging scope and destination, storage and lifecycle management,
+sensitive-data handling, verification and general log-level selection.
+\\
+The central contribution of the thesis is therefore not a claim that one universal 
+logging strategy can be applied to every software system. Instead, the study provides 
+a structured and traceable catalogue of concrete logging recommendations and an analytical 
+framework for organising those recommendations.
+\\
+The distinction between themes and individual guidelines is important. 
+Themes provide an abstraction for understanding and navigating the catalogue, 
+while the individual guidelines retain the contextual specificity required for 
+practical application. This structure allows the catalogue to remain useful even 
+where logging recommendations depend strongly on framework, project or operational context.
+\\
+Overall, the findings demonstrate that software logging is a multidimensional
+and context-dependent engineering activity. Combining academically documented
+logging knowledge with guidance identified in practical open-source development
+provides a broader view of the decisions involved in software logging. The
+resulting catalogue establishes a foundation that can support developers in
+exploring existing logging recommendations and can provide a basis for future
+research and context-sensitive guideline retrieval.

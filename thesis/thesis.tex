@@ -47,7 +47,7 @@ BCOR=1cm, % Bindekorrektur: Change this accordingly, also read the KomaScript Gu
 
 \input{chapters/chap_3}
 
-\input{chapters/chap_4}
+%\input{chapters/chap_4}
 
 \input{chapters/chap_5}
 
@@ -66,16 +66,24 @@ BCOR=1cm, % Bindekorrektur: Change this accordingly, also read the KomaScript Gu
 %% generate list of tables, optional, remove it if you do not like it
 \listoftables
 
+%% generate list of prompts, optional, remove it if you do not like it
+\listoflistings
+
 %% generate list of algorithms, optional, remove it if you do not like it
 \clearpage \phantomsection
-\addcontentsline{toc}{chapter}{List of Algorithms}
+%%\addcontentsline{toc}{chapter}{List of Algorithms}
 
 %% generate bibliography with bibtex, the bibfile here is "paper.bib"
 \flushbottom
 \printbibliography
 
-\KOMAoptions{open=right} % Plaziert Kapitel wieder nur auf rechten Seiten
+%%\KOMAoptions{open=right} % Plaziert Kapitel wieder nur auf rechten Seiten
 
 \input{chapters/chap_appendix}
+
+\includepdf[
+    pages=-,
+    pagecommand={}
+]{chapters/appendix/DeclarationOfAuthorship.pdf}
 
 \end{document}

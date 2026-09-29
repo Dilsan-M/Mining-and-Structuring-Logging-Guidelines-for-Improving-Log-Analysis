@@ -8,14 +8,28 @@
 \usepackage{lmodern}
 
 \usepackage{tikz} % used on frontpage
+\usetikzlibrary{arrows.meta}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 
+\usepackage{float}
+\usepackage{placeins}
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{longtable}
+
+\usepackage{pdfpages}
 
 % Set date here
 %\day=4 \month=5 \year=2023
 
 % Set name and title
 \author{Dilsan Mahadeva}
-\title{Catalogue of Logging Guidelines for Improving Automated Log Analysis}
+\title{Mining and Structuring Logging Guidelines for Improving Log Analysis}
 \date{\today}
 
 % Bibliography
@@ -90,6 +104,9 @@
 \ihead{\headmark}
 \pagestyle{scrheadings}
 
+%List of Prompt
+\renewcommand{\listingscaption}{Prompt}
+\renewcommand{\listoflistingscaption}{List of Prompts}
 % Hyperlinks and menu for your document
 \usepackage[breaklinks,hyperindex,colorlinks,anchorcolor=black,citecolor=black,filecolor=black,linkcolor=black,menucolor=black,urlcolor=black,pdftex]{hyperref} % pagebackref: Add page number to the references where they can be found
 % DO NOT LOAD ANY OF YOUR PACKAGES BEYOND THIS PACKAGE

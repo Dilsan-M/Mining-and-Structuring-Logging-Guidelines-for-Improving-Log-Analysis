@@ -1,131 +1,1436 @@
 \chapter{Methodology} \label{chap:methodology}
-This chapter describes 
 
-This chapter descirbes the setup for running the expirment with an overview of our experiment pipeline shown in Figure including data preparation,
-MIA feature .... and how we aggretgate the feature.
-
-This chapter introduces the importance of software logging and challenges of inconsistent logging pracitces and log data. 
-Based on these challenges, the motivation and problem are described for this research.
-Afterwards, the next chapter describes goals and research questions about logging practices and guidelines.
-Followed up by the strucutre of this thesis.
+The methodology is based on data-driven empirical research to investigate logging practices and challenges
+and guidelines from different perspectives.
+It collects and combines data from software developers, academic literature and open-source software repositories.
+First, logging practices and challenges encountered during software development
+and maintenance are investigated through a developer study.
+Second, academic literature is analysed to identify actionable logging
+recommendations, literature-derived classifications and supporting empirical,
+conceptual or tool-oriented evidence.
+Third, logging guidance identified in open-source repositories is extracted,
+classified and analysed according to recurring themes and characteristics, including
+what to log, where to log, how to log and log-level verbosity.
+Finally, the logging catalogue is constructed from the open-source repository
+guidance and organised by themes into a consolidated set of logging guidelines.
 
 \section{Research Design}
 
+The research design of this thesis investigates software logging from three
+perspectives: developer practices and challenges, logging guidelines
+documented in academic literature and logging guidance documented in open-source
+software repositories.
+\\
+The study is structured according to four research questions. First,
+\hyperref[table:t1rq]{\textbf{RQ1}} investigates logging practices and challenges
+encountered by software developers during software development and maintenance.
+This research question is addressed through a developer survey.
+\\
+Second, \hyperref[table:t1rq]{\textbf{RQ2}} investigates logging guidelines and practices documented
+in academic literature. Relevant publications are identified, selected and examined
+for actionable recommendations concerning software logging.
+\\
+Third, \hyperref[table:t1rq]{\textbf{RQ3}} investigates logging guidance and practices documented
+in open-source software repositories. Relevant repository material is collected,
+prepared and analysed to identify logging recommendations and construct an
+open-source guideline catalogue.
+Publications that provided relevant empirical, conceptual or tool-oriented evidence 
+but did not contain a recommendation were retained as supporting 
+literature but were not treated as independent recommendation targets.
+\\
+The logging guidelines identified for \hyperref[table:t1rq]{\textbf{RQ2}} and
+\hyperref[table:t1rq]{\textbf{RQ3}} remain traceable to their respective source sets.
+The open-source recommendations are normalised, classified, consolidated and validated
+to construct the logging guideline catalogue.
+The academic recommendations establish the literature-based foundation of the
+deductive codebook and are subsequently compared with the consolidated catalogue
+to assess the extent of academic coverage.
+\\
+Finally, \hyperref[table:t1rq]{\textbf{RQ4}} investigates the themes represented
+within the resulting logging guideline catalogue.
+A deductive classification is first applied using the predefined logging
+themes from the literature. The classified guideline content is then examined to identify
+recurring concepts and additional themes across the collected guidelines.
+\\
+The developer study used for \hyperref[table:t1rq]{\textbf{RQ1}} remains analytically separate from the
+construction of the guideline catalogue. Relationships between developer
+practices and challenges and the identified guideline themes are considered later
+during the discussion of the findings rather than being used to construct the themes
+for \hyperref[table:t1rq]{\textbf{RQ4}}.
+\\
+An overview of the research design is shown in
+Figure~\ref{fig:research_design}. The individual methodological stages are described
+in the following sections.
 
-\section{Developer Study}
+\begin{figure}[H]
+    \centering
+    \resizebox{0.90\textwidth}{!}{%
+        \begin{tikzpicture}[
+            box/.style={
+                rectangle,
+                rounded corners=2pt,
+                draw=black,
+                align=center,
+                text width=3.4cm,
+                minimum height=1.0cm,
+                inner sep=4pt,
+                font=\small
+            },
+            resultbox/.style={
+                rectangle,
+                rounded corners=2pt,
+                draw=black,
+                align=center,
+                text width=3.4cm,
+                minimum height=1.0cm,
+                inner sep=4pt,
+                font=\small
+            },
+            mainarrow/.style={
+                -{Latex[length=2.2mm]},
+                semithick
+            },
+            auxarrow/.style={
+                -{Latex[length=2.0mm]},
+                dashed,
+                thin
+            },
+            arrowlabel/.style={
+                font=\scriptsize,
+                fill=white,
+                inner sep=1.5pt,
+                align=center
+            }
+        ]
 
-\section{Liturature Guideline Collection}
-1: 
-- collect all from google scholar
-HowToLog
-Logging Guideline
-Logging Practice
-Logging Survey 
-What To Log
-Where To Log 
-from 2020 literature
+        % ------------------------------------------------------------
+        % Research questions / data sources
+        % ------------------------------------------------------------
 
-- check literature references for more literature orignal literature
+        \node[box] (developer) at (-4.3,0)
+        {Developer Study\\
+        \hyperref[table:t1rq]{\textbf{RQ1}}};
 
-- extract important information check catalogue
+        \node[box] (literature) at (0,0)
+        {Academic Literature\\
+        Collection\\
+        \hyperref[table:t1rq]{\textbf{RQ2}}};
 
+        \node[box] (opensource) at (4.3,0)
+        {Open-Source Repository\\
+        Collection\\
+        \hyperref[table:t1rq]{\textbf{RQ3}}};
 
+        % ------------------------------------------------------------
+        % Results of the three research streams
+        % ------------------------------------------------------------
 
-\section{Open-sorce Repository Guideline Collection}
-2:
-FULL LIST scarped list
-OPTList remove forks and same result for different queries 
-OPTListwMetaData samefile including MetaData
-MetaList remove github removed repo , Date included , exclude/include + comments
-Prompts for search:
+        \node[resultbox] (developerResult) at (-4.3,-2.2)
+        {Logging Practices\\
+        and Challenges};
 
+        \node[resultbox] (literatureResult) at (0,-2.2)
+        {Literature-Based\\
+        Logging Guidelines};
 
-1. Broad High-Recall Query (Recommended Starting Point)
-Use this directly in GitHub search:
-("logging guidelines" OR "logging best practices" OR "logging standards" OR "logging conventions" OR "logging policy") (path:/docs/ OR path:/.github/ OR filename:README.md OR path:**/CONTRIBUTING.md)
-This will retrieve repositories containing explicit logging guidance documents.
-2. Query Focused on “What to Log”
-("what to log" OR "log levels" OR "when to log" OR "structured logging" OR "sensitive information")
-("logging" OR "application logs")
-(path:/docs/ OR filename:README.md)
-Useful for extracting actionable recommendations such as:
-what events should be logged,
-log levels,
-sensitive data handling,
-tracing,
-observability.
-3. Engineering Handbook / Internal Standards Query
-Many mature projects store logging guidance inside engineering standards rather than standalone logging docs.
-(logging observability tracing telemetry)
-("engineering standards" OR handbook OR conventions OR practices OR guidelines)
-4. Query for Structured Logging Practices
-("structured logging" OR "correlation id" OR "trace id")
-("best practices" OR guidelines OR standards)
-This is especially useful for distributed systems and microservices research.
-5. Query for Security/Sensitive Logging Guidance
-(logging OR logs)
-("sensitive data" OR PII OR GDPR OR credentials)
-("guidelines" OR "best practices")
-This often reveals high-quality operational logging rules.
-6. Query for Log Levels and Severity Policies
-("log level" OR ERROR OR WARN OR INFO OR DEBUG)
-(logging guidelines OR logging conventions)
-This helps extract recommendations about:
-severity assignment,
-verbosity,
-debugging practices,
-production logging.
-7. Query Targeting Large Mature OSS Projects
-You can restrict by stars:
-("logging guidelines" OR "logging best practices")
-stars:>1000
-Or by language/domain:
-("logging guidelines")
-language:Java
-("structured logging")
-language:Go
-8. Query for Wiki/Markdown-Based Guidance
-Many repositories store guidelines in markdown files:
-(logging OR observability)
-extension:md
-(guidelines OR practices OR standards)
-9. Query for Operational Observability Guidance
-Modern repositories may avoid the term “logging” and instead use:
-observability,
-telemetry,
-diagnostics,
-tracing.
-Use:
-(observability OR telemetry OR diagnostics OR tracing)
-(logging guidelines OR standards OR practices)
-10. Query for Logging Anti-Patterns / Smells
-Very useful for building your catalogue of “avoid these” rules.
-("logging smells" OR "bad logging practices" OR "logging anti-patterns")
+        \node[resultbox] (opensourceResult) at (4.3,-2.2)
+        {Repository-Based\\
+        Logging Guidelines};
 
-- Get Queriy via QA
-- Scrap Data (only limited 5 page or search is not precise)
-- Check Duplicated via different Query remove or merge and forks)
-- using cosinesimilarity removing 100% duplicates
-- Remove not exisiting projects
-- get meta data and sort the most important one and recent most developers
-- extract information to catalgoue
+        % ------------------------------------------------------------
+        % Open-source catalogue construction
+        % ------------------------------------------------------------
 
--include/exclude repos
--resulted in almost 215 repos
--filter not needed we use all 
--extracted what to log, where to log, how to log, log verbosity
-exclusive reference, project type, language, field LLM
-PROMPT:
+        \node[box, text width=4.2cm] (catalogue) at (4.3,-4.8)
+        {Open-Source Logging\\
+        Guideline Catalogue\\
+        Construction};
 
-"Give me all logging guidelines and pracitces related to what to log, where to log,
- how to log and log level verbosility from these repositories and also give me the projecttype specific in language and field:"
+        % ------------------------------------------------------------
+        % Thematic analysis
+        % ------------------------------------------------------------
 
- Also less devs repo interesting because of different and more guidelines
-(-internal categorization)
+        \node[box, text width=4.2cm] (analysis) at (0,-7.2)
+        {Thematic Analysis\\
+        \hyperref[table:t1rq]{\textbf{RQ4}}};
 
+        \node[resultbox, text width=4.2cm] (themes) at (0,-9.5)
+        {Themes within the\\
+        Logging Guideline Catalogue};
 
-\section{Guideline Classification}
+        % ------------------------------------------------------------
+        % Discussion of findings
+        % ------------------------------------------------------------
 
-\section{Comparison and Gap Analysis}
+        \node[resultbox, text width=4.2cm] (discussion) at (0,-11.8)
+        {Discussion of Findings};
 
-\section{Threats to Validity}
+        % ------------------------------------------------------------
+        % Source -> result
+        % ------------------------------------------------------------
+
+        \draw[mainarrow]
+        (developer) -- (developerResult);
+
+        \draw[mainarrow]
+        (literature) -- (literatureResult);
+
+        \draw[mainarrow]
+        (opensource) -- (opensourceResult);
+
+        % ------------------------------------------------------------
+        % Repository guidelines form the open-source catalogue
+        % ------------------------------------------------------------
+
+        \draw[mainarrow]
+        (opensourceResult.south) -- (catalogue.north);
+
+        % ------------------------------------------------------------
+        % Literature provides the deductive codebook for RQ4
+        % ------------------------------------------------------------
+
+        \draw[mainarrow]
+        (literatureResult.south)
+        -- node[
+            arrowlabel,
+            pos=0.56,
+            left
+        ] {Literature-derived\\Deductive\\codebook}
+        (analysis.north);
+
+        % ------------------------------------------------------------
+        % Open-source catalogue is analysed in RQ4
+        % ------------------------------------------------------------
+
+        \draw[mainarrow]
+        (catalogue.south)
+        -- ++(0,-1.75)
+        -- (analysis.east);
+
+        % ------------------------------------------------------------
+        % Thematic analysis -> identified themes
+        % ------------------------------------------------------------
+
+        \draw[mainarrow]
+        (analysis.south)
+        -- node[
+            arrowlabel,
+            pos=0.50,
+            left
+        ] {Theme identification\\and refinement}
+        (themes.north);
+
+        % ------------------------------------------------------------
+        % Themes contribute to the later discussion
+        % ------------------------------------------------------------
+
+        \draw[auxarrow]
+        (themes.south) -- (discussion.north);
+
+        % ------------------------------------------------------------
+        % Developer study contributes independently to the discussion
+        % ------------------------------------------------------------
+
+        \draw[auxarrow]
+        (developerResult.south)
+        -- node[
+            arrowlabel,
+            midway,
+            left
+        ] {Developer perspective}
+        (developerResult.south |- discussion.west)
+        -- (discussion.west);
+
+        \end{tikzpicture}%
+    }
+
+    \caption{Overview of the research design.}
+    \label{fig:research_design}
+\end{figure}
+
+\section{Developer Study} \label{sec:meth_developerstudy}
+The developer study investigates logging practices and challenges encountered during software development and maintenance.
+It aims to provide practical insights from industry experience on logging to answer \hyperref[table:t1rq]{\textbf{RQ1}}.
+The study focuses on how developers implement logging, analyse logs and use them for fault localisation.
+For this purpose, a survey was conducted with software developers at an industry company. The company operates in the aviation field.
+The following subsections describe the study design, participant recruitment, survey structure,
+data collection procedure, and analysis of the collected responses in more detail.
+
+\subsection{Study Design}
+A survey was designed to collect information about developers' experiences with logging in real-world software projects.
+The survey includes structured and free-text questions to collect quantitative and qualitative information about logging practices and challenges.
+Structured questions are used to identify common patterns and frequently reported practices,
+while free-text questions allow participants to explain their experiences in more detail.
+This combination provides both comparable responses across participants and gives additional context.
+The collected responses are used to identify common logging practices and recurring challenges encountered in practical software development.
+
+\subsection{Participants and Recruitment}
+The target group of the developer study consisted of software developers with
+practical experience in software development and maintenance. Participants were
+recruited from an industry company operating in the aviation field to obtain
+insights from an industry development environment.
+\\
+Participation in the survey was voluntary. The questionnaire focused primarily on
+participants’ experience with software logging and the difficulties encountered when
+implementing, analysing and using logs for fault localisation. Detailed information
+about individual projects or personally identifying information was not required for
+the analysis.
+\\
+The survey dataset contained 26 recorded responses. Since not all participants
+completed the entire questionnaire, the dataset contained both complete and partial
+responses. Ten participants reached the final section of the survey, while other
+participants responded only to earlier parts of the questionnaire.
+\\
+Partial responses were retained where a valid answer had been provided. Questions
+that were not answered were excluded from the corresponding analysis and were not
+interpreted as negative responses. This approach preserved useful information from
+partially completed questionnaires while accounting for the number of valid
+responses across individual survey questions.
+
+\subsection{Survey and Data Collection}
+The questionnaire was structured into three main parts covering logging implementation, log analysis and fault localisation.
+Each part addressed different activities and challenges that developers may encounter when working with logs.
+\\
+The first part focused on logging implementation. Participants were asked about the amount of development effort spent on logging,
+the data to log, the reasons for adding log statements and the tools or workarounds that have been used.
+Further questions addressed how the relevance of logged information is assessed, how log levels are selected,
+which log formats are used, and what difficulties arise when deciding what, where, and how to log.
+\\
+The second part focused on log analysis and examined how developers use logs during software development and maintenance.
+Participants were asked for which purposes logs are analysed, how relevant log entries are identified
+and which methods or tools are used to access and inspect log data.
+Additional questions addressed working with unfamiliar logs, like structured, semi-structured and unstructured logs, collaboration with other developers
+and difficulties that may occur during the analysis process.
+\\
+The third part investigated fault localisation and the role of logs in identifying the origin of software failures.
+Participants were asked which additional information is required alongside log data and how important knowledge
+about the software architecture, project context, development history and technical environment is for locating faults.
+The questionnaire also considered the effort required for fault localisation, situations in which available log information
+is insufficient and challenges caused by failures involving several system components.
+\\
+Different question formats were used throughout the questionnaire, including predefined response options,
+multiple-selection questions, agreement scales, rankings, percentage estimates, and free-text responses.
+The structured questions support comparison across participants, whereas free-text responses provide additional
+context and allow participants to describe experiences that may not be covered by predefined answer options, such as
+best practices and effective strategies for logging implementation, log analysis and fault localisation for each survey section.
+
+\subsection{Data Analysis}
+
+The survey responses were analysed using quantitative and qualitative methods.
+Structured questions were evaluated using frequencies, percentages, agreement levels and rankings.
+For multiple-selection questions, the number of selections for each response option was counted.
+Agreement-scaled questions were used to identify general tendencies among the participants,
+while percentage-based responses were used to estimate the effort required for different logging activities.
+Because some questionnaires were only partially completed, the number of valid responses was considered separately for each question.
+Missing answers were excluded from the corresponding analysis and were not treated as negative responses.
+The free-text responses were lightly paraphrased for readability and conciseness while preserving their original meaning.
+The paraphrased responses were manually checked against the original answers. No additional thematic coding or grouping was applied.
+The free-text responses complement the structured responses by providing explanations and observations
+that cannot be represented sufficiently through predefined answer options.
+The findings from both forms of analysis are used to answer \hyperref[table:t1rq]{\textbf{RQ1}}
+by identifying commonly reported logging practices and recurring challenges encountered during software development and maintenance.
+
+\section{Collection of Logging Guidelines from Academic Literature}
+\label{sec:meth_collection_literature}
+
+To answer \hyperref[table:t1rq]{\textbf{RQ2}}, academic literature related to
+software logging was collected and analysed. The primary aim was to identify
+actionable recommendations for implementation and configuring
+logging. Relevant publications that provided empirical, conceptual or tool-oriented
+evidence were also retained where they contributed to understanding logging
+practices, instrumentation or the analytical framework used in this thesis.
+\\
+Only identifiable actionable recommendations were treated as recommendation targets
+for the later coverage comparison. Supporting observations, tool descriptions,
+evaluation results and other non-prescriptive evidence were retained as literature
+context but were not treated as independent logging guidelines.
+\\
+The actionable academic recommendations provide the reference set used for the
+literature-based classification and the later comparison with the consolidated
+open-source guideline catalogue.
+\\
+The following subsections describe the search strategy used to identify relevant
+publications, the criteria applied to select the literature and the procedure used to
+identify and extract actionable logging recommendations.
+
+\subsection{Search Strategy}
+
+Google Scholar was the primary platform for identifying relevant academic publications.
+Several search terms were selected to cover different terminology used in research on software logging.
+The following search terms were used:
+
+\clearpage
+
+\begin{itemize}
+\item \textit{Logging Guideline}
+\item \textit{Logging Practice}
+\item \textit{Logging Survey}
+\item \textit{What to Log}
+\item \textit{Where to Log}
+\item \textit{How to Log}
+\end{itemize}
+
+Using multiple search terms reduced the dependency on a single terminology, since logging recommendations
+may be described as guidelines, practices, decisions or recommendations in different publications.
+The search terms were intended to provide broad coverage of logging research rather than to correspond
+one to one with the analytical dimensions used later in the study. Therefore, more specific topics
+such as log levels and verbosity could also be identified through broader terms such as Logging Guideline or Logging Practice.
+\\
+The initial search focused on publications from 2020 to 2026.
+Relevant publications identified through the search were additionally examined for references to earlier work
+on software logging. When a cited publication provided relevant original research on logging practices or guidelines,
+it was added to the literature set. This backward snowballing process was used to identify publications
+that were not directly retrieved by the initial Google Scholar searches.
+Regardless of the publication year, all relevant references identified through backward snowballing were considered for inclusion,
+because older publications may contain important research that is still relevant to current logging practices.
+
+\subsection{Selection Criteria}
+
+Publications were selected based on their relevance to software logging
+implementation, logging practices or the subsequent use of generated log data.
+The literature set therefore contained both publications providing actionable
+logging recommendations and publications providing relevant empirical, conceptual
+or tool-oriented evidence.
+\\
+Publications containing actionable guidance were particularly relevant when they
+addressed at least one of the four logging aspects considered in this thesis:
+what information should be logged, where logging should occur, how logging should
+be implemented or represented, or how log levels and verbosity should be selected.
+\\
+Empirical studies were also retained when they provided relevant evidence about
+logging practices, instrumentation decisions or recurring logging problems.
+Similarly, publications describing or evaluating logging tools, automated
+instrumentation approaches, log parsers or related techniques could be retained as
+supporting literature when they contributed to the conceptual background or
+interpretation of software logging.
+\\
+A distinction was subsequently made between inclusion in the literature set and
+inclusion in the academic recommendation set. A publication was treated as a source
+of an actionable recommendation only when an identifiable statement prescribed,
+recommended, or clearly demonstrated an action concerning the creation,
+configuration or implementation of logging. Descriptive observations, tool
+descriptions, evaluation results, model-performance measures and empirical findings
+without a corresponding recommendation were not treated as independent coverage
+targets.
+\\
+Publications were excluded when their relationship to logging was incidental and
+they did not provide relevant evidence concerning logging practices,
+instrumentation, log quality or the analytical context of the study. Duplicate
+publications were also excluded.
+
+\subsection{Guideline Extraction}
+
+The selected publications were examined for statements containing recommendations
+or guidelines concerning software logging. A statement was considered a logging
+guideline when it explicitly described an action, recommendation or practice
+concerning the creation or configuration of log information.
+\\
+Each identified guideline was extracted while preserving a reference to its original
+publication. When a publication contained several distinct recommendations, these were
+manually assigned to the corresponding logging category and recorded together in the catalogue for each publication.
+The original context and source information were retained so that every guideline could be traced back to the
+publication from which it originated.
+\\
+The extracted recommendations were manually summarised rather than copied word for
+word. The purpose of this summarisation was to create concise and comparable guideline
+statements while preserving the meaning of the original recommendation. No additional
+recommendation, restriction or opposite recommendation was introduced during this
+process.
+\\
+At this stage, semantically similar recommendations identified in different
+publications were retained as separate source-level observations. This preserved
+information about the independent occurrence of similar logging recommendations
+across academic sources. The literature-derived recommendations were retained as a
+separate reference set for construction of the initial deductive codebook and for the
+later academic coverage comparison described in
+Section~\ref{sec:meth_classification}.
+\\
+Each extracted guideline retained its original publication reference and was prepared
+for subsequent use according to the main logging aspects
+\textit{what to log}, \textit{where to log}, \textit{how to log}, and
+\textit{log levels and verbosity}.
+
+\section{Collection of Logging Guidance from Open-Source Repositories}  \label{sec:meth_collection_opensource}
+
+To answer \hyperref[table:t1rq]{\textbf{RQ3}}, logging guidelines were collected from open-source software repositories hosted on GitHub.
+Unlike academic literature, open-source projects do not necessarily document logging guidance in dedicated guideline documents.
+Relevant recommendations may instead appear across different repository artefacts, such as README files, contribution guidelines,
+project documentation, source files or configuration files.
+Therefore, a multi-stage repository collection process was applied to identify, prepare and analyse relevant repository content.
+The collected material was subsequently used to extract logging guidelines while preserving their connection to the source.
+\\
+The following subsections describe the repository search strategy, repository selection, collected repository characteristics
+and the procedure used to identify and extract logging guidelines.
+
+\subsection{Repository Search Strategy}
+
+The repository search aimed to achieve broad coverage of logging guidance in open-source
+software projects. Since logging recommendations may be expressed using different
+terminology, several complementary GitHub search queries were used instead of relying
+on a single search term.
+\\
+The initial query set was developed with the assistance of a large language model (GPT-5.4).
+GPT-5.4 was used to suggest more precise terminology and combinations of search terms related to
+different aspects of software logging for more precise results. The proposed queries were subsequently reviewed,
+adapted and selected before being applied to GitHub. Therefore, GPT-5.4 supported the
+formulation of candidate search queries, while the final search strategy and selection
+of queries remained part of the research process.
+\\
+The final query set covered explicit logging guidelines as well as related topics
+such as log content, structured logging, log levels, sensitive information,
+observability and logging anti-patterns. Table~\ref{tab:github_queries}
+summarises the queries used during the repository search.
+
+\begin{table}[H]
+    \centering
+
+    \resizebox{1\textwidth}{!}{%
+        \begin{tabularx}{\textwidth}{p{0.8cm} p{3.3cm} X}
+            \hline
+
+            \textbf{ID} & \textbf{Focus} & \textbf{Search Query} \\
+            \hline
+
+            Q1 &
+            General logging guidelines &
+            \texttt{(``logging guidelines'' OR ``logging best practices'' OR ``logging standards''
+            OR ``logging conventions'' OR ``logging policy'') (path:/docs/ OR path:/.github/
+            OR filename:README.md OR path:**/CONTRIBUTING.md)} \\
+            \hline
+
+            Q2 &
+            What and when to log &
+            \texttt{(``what to log'' OR ``log levels'' OR ``when to log'' OR ``structured logging''
+            OR ``sensitive information'') (``logging'' OR ``application logs'')
+            (path:/docs/ OR path:**/README.md)} \\
+            \hline
+
+            Q3 &
+            Engineering standards and conventions &
+            \texttt{(logging observability tracing telemetry)
+            (``engineering standards'' OR handbook OR conventions OR practices OR guidelines)} \\
+            \hline
+
+            Q4 &
+            Structured logging &
+            \texttt{(``structured logging'' OR ``correlation id'' OR ``trace id'')
+            (``best practices'' OR guidelines OR standards)} \\
+            \hline
+
+            Q5 &
+            Security and sensitive information &
+            \texttt{(logging OR logs)
+            (``sensitive data'' OR PII OR GDPR OR credentials)
+            (``guidelines'' OR ``best practices'')} \\
+            \hline
+
+            Q6 &
+            Log levels and severity &
+            \texttt{(``log level'' OR ERROR OR WARN OR INFO OR DEBUG)
+            (``logging guidelines'' OR ``logging conventions'')} \\
+            \hline
+
+            Q7 &
+            Repository popularity and programming language &
+            \texttt{(``logging guidelines'' OR ``logging best practices'') OR
+            (``logging guidelines'') language:Java OR
+            (``structured logging'') language:Go} \\
+            \hline
+
+            Q8 &
+            Markdown-based documentation &
+            \texttt{(logging OR observability) path:*.md
+            (guidelines OR practices OR standards)} \\
+            \hline
+
+            Q9 &
+            Observability, telemetry and diagnostics &
+            \texttt{(observability OR telemetry OR diagnostics OR tracing)
+            (logging guidelines OR standards OR practices)} \\
+            \hline
+
+            Q10 &
+            Logging anti-patterns &
+            \texttt{(``logging smells'' OR ``bad logging practices'' OR ``logging anti-patterns'')} \\
+            \hline
+
+        \end{tabularx}%
+    }
+
+    \caption{GitHub search queries used for repository collection.}
+    \label{tab:github_queries}
+\end{table}
+
+The queries were intended to complement each other by covering different terminology
+and forms of logging guidance.
+Specific search operators were used to focus on repositories and file types
+in which guidelines are commonly documented.
+\\
+The results returned by the individual queries were combined into an initial search
+dataset. Since the same repository or file could be returned by several queries,
+duplicate handling and further preparation of the retrieved repositories were performed
+in the subsequent repository selection step.
+
+\subsection{Repository Retrieval}
+
+After defining the search queries, an initial attempt was made to retrieve the search
+results through the GitHub API. However, some of the predefined queries could not be
+executed in their intended form because of restrictions affecting long and complex
+search expressions containing several logical operators.
+\\
+Simplifying the queries would have changed the previously defined search strategy.
+Therefore, the original query expressions were retained and executed through the
+GitHub search interface instead.
+\\
+The searches were executed on 8 June 2026. For each
+query, the first 10 search-result pages were collected, corresponding to a maximum of
+approximately 100 returned results per query.
+This boundary also reflected the GitHub search interface's limitations during data collection.
+\\
+The returned search-result pages were collected and processed using a Python script.
+The script extracted the available repository names, file references and source URLs
+from the search-result pages and stored these records for further processing. This
+procedure was repeated for each of the defined search queries.
+\\
+The retrieved results from all queries were subsequently combined into an initial
+dataset. At this stage, the complete set of retrieved records within the defined
+search boundary was retained without removing duplicate repositories or files.
+Cleaning and exclusion were performed only after the initial repository selection and
+collection of repository characteristics.
+\\
+The use of a fixed number of search-result pages means that the collected dataset
+represents the results available within the defined search boundary rather than all
+repositories available on GitHub. This limitation is considered further in the
+discussion of threats to validity.
+
+\subsection{Repository Selection}
+
+The results retrieved through the different search queries formed the initial
+repository selection. The purpose of this stage was to preserve the complete set of
+potentially relevant repositories and files identified through the predefined search
+strategy.
+\\
+A repository was retained in the initial selection when the corresponding search
+result contained potentially relevant logging-related material. No minimum threshold
+based on the number of stars, commits, contributors or repository activity was applied
+at this stage. Even repository creation date was considered later during the selection process.
+This allowed both large and smaller open-source projects to be considered,
+since relevant logging guidance may also occur in projects with lower levels of
+development activity.
+\\
+Results returned by several different search queries were not removed at this point.
+Similarly, repositories with overlapping characteristics or common authors were
+initially retained. This ensured that metadata could first be collected for the complete
+search result set before exclusion and duplicate handling were performed.
+\\
+The resulting initial selection therefore represents the complete repository dataset
+obtained from the defined GitHub searches before data cleaning.
+
+\subsection{Repository Characteristics}
+
+Repository metadata were collected for the initial selection before duplicate
+handling and other exclusion steps. The purpose of collecting these
+characteristics was to provide contextual information about the projects in which
+potentially relevant logging guidance occurred and to support later descriptive
+analysis of the repository dataset.
+
+The collected information included, where available:
+
+\begin{itemize}
+    \item repository and source reference,
+    \item programming language,
+    \item project type,
+    \item application field or domain,
+    \item number of commits,
+    \item number of contributors or developers,
+    \item repository activity,
+    \item repository owner or author information.
+\end{itemize}
+
+Repository information directly available through GitHub, such as repository
+reference, programming language, owner information, activity, commits, and
+contributors were obtained from the corresponding repository information where
+available.
+\\
+Project type and application field were determined from information available in the
+repository documentation and description. Where AI-assisted (GPT-5.6 Sol) classification was
+used to support the assignment of these characteristics, the assigned values were
+reviewed against the corresponding repository information before being retained.
+\\
+Programming language, project type and application field were collected to describe
+the technical and application context in which the logging guidance occurred. These
+characteristics also support later descriptive analysis of whether particular
+guidelines or themes occur across different types of projects or are concentrated
+within particular parts of the collected dataset.
+\\
+The number of commits and contributors was interpreted as contextual information
+about development activity and community involvement rather than as a measure of
+repository or guideline quality. Repositories were therefore not excluded
+because of few commits, contributors or other popularity indicators.
+\\
+Collecting the metadata before data cleaning additionally supported the comparison of
+retrieved records and the identification of duplicate or overlapping repository
+entries during the subsequent cleaning procedure.
+
+\subsection{Data Cleaning and Exclusion}
+
+After the initial repository selection and metadata collection, the dataset was
+cleaned before guideline extraction.
+\\
+Since the same repository or file could be returned by several search queries,
+duplicate search-result entries were identified and removed. Multiple occurrences
+representing the same underlying repository or source material were consolidated
+into a single entry.
+\\
+Repository owner and author information was additionally considered when identifying
+overlapping results. However, repositories were not excluded because of
+the same author or owner. Separate repositories were retained when projects 
+or relevant material are represented. Entries were consolidated
+only when duplicate or identical source material are referenced.
+\\
+Forked repositories were also examined during the cleaning process. Where a fork
+contained the same relevant material as the corresponding original repository, the
+original repository was retained, and the duplicated fork was excluded. When GitHub
+search results displayed both an original repository and its forks, preference was
+therefore given to the original repository to retain the source material
+closest to its original project context.
+\\
+Additional duplicate and similarity detection was performed on the retrieved files
+using cosine similarity. The similarity scores were used to identify files with
+identical or highly similar textual content and to support the comparison of
+potential duplicate material. A cosine similarity value of 1.0 indicated identical
+representations of the compared file content. Files with almost identical content,
+with a similarity value of around 0.9, were manually examined and duplicate
+copies were removed before guideline extraction.
+\\
+Files with lower similarity values were not automatically removed based on their similarity score. Instead, similarity information was used to distinguish
+between identical source material and files that contained related but potentially
+different content. This prevented independently documented logging guidance from
+being removed simply because its wording or structure was similar to another file.
+\\
+Repositories or referenced files that were no longer accessible on GitHub at the time
+of data preparation were excluded. Information about excluded and unavailable
+repositories was retained to keep the preparation procedure traceable.
+\\
+These cleaning steps concerned duplicate or overlapping source material within the
+repository collection. Similar logging recommendations occurring independently in
+different repositories were not removed at this stage. Such occurrences were retained
+as independent source-level evidence and were considered separately during the later
+construction and semantic consolidation of the logging guideline catalogue.
+\\
+After completion of the cleaning procedure, all remaining repositories and files
+containing potentially relevant logging-related material were prepared for guideline
+identification and extraction.
+
+\subsection{Relevant Logging Content Identification and Extraction}
+\label{sec:meth_content_extraction}
+
+After data cleaning, the remaining relevant repository files were downloaded and
+stored locally. The files were retained in their original file formats whenever
+possible to preserve the source material and maintain traceability
+to the repository and file from which the content originated.
+\\
+The collected files were analysed for logging recommendations concerning four
+predefined logging dimensions:
+
+\begin{itemize}
+    \item \textit{what to log},
+    \item \textit{where to log},
+    \item \textit{how to log},
+    \item \textit{log levels and verbosity}.
+\end{itemize}
+
+These four dimensions were used as high-level categories for identifying relevant
+logging content within the repository files. At this stage, the purpose of the
+classification was to locate potentially relevant source passages rather than to
+assign the more detailed guideline codes introduced later during catalogue
+construction.
+\\
+A passage was considered relevant when it contained an identifiable recommendation,
+instruction or practice concerning the implementation or configuration of software
+logging. This included both positive recommendations describing practices that should
+be followed and negative recommendations describing practices that should be avoided.
+Purely descriptive statements that mentioned logging without providing identifiable
+guidance were not classified as logging recommendations.
+\\
+An AI-assisted (GPT-5.6 Sol) procedure was used to identify relevant logging content within the
+collected repository files. Instead of asking the model to rewrite or summarise the
+source material, the model was instructed to preserve the original content and add
+XML tags around passages containing identifiable logging guidance.
+\\
+The following XML categories were used:
+
+\begin{itemize}
+    \item \texttt{<what\_to\_log>},
+    \item \texttt{<where\_to\_log>},
+    \item \texttt{<how\_to\_log>},
+    \item \texttt{<log\_verbosity>}.
+\end{itemize}
+
+The original wording and structure of the source files were preserved as far as
+possible. The model was instructed to add classification tags only around source
+content containing identifiable logging guidance and not to generate, complement,
+summarise or infer recommendations that were not explicitly supported by the
+underlying material.
+\\
+Where a passage addressed more than one logging aspect, multiple corresponding
+classifications could be retained. For example, a recommendation could specify both
+which information should be recorded and how that information should be represented.
+In such cases, the passage was not forced into only one of the four high-level
+dimensions.
+\\
+Files for which no identifiable logging guidance was detected were retained without
+additional XML classification tags. This prevented the procedure from requiring every
+retrieved file to produce a guideline and reduced the risk of forcing unrelated or
+purely descriptive content into one of the predefined categories.
+\\
+The tagging procedure was applied automatically to the collected files using
+OpenAI GPT-5.6 Sol through the API. A predefined prompt was used consistently
+across the processed dataset. The prompt defined what was considered relevant
+logging guidance, specified the four classification categories and instructed
+the model to preserve the original file content while adding XML tags only around
+passages containing actionable logging recommendations or practices.
+\\
+The prompt used for this procedure was:
+
+\begin{listing}[H]
+\begin{minted}[linenos=false]{text}
+I am providing you with a file that may contain logging guidelines.
+Analyse the entire file and return the complete file with XML
+classification tags added around passages that contain actual
+logging guidelines. A logging guideline is a prescriptive or
+recommended statement that tells developers what they should,
+should not, must, may, or are expected to do when implementing
+or configuring logging. This can also include clearly stated
+best practices or recommendations expressed through examples.
+Do not classify text merely because it discusses logging.
+Only tag passages that contain actionable guidance, recommendations,
+requirements, or explicitly demonstrated logging practices.
+Classify each identified guideline using one or more
+of the following categories:
+
+* What to log <what_to_log>…</what_to_log>
+* Where to log <where_to_log>…</where_to_log>
+* How to log <how_to_log>…</how_to_log>
+* Log verbosity <log_verbosity>…</log_verbosity>
+Important:
+* Keep the original wording exactly and dont change it at all.
+* Only add tags if possible, else return file without any tags
+\end{minted}
+\caption{Prompt for logging content identification and XML classification}
+\label{lst:prompt_xml_classification}
+\end{listing}
+
+After the AI-assisted (GPT-5.6 Sol) tagging procedure,
+the generated files were checked for the
+expected XML structure before their content was extracted. This technical integrity
+check examined whether the expected opening and closing tags were present and whether
+the generated output could be processed correctly by the subsequent extraction
+script. Outputs containing malformed, incomplete or inconsistent XML structures were
+identified and reprocessed or manually reviewed before being included in the
+extraction stage.
+\\
+The technical XML check was distinguished from the validation of the content
+classification itself. The accuracy of the AI-assisted (GPT-5.6 Sol) identification of relevant
+logging passages was evaluated separately through manual validation as described in
+Section~\ref{sec:meth_validation}. The validation included both files containing
+identified logging guidance and files for which no guideline had been identified.
+Including files without assigned tags made it possible to examine whether relevant
+recommendations had potentially been missed during the automated identification
+process.
+\\
+After the tagging procedure had been completed, the XML-marked passages were
+extracted automatically using a Python script and transferred into a structured
+open-source logging-content corpus. The extraction procedure identified the content
+contained within the four predefined XML categories and stored the corresponding
+passages in a structured representation.
+\\
+Multiple distinct passages originating from the same source file were retained as
+separate entries where applicable. Similarly, comparable recommendations occurring
+independently in different repositories were retained separately rather than being
+combined during this stage.
+\\
+Each extracted passage remained linked to its original repository and source file.
+The assigned high-level logging category was also retained to support the subsequent
+guideline formulation and classification.
+\\
+The resulting dataset therefore preserved the relationship between the extracted
+logging content, its classification and its original repository context. This
+traceability enabled the extracted passages to be compared with their source
+material during subsequent normalisation and validation.
+\\
+At this stage, the extracted passages represented source-level logging content and
+were not yet treated as normalised logging guidelines. No semantic consolidation of
+similar recommendations was performed. Consequently, similar recommendations
+documented independently in different repositories remained separate source-level
+observations.
+\\
+The subsequent transformation of the extracted source content into concise normalised
+guideline statements, the manual review of these statements, their comparison with
+the academic reference set, detailed classification and semantic consolidation
+are described in Section~\ref{sec:meth_classification}.
+
+\section{Logging Guideline Catalogue Construction and Classification}
+\label{sec:meth_classification}
+
+The preceding sections describe the collection of logging guidelines from academic
+literature and the identification of relevant logging content within open-source
+repositories. While the academic literature already provided explicitly formulated
+logging recommendations, the open-source material differed considerably in wording,
+structure and level of detail. A separate catalogue construction process was therefore
+applied to transform the collected material into a consistent and analysable set of
+logging guidelines.
+\\
+The objective of this stage was to create a traceable open-source guideline catalogue while
+preserving the relationship between each guideline and its source. The
+process consisted of contextual content tagging, guideline formulation and normalisation,
+manual review, classification using an initial literature-based codebook, inductive
+extension of the codebook, semantic consolidation and final validation. The retained
+academic recommendations were used to derive the deductive starting structure and were
+compared with the consolidated catalogue after catalogue construction.
+\\
+The resulting catalogue forms the basis for the thematic analysis described in
+Section~\ref{sec:meth_thematic_analysis}.
+
+\subsection{Contextual Content Tagging}
+
+Following extraction of the XML-classified source passages, an additional contextual
+tagging step was applied before the passages were transformed into normalised logging
+guidelines. The purpose of this step was to retain a short description of the main
+topic or topics represented by each extracted passage.
+\\
+For each extracted entry, the source passage was retained in the
+\textit{Content} field. An AI-assisted procedure was then used to create a corresponding
+\textit{Content Tag}. The Content Tag was used as contextual metadata to support later
+guideline formulation and validation rather than as the final thematic classification
+of the guideline.
+\\
+The prompt used for this procedure was:
+
+\begin{listing}[H]
+\begin{minted}[linenos=false]{text}
+I am providing an Excel file containing extracted logging content.
+Please analyse the Content column and add a new column called Content Tag.
+For each row, create a short summary of the main topic
+or topics discussed in the content.
+\end{minted}
+\caption{Prompt for contextual content tagging}
+\label{lst:prompt_content_tagging}
+\end{listing}
+
+The original Content remained available alongside the Content Tag so that the technical
+context could be checked when a short tag was ambiguous. During manual investigation,
+contextual expressions that could lead to misleading interpretations were checked
+against the source passage and corrected where necessary.
+
+\subsection{Guideline Formulation and Normalization}
+
+The logging content extracted from the open-source repository files was initially
+retained in its original wording. Since the extracted passages differed in length,
+writing style and level of detail, they were transformed into guideline statements
+before further analysis.
+\\
+An AI-assisted (GPT-5.6 Sol) procedure supported this normalisation step.
+The original Content and its related Content Tag were analysed together to identify
+the logging recommendation contained in the source, and turn it into a clear and
+independently understandable logging guideline. The aim was to express recommendations
+that consistently appeared in different forms so that they could be compared
+within the catalogue. No additional logging advice was added, and the final guideline
+was based only on the information available in the original context.
+\\
+Guidelines could also be derived from clearly demonstrated logging practices in code,
+configuration, examples or tables where the source material sufficiently supported the recommendation. Information that was not supported by the source was not added.
+The normalised guideline was formulated so that it could be understood independently
+without referring back to the Content field.
+\\
+Where no meaningful logging guideline could be derived from the extracted material,
+the entry was assigned \texttt{NO\_GUIDELINE}. Such entries were retained separately
+and were not assigned themes during the subsequent classification.
+These entries were also manually reviewed to confirm that no relevant
+logging guideline had been overlooked.
+\\
+The original Content and Content Tag were retained alongside the normalised guideline.
+Consequently, every transformed guideline could subsequently be compared with the
+source material from which it had been derived.
+\\
+The prompt used for the procedure was:
+
+\begin{listing}[H]
+\begin{minted}[linenos=false]{text}
+Analyse the Content column and content tag, and add a new Guideline column.
+Transform each row into a clear, concise, self-contained and stand
+alone as logging guideline, where content is not reference in the guideline.
+Guidelines may also  be derived from clearly demonstrated practices
+in code, configuration, examples, or tables.
+Preserve the source meaning and do not add  unsupported information.
+Use NO_GUIDELINE only  when no meaningful guideline can be derived or
+content tag include no guideline.
+Add all NO_GUIDELINE rows to a separate worksheet.
+\end{minted}
+\caption{Prompt for guideline formulation and normalization}
+\label{lst:prompt_guideline_normalization}
+\end{listing}
+
+\subsection{Manual Review of Normalised Guidelines}
+
+Following normalisation, the generated guideline statements remained linked to their
+corresponding source passages and Content Tags so that the transformation
+could be manually validated.
+\\
+A random sample of approximately 10\% of the normalised entries was manually
+compared with the corresponding Content and Content Tag. The review considered whether
+the normalised guideline represented the recommendation contained in the source,
+whether relevant restrictions or conditions had been preserved, whether the guideline
+was sufficiently self-contained and whether additional unsupported meaning had been
+introduced during normalisation.
+\\
+Additional manual investigation was performed for entries identified during the
+processing procedure as unclear or inconsistent. Where recurring problems were
+identified, related entries were checked and corrected rather than changing only the
+individual example in which the problem had first been observed.
+\\
+Entries classified as \texttt{NO\_GUIDELINE} were also checked to ensure that no
+meaningful recommendation was excluded only because of the automated transformation.
+\\
+After this review, the resulting entries formed the source-level open-source guideline
+catalogue used to address \hyperref[table:t1rq]{\textbf{RQ3}}. Each guideline remained linked to its original
+passage, repository and source file during the repository collection process.
+
+\subsection{Relationship Between Academic and Open-Source Guidelines}
+
+The academic and open-source guideline sets were retained as analytically distinguishable
+source sets. The open-source recommendations formed the source-level catalogue that was
+normalised, thematically classified and semantically consolidated. The academic
+recommendations were retained with their publication references as the literature-based
+reference set, while descriptive literature remained available as supporting evidence.
+\\
+The academic literature contributed to the catalogue analysis in two ways. First,
+classifications identified in previous logging research were used to construct the
+initial deductive codebook described in the following subsection. Second, after semantic
+consolidation of the open-source recommendations, the retained academic recommendations
+were manually compared with the resulting canonical guidelines to determine whether each
+academic recommendation was represented in the final consolidated open-source catalogue.
+\\
+The comparison was performed at the consolidated guideline level rather than separately
+for every repeated source occurrence. This prevented a recommendation documented in
+several open-source sources from being counted repeatedly when evaluating its relationship
+to the academic recommendations.
+\\
+The academic and open-source provenance remained retained throughout this comparison.
+The methodological procedure for the comparison is described later in the thematic
+analysis, while the actual academic coverage identified for the final consolidated
+guidelines is reported in the results chapter.
+
+\subsection{Initial Literature-Based Codebook}
+
+An initial deductive codebook was constructed from classifications and concepts
+identified in previous software logging research. The purpose of this codebook was
+to provide an academically grounded starting structure for the classification of the
+collected guidelines rather than to define an exhaustive set of possible themes.
+\\
+The four high-level categories used during the earlier extraction process were
+retained:
+
+\begin{itemize}
+\item \textit{what to log},
+\item \textit{where to log},
+\item \textit{how to log},
+\item \textit{log levels and verbosity}.
+\end{itemize}
+
+For \textit{what to log}, the initial codes were based on the classification reported
+in \textit{Industry Practices and Event Logging: Assessment of a Critical Software
+Development Process}~\cite{peccia2015industrypracticesandeventlogging}. The following
+codes were used:
+
+\begin{itemize}
+\item \textit{state dump},
+\item \textit{execution tracing},
+\item \textit{event reporting}.
+\end{itemize}
+
+For \textit{where to log}, the initial codes were derived from
+\textit{Where Do Developers Log? An Empirical Study on Logging Practices in Industry}
+~\cite{fu2014wheredodeveloperslog}. The following classifications were included:
+
+\begin{itemize}
+\item \textit{assertion-check logging},
+\item \textit{return-value-check logging},
+\item \textit{exception logging},
+\item \textit{logic-branch logging},
+\item \textit{observing-point logging}.
+\end{itemize}
+
+For \textit{how to log}, the initial classification was based on
+\textit{A Survey of Software Log Instrumentation}
+~\cite{chen2021asurveyofsoftwareloginstrumentation}. The survey distinguishes three
+main stages of log instrumentation:
+\clearpage
+\begin{itemize}
+\item \textit{logging approach},
+\item \textit{logging utility integration},
+\item \textit{logging code composition}.
+\end{itemize}
+
+For \textit{log levels and verbosity}, the initial codes were based on the verbosity
+levels discussed by Gholamian and Ward \cite{gholamian2021whatdistributedsystemssay}.
+The paper refers to the six default Log4j verbosity levels:
+\begin{itemize}
+\item \textit{FATAL},
+\item \textit{ERROR},
+\item \textit{WARN},
+\item \textit{INFO},
+\item \textit{DEBUG},
+\item \textit{TRACE}.
+\end{itemize}
+
+The resulting initial codebook therefore consisted of literature-derived codes within
+each of the four predefined logging categories. Guidelines that could not be
+meaningfully represented by one of these codes were not forced into the existing
+classification. Instead, they were marked for subsequent investigation.
+\\
+The codebook was based on classifications identified in the academic literature.
+For each code, the corresponding literature was used to determine its meaning and
+to guide its application during classification.
+
+\subsection{Inductive Codebook Extension and Final Classification}
+
+The literature-derived codes provided the initial classification structure for the
+guideline catalogue. However, not all guidelines could be represented adequately by
+these initial codes. Additional themes were therefore introduced based on concepts
+identified within the collected guideline content.
+\\
+The normalised Guideline column was analysed using the literature-derived codebook
+first. The four high-level logging categories remained \textit{what to log},
+\textit{where to log}, \textit{how to log} and \textit{log verbosity}. Where a
+guideline could be represented by one of the existing deductive themes, the
+corresponding theme was assigned. If both a broad and a more specific deductive theme
+were applicable, the most specific applicable theme was selected.
+\\
+Where none of the existing deductive themes adequately represented the guideline, a
+concise additional theme was derived inductively from the guideline content. For each
+assignment, the origin of the theme was retained in the field \textit{Theme Basis} as
+either \textit{Deductive} or \textit{Inductive}. Guidelines assigned an inductive theme
+were additionally collected in a separate review worksheet so that the newly derived
+themes could be inspected and later harmonised.
+\\
+Entries classified as \texttt{NO\_GUIDELINE} were not assigned a Theme or Theme Basis.
+\\
+The prompt used for this classification was:
+
+\begin{listing}[H]
+\begin{minted}[linenos=false]{text}
+Analyse the Guideline column and add Theme and Theme Basis and Leave
+out for NO_GUIDELINES
+Use this codebook first:
+What to log: State dump, Execution tracing, Event reporting
+Where to log: Assertion-check logging, Return-value-check logging,
+Exception logging, Logic-branch logging, Observing-point logging
+How to log: Logging approach, Logging utility integration,
+Logging code composition
+Log verbosity: FATAL, ERROR, WARN, INFO, DEBUG, TRACE
+Check all deductive themes first, then if a guideline fits both a broad
+and a more specific deductive theme, assign the most specific applicable theme,
+else when no existing theme fits, create a concise
+new inductive theme from the guideline.
+Set Theme Basis to Deductive or Inductive.
+Put all inductively themed rows in a separate worksheet called Inductive Review.
+Leave the NO_GUIDELINES empty for Theme and Theme Basis
+\end{minted}
+\caption{Prompt for deductive-inductive theme classification}
+\label{lst:prompt_theme_classification}
+\end{listing}
+
+The theme assignment was based on the semantic meaning of the normalised guideline.
+The original Content and Content Tag remained available as contextual information when
+additional interpretation was required. The Content Tag itself was not automatically
+treated as a Theme.
+\\
+After the initial classification, inductively generated themes were reviewed across
+the catalogue. Overlapping inductive themes representing the same concept were merged, and their names standardised, while distinct concepts were retained separately. The
+existing literature-derived themes retained their deductive basis.
+\\
+The resulting classification therefore combined literature-derived deductive themes
+with additional themes derived from the collected guideline content. The analytical
+structure consisted of the high-level logging dimension, the assigned theme and the
+individual guideline. Guidelines assigned to the same theme were not assumed to be
+semantically equivalent, since the guideline itself retained the specific recommendation
+and context.
+
+\subsection{Guideline Consolidation and Traceability}
+
+Following classification, the source-level catalogue was examined for semantically
+equivalent guideline statements. This step was separate from the removal of duplicate
+repository material performed during data cleaning. Recommendations independently
+documented in different sources were treated as separate source occurrences even when
+their meaning was equivalent.
+\\
+Guidelines were considered candidates for consolidation when they described the same
+underlying normative recommendation. Equivalence was assessed by considering the
+recommended action, the logging concern to which the action referred and any conditions
+or restrictions attached to the recommendation. Guidelines addressing a similar topic
+but containing a distinct recommendation, condition or restriction were retained
+separately. Uncertain cases were also kept separate.
+\\
+Due to the number of guidelines contained in the catalogue, AI-assisted semantic
+comparison using GPT-5.6 Sol was used to support the identification and consolidation
+of semantically equivalent guidelines. The model was instructed not to remove unique
+recommendations or conditions and to preserve the mapping from every original guideline
+to the corresponding consolidated guideline.
+\\
+A separate code-review indicator was used to identify source Content containing
+technical material that could later be displayed as an illustrative example for a
+guideline. This included source code, configuration, use-case or implementation examples,
+example input and program output. In the working catalogue, this information was retained
+through the \textit{Code Involved} field. The term \textit{Code Review} in the
+consolidation prompt referred to this example-identification step and did not indicate
+a methodological validation status.
+\\
+For entries identified in this way, the associated source Content was preserved as a
+separate \textit{Example Reason} linked to the consolidated guideline. These examples
+were not merged, removed or generalised during consolidation, even when their underlying
+guideline was consolidated.
+\\
+The prompt used for the consolidation procedure was:
+
+\begin{listing}[H]
+\begin{minted}[linenos=false]{text}
+Merge semantically equivalent guidelines without losing any unique
+recommendation or condition. Keep uncertain cases separate.
+For every row with Code Review = Yes, preserve its Content as a
+separate Example Reason linked to the consolidated guideline and do not
+merge, remove, or generalise these examples during consolidation.
+Create consolidated Guidelines and consolidation mapping
+Then update the codebook: keep existing deductive themes as
+Deductive, merge overlapping inductive themes, standardise names,
+and keep distinct concepts separate.
+create updated codebook and theme mapping
+Ensure every original guideline is represented exactly once
+and summarise identical guidelines together. Provide a sheet
+with all summarized guidelines, their content, type, theme for manual
+investigation later
+\end{minted}
+\caption{Prompt for guideline consolidation and codebook refinement}
+\label{lst:prompt_guideline_consolidation}
+\end{listing}
+
+Guidelines confirmed as semantically equivalent were mapped to a common canonical
+guideline. The original source-level guideline records were retained to
+preserve traceability. Each original guideline was required to be represented exactly
+once in the consolidation mapping.
+\\
+The consolidation stage also updated the codebook and theme mapping. Existing deductive
+themes remained deductive. Overlapping inductive themes were merged and standardised
+where they represented the same underlying concept, while distinct concepts were kept
+separate.
+\\
+This approach reduced repetition in the final presentation of the catalogue while
+preserving provenance, contextual examples and the independent source occurrences
+associated with each consolidated recommendation. Exact duplicates originating from
+repeated retrieval of the same underlying source remained handled by the earlier
+data-cleaning stage and were not counted as independent source occurrences.
+
+\subsection{Validation of the Guideline Catalogue}
+\label{sec:meth_validation}
+
+The AI-assisted (GPT-5.6 Sol) catalogue construction involved several processing stages
+at which identification, transformation or classification errors could occur. Validation
+was therefore performed at multiple stages of the catalogue construction process.
+\\
+First, the XML-tagged repository files were checked for technical integrity. The check
+examined whether the expected opening and closing tags were present and whether the
+output could be processed correctly by the extraction script. Malformed, incomplete or
+inconsistent XML outputs were identified and reprocessed or manually investigated.
+\\
+The semantic content of the extracted material was additionally reviewed during the
+subsequent preparation steps. Manual investigation was used to identify cases in which
+a contextual expression had been interpreted incorrectly, or the high-level XML category
+did not adequately represent the source content. Examples included log-verbosity cases,
+unstructured log-message content, formatting-related recommendations and HTTP-related
+content. In particular, HTTP-related entries were investigated because occurrences of
+HTTP could represent hyperlinks or references rather than an HTTP-specific logging
+recommendation. Where recurring issues were identified, corresponding entries were
+reviewed and corrected throughout the affected part of the dataset.
+\\
+Second, the transformation from Content and Content Tag to normalised guidelines was
+validated manually. A random sample of 234 entries, corresponding to approximately 10\% of the dataset at this stage, was compared with the associated source Content
+and Content Tag. The review examined whether the guideline preserved the source meaning,
+retained relevant conditions and restrictions, remained self-contained and did not
+introduce unsupported information. Cases requiring additional context were corrected
+using the original Content as the reference.
+\\
+Entries assigned \texttt{NO\_GUIDELINE} were additionally reviewed to ensure that the
+classification did not exclude meaningful logging recommendations. Content that only
+contained references, links or descriptive material without a supported logging
+recommendation remained excluded from thematic classification.
+\\
+Third, the final theme classification was validated using the deductive–inductive
+codebook. Validation was performed across the individual themes rather than relying on
+one undifferentiated sample from the complete dataset. Larger themes were checked using
+manual samples, while themes with comparatively few assigned guidelines were inspected
+more closely because individual classification errors would have a larger proportional
+influence on their reported distribution.
+\\
+The guidelines initially assigned to \textit{Logging approach} were re-examined against 
+the complete final codebook and, where necessary, their original Content to determine 
+whether a more specific existing theme represented the recommendation more accurately. 
+This review aimed to determine whether the guidelines fell within the theme's conceptual scope. 
+Guidelines within such a broad theme did not need to be semantically equivalent, 
+since each guideline retained its specific scenario and recommendation.
+In contrast, the theme served as a higher-level classification.
+\\
+During this validation, incorrectly assigned log levels, event-reporting cases and
+logging-approach cases were corrected where identified. When a repeated classification
+pattern was detected, related entries were investigated rather than correcting only the
+initial sampled row. The final theme distribution was calculated after these corrections.
+\\
+Finally, the semantic consolidation and traceability of the catalogue were checked.
+Consolidated guidelines were reviewed to determine whether semantically equivalent
+recommendations had been combined without removing a unique condition, restriction or
+recommendation. Where equivalence remained uncertain, the guidelines were retained
+separately.
+\\
+Where manual validation showed that a consolidated group contained source occurrences
+representing different recommendations, the affected occurrences were separated and,
+where an equivalent canonical guideline already existed elsewhere in the catalogue, 
+reassigned to that guideline rather than creating a duplicate recommendation.
+A new canonical guideline was retained only when the recommendation was not adequately
+represented by an existing guideline.
+\\
+An integrity check was also performed on the consolidation mapping. Every retained
+source-level guideline was required to be represented exactly once by a consolidated
+canonical guideline, and every canonical guideline remained linked to the source-level
+guideline or guidelines from which it had been derived. Example Reasons originating
+from code, configuration, usage, implementation or output examples remained separately
+linked to the corresponding consolidated guideline.
+\\
+The resulting catalogue therefore preserves the relationship between the 
+source content, contextual Content Tag, normalised source-level guideline, assigned
+theme and consolidated canonical guideline. This structure supports later manual
+investigation while preserving the provenance of the final catalogue.
+
+\section{Thematic Analysis}
+\label{sec:meth_thematic_analysis}
+
+The final classified and consolidated logging guideline catalogue was used as the
+basis for answering \hyperref[table:t1rq]{\textbf{RQ4}}:
+\textit{What themes can be identified within the logging guideline catalogue?}
+\\
+A hybrid deductive–inductive thematic classification was applied. The deductive
+component originated from the literature-derived initial codebook, while the inductive
+component allowed additional themes to be introduced for guideline concepts that could
+not be represented adequately by the initial classification.
+\\
+The thematic analysis considered both the final themes and the individual guidelines
+assigned to them. The four predefined logging aspects \textit{what to log},
+\textit{where to log}, \textit{how to log}, and \textit{log levels and verbosity}
+were retained as the high-level analytical dimensions. Within these dimensions, the
+final deductive and inductive themes represented recurring areas of logging guidance.
+\\
+The individual normalised, or consolidated guideline remained the more specific unit of
+actionable knowledge. Consequently, guidelines assigned to one broad theme were not
+interpreted as identical recommendations. The themes provided an organisational and
+analytical structure through which recurring logging concerns could be examined across
+the catalogue.
+
+\subsection{Theme Identification}
+
+Theme identification followed the hybrid deductive–inductive classification procedure
+described in Section~\ref{sec:meth_classification}. Each guideline was first compared
+with the literature-derived deductive themes. Where an existing deductive theme
+adequately represented the recommendation, that theme was assigned. Where no existing
+theme was sufficient, an inductive theme was created based on the semantic meaning of
+the guideline.
+\\
+The themes were reviewed iteratively across the catalogue. Overlapping inductive themes
+representing the same underlying concept were merged, and their names standardised,
+while themes representing distinct logging concepts remained separate. Existing
+deductive themes retained their literature-derived basis.
+\\
+Theme development was based on the meaning of the underlying guidelines rather than
+only on similarity in terminology. The source passages, Content Tags and
+normalised guidelines were consulted where necessary to preserve the context of a
+recommendation during classification.
+\\
+The resulting structure consisted of the four high-level logging dimensions, the final
+deductive or inductive Theme assigned within the corresponding dimension, and the
+specific guideline. This structure allowed the themes to be analysed descriptively
+while retaining the detailed recommendations contained in the catalogue.
+
+\subsection{Theme Distribution}
+
+After the themes had been identified, their distribution within the guideline
+catalogue was analysed descriptively. This analysis considered both the number of
+canonical guidelines associated with each theme and the number of source-level
+occurrences contributing to those guidelines.
+\\
+The distinction between canonical guidelines and source occurrences was maintained
+throughout this analysis. A canonical guideline represents a semantically consolidated
+recommendation, whereas a source occurrence represents an independent appearance of
+that recommendation within an open-source repository.
+\\
+For each identified theme, the following information was considered where applicable:
+
+\begin{itemize}
+\item number of canonical guidelines,
+\item number of source-level guideline occurrences,
+\item number of contributing open-source repositories,
+\item distribution across the four high-level logging categories.
+\end{itemize}
+
+The number of occurrences was used as a descriptive indication of how frequently a
+theme appeared within the collected corpus. Frequency was not interpreted as a
+measure of guideline quality, correctness or importance. A frequently occurring
+recommendation may indicate that different sources repeatedly address a concern, while a less frequent recommendation may still represent a relevant or
+specialised logging practice.
+\\
+Where appropriate, repository metadata such as programming language, project type
+or application field was used as additional descriptive context. Such comparisons
+were used to explore whether particular themes occurred across different types of
+projects or were concentrated within specific parts of the collected dataset.
+
+\subsection{Coverage of Academic Recommendations}
+
+After semantic consolidation, the retained actionable academic recommendation
+targets were manually compared with the canonical open-source guidelines. The
+purpose of this comparison was to determine the extent to which recommendations
+identified in academic literature were represented in the final consolidated
+open-source catalogue.
+\\
+The unit of comparison was the individual actionable recommendation rather than the
+publication as a whole. A publication could therefore contribute several distinct
+recommendation targets, while publications retained only for empirical, conceptual
+or tool-oriented context did not contribute a coverage target.
+\\
+The comparison was performed against the consolidated catalogue rather than
+separately against each repeated source occurrence. Where equivalent guidance
+appeared independently in several repositories, the corresponding canonical
+guideline was used for the coverage assessment, while the source-level occurrences
+remained available for the separate frequency analysis.
+\\
+The comparison considered the semantic meaning of the academic recommendation and
+the corresponding canonical guideline, including its recommended action, relevant
+conditions, scope and restrictions.
+\\
+An academic recommendation was classified as fully covered when one or
+more canonical guidelines expressed the same underlying recommendation while
+preserving the relevant meaning and conditions.
+\\
+A recommendation was classified as partially covered when the principal
+logging concern was represented in the catalogue but one or more relevant aspects,
+conditions or sub-recommendations were not represented sufficiently.
+\\
+A recommendation was classified as not identified when no canonical
+guideline in the collected open-source catalogue sufficiently represented the
+underlying recommendation. Thematic similarity alone was not considered sufficient
+for guideline-level coverage.
+\\
+The retained provenance of both datasets allowed each academic recommendation to
+remain linked to its publication and each matching recommendation to remain linked
+to the corresponding canonical guideline or guidelines. The resulting coverage
+classification is reported in the Results chapter.
+\\
+The comparison is limited to the selected academic recommendation set and the
+collected open-source corpus. A partial or missing match therefore does not
+demonstrate that a recommendation is absent from software logging research or
+open-source software in general.

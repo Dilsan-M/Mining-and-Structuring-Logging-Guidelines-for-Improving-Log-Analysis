@@ -1,80 +1,568 @@
-\chapter{Background} \label{chap:background}
+\chapter{Background}
+\label{chap:background}
 
-  2.1 Software Logging
-   2.2 Logging Practices and Decisions
-   2.3 Automated Log Analysis
-   2.4 Existing Logging Guidelines
-   2.5 Mining Software Repositories
-   2.6 Related Work
-   2.7 Research Gap
+This chapter introduces the concepts required to understand the role of logging in software development and maintenance.
+It first provides an overview of software logging, including its purpose, the distinction between log statements and log messages,
+the use of log levels and verbosity, and structured and unstructured representations of log data.
+\\
+The chapter then discusses logging in software development and maintenance. 
+It focuses on logging implementation, log analysis, fault localisation, root cause analysis, 
+and the challenges developers encounter when producing and using log information. 
+These concepts provide the background for the developer study conducted in this thesis.
+\\
+Subsequently, logging guidelines and practices are introduced according to four principal aspects: \textit{what to log},
+\textit{where to log}, \textit{how to log}, and \textit{log levels and verbosity}. 
+These aspects provide the conceptual basis for analysing logging recommendations identified in academic literature
+and for organising and classifying the logging guidelines collected from academic literature 
+and open-source repositories.
+\\
+Finally, the chapter discusses logging quality and the impact on logging analysis to establish the relationship 
+between decisions made during logging implementation and the later use of generated log data. 
+The chapter then presents related research, followed by the research gap this thesis addresses.
 
-The Background chapter of your thesis is an important part of your work, providing your readers with the necessary context and information to understand the problem you are addressing. To write a good Background chapter, it is important to remember that you should only describe the background that is necessary for your readers to know.
-You don't need to explain everything that you cover during the thesis's processing time.
-
-One common mistake is to provide a lengthy description of official standards. This is not necessary as your readers can look them up themselves.
-Another common mistake is to provide extensive translations or transcriptions of official documents.
-It is usually enough to refer to the source material and provide a systematized overview of its content.
-
-The key to writing a good Background chapter is its shortness. Keep in mind that this chapter should only provide the minimum information needed to understand your thesis's research question.
-This includes explaining any relevant background theories, prior research, and current state of the field.
-You should also describe any important terms or concepts that readers may not be familiar with.
-
-A good way to approach the Background chapter is to think about it as an introduction to the problem you are addressing. This means providing enough context for readers to understand the importance of your research question and why it is worth investigating.
-Remember to keep your writing clear and concise, focusing on the key points that will help readers understand the background of your work.
 
 \section{Software Logging}
+\label{sec:background_logging}
 
+Software logging refers to the recording and monitoring of information about events and states that occur during the execution of a software system. 
+Developers introduce logging statements into source code to make relevant runtime information observable.
+When a logging statement is executed, it generates a log message that can subsequently be stored, inspected, searched or processed 
+\cite{chen2021asurveyofsoftwareloginstrumentation}.
+\\
+Logging is used throughout different phases of the software lifecycle. During development, 
+log information can help developers understand program behaviour, inspect execution states and identify unexpected behaviour. 
+In deployed systems, logs can support monitoring, troubleshooting, failure diagnosis, auditing, security analysis
+and other operational activities \cite{chen2021asurveyofsoftwareloginstrumentation,gu2023loggingpracticesinsoftwareengineering}.
+\\
+The usefulness of logging depends on several implementation decisions. 
+Developers must determine which information should be recorded, where logging statements should be placed,
+how generated messages should be represented and how much information should be produced. 
+These decisions determine which runtime information will later be available to developers and analysis tools 
+\cite{chen2021asurveyofsoftwareloginstrumentation,fu2014wheredodeveloperslog}.
+\\
+The following subsections introduce the main concepts of software logging that are required for the remainder of this thesis.
+
+\subsection{Purpose of Logging}
+
+The primary purpose of software logging is to provide information about a software system's behaviour and state during execution. 
+Unlike information that exists only temporarily during runtime, log data preserves event information after it occurs.
+Recorded information can therefore be inspected and analysed at a later time, enabling developers and operators to investigate system
+behaviour without necessarily reproducing the original execution 
+\cite{chen2021asurveyofsoftwareloginstrumentation}.
+\\
+During software development, logs can observe program execution, inspect relevant program states, trace operations, and support debugging. 
+After deployment, logs can additionally support monitoring, troubleshooting, failure diagnosis, auditing, security-related analysis, 
+and operational maintenance \cite{chen2021asurveyofsoftwareloginstrumentation,gu2023loggingpracticesinsoftwareengineering}.
+\\
+Different purposes may require different types and amounts of information. 
+Detailed diagnostic information can be useful during development because developers may require insight into individual execution steps
+and internal program states. In production environments, recording the same amount of information can introduce additional storage
+and processing costs or make relevant events more difficult to identify \cite{gholamian2021whatdistributedsystemssay}.
+\\
+Logging therefore requires balancing sufficient runtime information for its intended purpose with avoiding unnecessary or excessive output 
+to save resources and maintain system performance.
+
+\subsection{Log Messages and Log Statements} \label{subsec:log_messages_statements}
+An important distinction exists between a \textit{log statement} and a \textit{log message}.
+A log statement is an instruction embedded in the source code that specifies recording information when the program reaches a particular point.
+A log message is the runtime output generated when the corresponding statement is executed \cite{chen2021asurveyofsoftwareloginstrumentation,yuan2012characterzingloggingpractices}.
+\\
+For example, a developer may introduce a logging statement such as:
+
+\begin{verbatim}
+logger.error("Failed to process order {}", orderId);
+\end{verbatim}
+
+If the variable \texttt{orderId} contains the value \texttt{4817}, execution of this statement may result in a log message such as:
+
+\begin{verbatim}
+2026-01-01 10:00:00 ERROR Failed to process order 4817
+\end{verbatim}
+
+The logging statement remains part of the source code, whereas the log message represents information produced during a particular program execution.
+A logging statement may contain both static and dynamic information. Static information describes the event,
+whereas dynamic information is obtained from the current execution. Depending on the implementation 
+and logging framework, a resulting log message may contain a timestamp, severity level, component or 
+class name, event description, identifier, error information or relevant program values.
+\\
+The placement and content of logging statements therefore determine which information becomes observable during later analysis \cite{fu2014wheredodeveloperslog}.
+
+\subsection{Log Levels and Verbosity}
+\label{subsec:levels_verbosity}
+
+Log levels commonly indicate the severity or purpose of a log message. 
+Typical levels include \textit{DEBUG}, \textit{INFO}, \textit{WARN} and \textit{ERROR}, 
+although the available levels and their exact interpretation depend on the logging utility and conventions 
+used within a software project \cite{chen2020studyingtheuseofjavaloggingutilities}.
+\\
+Lower-severity levels are commonly used for detailed diagnostic or execution information, 
+while higher-severity levels generally indicate events that require greater attention. 
+Log levels can additionally control which messages are emitted or retained in a particular execution environment.
+\\
+Selecting an appropriate log level is itself a logging decision. 
+Previous research has investigated the automatic recommendation and adaptation of logging levels \cite{zhu2015learningtolog,mizouchi2019padla,mastropaolo2022usingdeeplearning}.
+\\
+Closely related to log levels is the concept of \textit{log verbosity}. 
+Verbosity describes the overall amount and level of detail contained in generated log output.
+High verbosity can provide detailed information for debugging and diagnosis, while simultaneously increasing the volume 
+and cost of logging. Research on distributed systems has shown that logging volume can result in measurable
+costs \cite{gholamian2021whatdistributedsystemssay}.
+\\
+Low verbosity reduces generated information but may leave insufficient detail
+when investigating unexpected behaviour. Selecting appropriate verbosity therefore requires consideration of both the intended purpose 
+and operating environment of the software.
+
+\subsection{Structured and Unstructured Logging}
+\label{subsec:structured_logging}
+
+Log messages may be represented as free-text or in more structured formats. 
+Software logs are frequently considered semi-structured because individual messages can contain both recurring textual structures 
+and variable runtime information \cite{he2021asurveyonautomatedloganalysis,liu2022uniparser}.
+\\
+In practice, developers commonly use (custom) logging frameworks or logging utilities to generate and manage log messages \cite{chen2020studyingtheuseofjavaloggingutilities}. 
+Depending on the framework and its configuration, log information can also be produced in a structured format, 
+for example, by representing individual attributes as separate fields rather than embedding all information within a free-text message. 
+\\
+Structured or consistently formatted representations can simplify filtering, querying, correlation, and automated processing. 
+Log parsing research similarly attempts to identify recurring structures and variable parameters in semi-structured 
+log messages \cite{dai2022logram,zhu2019toolsandbenchmarksforautomatedlogparsing}.
+
+\section{Logging in Software Development and Maintenance}
+\label{sec:logging_development_maintenance}
+
+Logging is not limited to generating runtime information. 
+Developers interact with logging throughout software development and maintenance by introducing and modifying logging statements,
+examining generated log output and using logs to investigate unexpected software 
+behaviour \cite{yuan2012characterzingloggingpractices,chen2017characterizingloggingpractices}
+\\
+For this thesis, several activities are particularly relevant: logging implementation, log analysis, fault localisation
+and root cause analysis. These activities describe different stages in producing and using logging information
+and provide the conceptual basis for investigating developers' practical experiences with logging.
+
+\subsection{Logging Implementation}
+\label{subsec:logging_implementation}
+
+Logging implementation, also called log instrumentation, describes the process of adding, configuring and maintaining logging code within a software system. 
+Chen and Jiang distinguish log instrumentation from log management and identify logging approach, logging utility integration
+and logging code composition within log instrumentation \cite{chen2021asurveyofsoftwareloginstrumentation}.
+\\
+During implementation, developers make decisions concerning which events and states should be recorded, where logging statements should be located,
+how messages should be formulated and which log level should be assigned \cite{fu2014wheredodeveloperslog,zhu2015learningtolog}.
+\\
+The intended use of the generated information influences decisions made during logging implementation.
+Logging introduced during development may primarily support debugging and understanding program execution. 
+Logging in deployed software may additionally support monitoring, maintenance, troubleshooting, security analysis and failure investigation.
+\\
+Logging implementation is not limited to adding new statements. 
+Logging code is actively maintained and modified during software development \cite{yuan2012characterzingloggingpractices,chen2017characterizingloggingpractices}.
+Components change, new functionality is introduced, and existing logging statements can become outdated, unnecessary or insufficient.
+\\
+The quality of the resulting log information therefore depends substantially on implementation decisions made by developers \cite{chen2021asurveyofsoftwareloginstrumentation}.
+
+\subsection{Log Analysis}
+\label{subsec:log_analysis}
+
+Log analysis refers to examining recorded log data to understand the behaviour of a software system.
+Developers and operators may analyse logs to identify relevant events, investigate errors, monitor system behaviour 
+or reconstruct sequences of actions that occurred before a failure.
+\\
+Automated log analysis has received considerable research attention, including techniques for parsing, anomaly detection,
+failure prediction and diagnosis \cite{he2021asurveyonautomatedloganalysis}. However, practical log analysis can also consist of manual or semi-manual activities.
+\\
+An empirical study at Microsoft involving questionnaire responses from 105 employees and interviews with 12 employees 
+investigated the scenarios, methods, tools and pain points associated with log analysis in practice \cite{he2022anempiricalsutdyofloganalysisatmicrosoft}.
+Developers may manually inspect files, search for particular messages or identifiers, 
+filter messages by severity or component, compare entries across time, or use dedicated analysis and visualisation tools.
+\\
+Analysis complexity can increase when information is distributed across different components and services. 
+Furthermore, missing contextual information, inconsistent messages, and large volumes of irrelevant output can make relevant events harder to identify.
+Log analysis therefore constitutes an important activity during both software development
+and maintenance, and provides information that may support subsequent failure investigation.
+
+\subsection{Fault Localisation and Root Cause Analysis}
+\label{subsec:fault_localisation}
+
+Fault localisation involves identifying the part of a software system associated with an observed failure or incorrect behaviour.
+Although a failure may be visible, identifying its origin can require information about execution and internal system state.
+\\
+Logs can support this process by preserving execution information that would otherwise be unavailable after a failure. 
+Research on software diagnosability has demonstrated that improving logging information can reduce the set
+of potential failure causes that developers must investigate \cite{yuan2012improvingsoftwarediagnosibilty}.
+\\
+Log messages can also contribute contextual development knowledge when developers attempt to 
+understand software behaviour during maintenance \cite{shang2014understandingloglinesusingdevelopmentknowledge}.
+\\
+Fault localisation can be distinguished conceptually from root cause analysis. Fault localisation 
+primarily concerns narrowing down the location or component associated with an observed problem. 
+Root cause analysis goes further by attempting to determine why the failure occurred and which underlying condition or sequence of events produced it.
+\\
+Log information can contribute to both activities. A sequence of messages can indicate which 
+component first reported abnormal behaviour, while contextual information can help developers investigate the conditions that caused the event.
+\\
+The effectiveness of logs for fault localisation and failure diagnosis depends 
+on whether the necessary information was recorded during the original execution. 
+If relevant runtime information is absent, developers may need to reproduce the failure, 
+introduce additional instrumentation or rely on other debugging techniques \cite{yuan2012improvingsoftwarediagnosibilty}.
+
+\subsection{Challenges of Software Logging}
+\label{subsec:logging_challenges}
+
+Implementing useful logging is a non-trivial software engineering activity. 
+A recent literature review of software logging practices identifies a broad range of challenges spanning 
+instrumentation, storage and preparation of logs for subsequent analysis \cite{batoun2024aliteraturereview}. 
+Industrial studies likewise report differences between developers' 
+logging intentions and the information that is finally captured \cite{rong2020canyoucaputreinformation}.
+\\
+One central challenge concerns the \textit{selection of information}. 
+Insufficient logging can leave relevant system behaviour unobservable. 
+At the same time, excessive logging can create large volumes of output without providing equivalent additional value.
+\\
+A related challenge concerns the \textit{placement of logging statements}. 
+Logging too little can miss out on execution information required for maintenance,  
+while logging too much can hide relevant information and introduce additional information noise \cite{li2021whereshallwelog}.
+\\
+The \textit{quality and consistency of messages} can also affect their usefulness. 
+Unclear wording, inconsistent terminology, and missing contextual information 
+or different representations of equivalent events can complicate later interpretation.
+\\
+Developers must additionally determine appropriate \textit{log levels and verbosity}. 
+Incorrect levels can cause significant events to be overlooked or result in many messages being treated as equally important.
+\\
+Logging may also introduce \textit{performance and storage costs}. 
+Generating, transmitting and retaining large amounts of runtime information requires system resources \cite{gholamian2021whatdistributedsystemssay}.
+\\
+Another concern involves \textit{privacy and security}. Runtime information can potentially contain sensitive 
+values if developers do not consider which information should or should not be recorded. Therefore, 
+selecting data for logging involves not only deciding what is useful, but also what is appropriate to retain.
+\\
+Finally, logging changes as software evolves. 
+Empirical studies show that logging code changes throughout software evolution rather 
+than remaining static after its initial introduction \cite{yuan2012characterzingloggingpractices,chen2017characterizingloggingpractices}.
+\\
+These challenges show that logging involves a series of software engineering decisions, not simply adding output statements. 
+Logging guidelines can help developers make these decisions more consistently and systematically.
 
 \section{Logging Guidelines and Practices}
+\label{sec:background_logging_guidelines}
 
-\section{Automated Log Analysis}
+Logging guidelines recommend on how to design and implement logging in software systems.
+Such recommendations can support developers in deciding which information should be recorded,
+where logging statements should be introduced, how the generated messages should be constructed
+and which log level or degree of verbosity should be used.
+\\
+Previous empirical and survey research demonstrates that logging involves several distinct implementation 
+decisions rather than a single activity \cite{chen2021asurveyofsoftwareloginstrumentation,gu2023loggingpracticesinsoftwareengineering,fu2014wheredodeveloperslog}.
+\\
+In this thesis, logging guidelines are initially considered according to these four aspects:
 
-\section{Logging in Open-Source Software}
-
-\section{Related Work}
-Recommendations for logging exist in academic literature, industrial documentation, open-source projects and grey literature.
-However, these recommendations are distributed across many different sources and can vary considerably in their scope
-and level of detail. Some guidelines describe general logging principles, whereas others focus on particular technologies,
-programming languages or application domains. Furthermore, practical logging knowledge may be documented inside software
-repositories without being systematically collected or compared with recommendations from research.
-
-
-Modern software systems generate large amounts of log data that collect information about their runtime behaviour.
-Log data are important for understanding how software systems operate and are used for tasks such as debugging,
-system monitoring, anomaly detection and root cause analysis. Inspecting log data from large scale
-and distributed systems is time consuming. As the volume of log data increases, automated processes for log analysis methods are introduced, including log parsing \cite{9134790}\cite{8804456}.
-This approach transforms unstructured log messages into structured data that can be later used for automated log analysis.
-
-The performance of a strong automated log analysis depends on the quality and consistency of the written log data.
-In practice, most logs are written without a clear logging guideline, which leads to inconsistent formats, different structures and results in a variety of logs,
-which is counterproductive for automation. The latest studies show that such inconsistencies can reduce accuracy and reliability \cite{9793976}\cite{gholamian2021comprehensive}\cite{chen2021survey}. 
-These challenges highlight the problem and motivate research on logging guidelines and practices to better support automated log analysis.
-Moreover, logging approaches to automate and improve logging practices have been examined \cite{he2021survey} \cite{7985651} and it shows there is still no approach,
-nether in industry \cite{he2022empirical} or open source project \cite{yuan2012characterizing}, transform log messages into a guideline conform structure.
-It is also important to note that a considerable amount of 'grey' literature \cite{medium_logging_best_practices_2022} \cite{loggly_logging_scale_2022} presents general logging practices
-and guidelines, which are often written by individual practitioners without a guarantee of academic or industry background.
-
-
-
-List related work \emph{and} the result of this work. What is the relevance of this work concerning your thesis? If necessary,\ \emph{emphasize} some words in your text, for example words like \emph{not} or \emph{and} are sometimes crucial for understanding.
-
-%\textbf{Hint:} Do not manually cite author names, use \code|\citeauthor{Newsome:05:DTA}|, for example, \enquote{\citeauthor{Newsome:05:DTA}}.
-%It takes also care if multiple authors are used, for example, \code|\citeauthor{AviramSSHDSVAHD16}| becomes \enquote{\citeauthor{AviramSSHDSVAHD16}}.
-%You could also get the full list of authors by using the command \code|\citeauthor*{AviramSSHDSVAHD16}| (\enquote{\citeauthor*{AviramSSHDSVAHD16}}) but this should only be used in rare cases.
-
-%Similarly, use \code|\citeyear{Newsome:05:DTA}| to get the year (\enquote{\citeyear{Newsome:05:DTA}}).
-
-\textbf{Tools:}
-We do not make any strict guidelines regarding the tools that can be used to manage the related work.
-You can freely choose your own methodology and tools.
-
-According to our experience, the following tools can be used as a starting point to find relevant papers:
 \begin{itemize}
-    \item Search Engines: \href{https://scholar.google.com}{Google Scholar}, \href{https://www.webofknowledge.com/}{Web of Science}, \href{https://dl.acm.org/}{ACM Digital Library}, \href{https://ieeexplore.ieee.org/Xplore/home.jsp}{IEEExplore}, and \emph{\{Search Engine\}} + \emph{\{Conference name\} proceedings}
-    \item Management Tools: \href{https://www.it-services.ruhr-uni-bochum.de/services/software/citavi.html.de}{Citavi}, \href{https://www.zotero.org/}{Zotero}, \href{https://www.mendeley.com/}{Mendeley}, and \href{https://www.jabref.org/}{JabRef}.
+\item \textit{what to log},
+\item \textit{where to log},
+\item \textit{how to log}, and
+\item \textit{log levels and verbosity}.
 \end{itemize}
 
+These aspects provide a common conceptual structure for describing recommendations.
+In this thesis, classifications identified in academic literature provide the initial basis for organising the practical guidance collected from open-source repositories.
+\\
+A particular guideline may address more than one aspect. For example, a recommendation 
+can specify that an exception should be logged while also prescribing the contextual 
+information to include in the corresponding message. Nevertheless, 
+the four aspects provide a useful starting point for organising the principal decisions involved in logging implementation.
+
+\subsection{What to Log}
+\label{subsec:what_to_log}
+
+The aspect \textit{what to log} concerns selecting the information that is recorded during software execution.
+This can include events, errors, state changes, execution progress, system interactions, requests, and runtime values.
+\\
+Empirical logging research has directly examined what information developers record.
+Fu et al.\ emphasise that developers must make informed decisions about both where and what to log \cite{fu2014wheredodeveloperslog}. 
+Pecchia et al.\ investigated event-logging practices in industry and identified different forms of 
+runtime information captured through logging \cite{peccia2015industrypracticesandeventlogging}.
+\\
+The usefulness of log data depends on whether the recorded information provides sufficient context for its intended purpose. 
+Information useful for debugging may differ from information required for monitoring, security analysis or operational maintenance.
+\\
+For example, recording only that an operation failed may provide little diagnostic value. 
+Information identifying the operation, affected entity, relevant runtime state and error condition 
+can make the event considerably easier to investigate.
+\\
+Decisions concerning what to log also include information that should \textit{not} be recorded. 
+This can increase log volume and introduce privacy and security risks.
+\\
+Selecting log content therefore requires weighing the need for useful contextual information against unnecessary or inappropriate data.
+
+\subsection{Where to Log}
+\label{subsec:where_to_log}
+
+The aspect \textit{where to log} concerns where logging statements appear in source code and the software architecture.
+\\
+Fu et al.\ conducted an industrial empirical study on logging locations 
+and identified recurring categories of locations where developers introduce logging statements \cite{fu2014wheredodeveloperslog}. 
+Subsequent work has further investigated and automatically suggested logging locations at the code-block level \cite{li2021whereshallwelog}.
+\\
+A logging statement can capture only the information available at its execution point. 
+Potential locations can therefore include error-handling paths, important control-flow decisions, 
+component boundaries, external interactions and state transitions.
+\\
+Too few logging statements can leave important execution paths unobservable, 
+while excessive placement can create unnecessary output \cite{li2021whereshallwelog}.
+\\
+The placement of logging statements matters because it determines which portions of program execution 
+become observable during later analysis.
+
+\subsection{How to Log}
+\label{subsec:how_to_log}
+
+The aspect \textit{how to log} concerns how logging is implemented and how recorded information is represented.
+\\
+Chen and Jiang organise log instrumentation research around three steps: the logging approach, 
+logging utility integration and logging code composition \cite{chen2021asurveyofsoftwareloginstrumentation}. 
+These aspects show that implementation involves more than deciding which event to record.
+\\
+Logging utilities provide functionality to produce and manage log messages. 
+An empirical study of Java projects found diverse and sometimes complex patterns in the use of logging utilities, 
+including projects that combine multiple utilities or implement project-specific logging abstractions 
+\cite{chen2020studyingtheuseofjavaloggingutilities}.
+\\
+At the message level, how information is logged can include decisions concerning wording, 
+formatting, identifiers, timestamps, error information, contextual values and the representation of dynamic data.
+\\
+Consistent message structures and terminology can improve readability and can additionally support searching,
+filtering, correlation and automated processing.
+\\
+The dimension \textit{how to log} therefore covers both the technical implementation of logging 
+and the way in which the resulting information is represented.
+
+
+\subsection{Guidelines for Log Levels and Verbosity}
+\label{subsec:verbosity_guidelines}
+
+Logging guidelines may also address log-level selection and how much information to generate.
+\\
+Selecting appropriate log levels is an established logging decision and has been 
+addressed by both recommendation systems and automated logging approaches \cite{zhu2015learningtolog,mastropaolo2022usingdeeplearning}.
+Other approaches investigate dynamically adapting logging levels according to system behaviour \cite{mizouchi2019padla}.
+\\
+An unsuitable severity assignment can reduce the usefulness of generated log data. 
+Important failures can receive insufficient attention if assigned an inappropriate level, 
+whereas misuse of high-severity levels can reduce the ability to distinguish critical events.
+\\
+Logging verbosity describes the overall amount and detail of generated output. 
+Higher verbosity can increase the amount of information available for diagnosis, 
+but also increases the volume and cost of logging \cite{gholamian2021whatdistributedsystemssay}.
+\\
+Guidelines concerning log levels and verbosity therefore aim to provide an appropriate 
+level of information for the intended purpose and operational context.
+
+\section{Log Quality and Its Impact on Analysis}
+\label{sec:logging_quality}
+
+The usefulness of logging depends not only on the volume of generated log messages, but also on the quality and relevance of the recorded information.
+Decisions made when logging statements are implemented influence how easily the resulting logs can later be understood, searched, 
+compared and processed. This is particularly important because the information available during debugging or failure investigation 
+is limited to what the program recorded during execution \cite{chen2021asurveyofsoftwareloginstrumentation}.
+\\
+This section therefore considers two related aspects. First, it discusses characteristics that influence the quality 
+and consistency of log messages. Second, it explains how decisions made during logging implementation can affect later log analysis.
+
+\subsection{Log Quality and Consistency}
+\label{subsec:log_quality}
+
+Useful log messages should contain sufficient information to clearly understand the recorded event.
+Important aspects include the completeness of the recorded information, the clarity of the message 
+and the consistent use of terminology, identifiers, formats and severity levels.
+\\
+Incomplete messages make failure investigation harder when important context is missing. 
+For example, a message that only records that an operation failed is of limited use if it does 
+not identify the affected operation, request, component or error condition.
+\\
+The wording of log messages is also relevant. Unclear descriptions or inconsistent terminology 
+can make it harder for developers to search for related events or understand a message's meaning.
+Similar events therefore are represented in a reasonably consistent way across the software system.
+\\
+Consistency also concerns technical aspects of logging. 
+Messages describing comparable events may use different formats, identifiers or log levels across components.
+Such differences can make manual inspection more difficult and can also complicate automated processing. 
+Empirical research on logging maintenance has shown that developers frequently modify logging statements 
+to improve characteristics such as formatting, style and message quality \cite{chen2017characterizingloggingpractices}.
+\\
+Research has also identified recurring anti-patterns in logging code, showing that poorly designed logging 
+statements can reduce the usefulness of the information  \cite{chen2017characterizinganddetectingantipatterns}.
+\\
+At the same time, improving log quality does not simply mean recording more information. 
+Large amounts of repetitive or unnecessary output can make relevant events harder to identify. 
+Log quality therefore depends on providing information that is sufficiently clear and complete without producing unnecessary data.
+
+\subsection{Impact of Logging Decisions on Log Analysis}
+\label{subsec:logging_analysis_relationship}
+
+Earlier logging decisions determine the information available during log analysis.
+Information such as events, identifiers, system states, or contextual values can 
+only support later investigation if the relevant information was recorded during execution.
+In such cases, developers may need to reproduce the problem or introduce additional logging before further analysis is possible \cite{chen2021asurveyofsoftwareloginstrumentation}.
+\\
+How information is represented can also affect later analysis. 
+Consistent message structures and identifiers make it easier to search for related events 
+and to compare information across components. 
+In contrast, inconsistent or highly variable log messages may require further processing before systematic analysis is possible.
+\\
+This is also relevant for automated log analysis. 
+Many automated approaches first transform raw log messages into a more structured form \cite{he2021asurveyonautomatedloganalysis}. 
+One common preprocessing step is log parsing, which identifies recurring message structures 
+and separates constant parts of a message from variable runtime values \cite{dai2022logram,zhu2019toolsandbenchmarksforautomatedlogparsing}.
+\\
+For example, the messages
+
+\begin{verbatim}
+User 193 failed login from 192.168.1.20
+User 417 failed login from 192.168.1.35
+\end{verbatim}
+
+share the same underlying event structure even though the user identifiers and IP addresses differ. 
+A parser may represent both messages using a common template such as:
+
+\begin{verbatim}
+User <*> failed login from <*>
+\end{verbatim}
+
+This allows similar events to be grouped and processed together. 
+More recent approaches also address heterogeneous log sources in which different 
+systems or components use different message structures \cite{liu2022uniparser}.
+\\
+The quality of this preprocessing can influence later analysis tasks. 
+For example, previous work has investigated how the choice of log parser affects the performance of log-based anomaly detection \cite{fu2022anempiricalstudy}.
+\\
+For this thesis, however, the main relevance of automated log analysis is the connection to logging implementation. 
+Decisions about \textit{what to log}, \textit{where to log}, \textit{how to log} and \textit{log verbosity} 
+determine the information that is available afterwards. 
+These decisions therefore influence both developers who inspect logs manually and tools that process logs automatically.
+
+\section{Related Work}
+\label{sec:related_work}
+
+Previous research has investigated software logging from several perspectives. 
+These include empirical studies of developer logging practices, approaches for assisting logging implementation, 
+research on individual logging decisions, and work examining the use and analysis of generated logs.
+\\
+A systematic mapping study by Gu et al.\ provides an overview of research on logging practices 
+in software engineering \cite{gu2023loggingpracticesinsoftwareengineering}. 
+More recently, Batoun et al.\ reviewed research on software logging practices 
+and investigated remaining challenges across instrumentation, storage and log preprocessing \cite{batoun2024aliteraturereview}.
+\\
+The following subsections focus on the areas most closely related to the objectives of this thesis.
+
+\subsection{Studies on Developer Logging Practices}
+
+Yuan et al.\ conducted an early empirical investigation of logging practices in open-source software
+and examined how logging statements are used and modified during software evolution \cite{yuan2012characterzingloggingpractices}.
+\\
+Chen and Jiang later replicated and extended this type of analysis using Java projects from the Apache Software Foundation.
+Their results similarly demonstrate that logging code is actively maintained throughout software evolution \cite{chen2017characterizingloggingpractices}.
+\\
+Researchers have also studied industrial logging practices.
+Rong et al.\ examined whether the information developers intend to capture is 
+actually recorded and identified differences between developers' intentions, 
+concerns, and the logging implemented in practice \cite{rong2020canyoucaputreinformation}.
+Further research has examined how developers' backgrounds and experiences influence their logging practices \cite{rong2023howdodevelopers}.
+\\
+Logging practices have additionally been investigated within more specific contexts,
+including mobile analytics \cite{harty2021loggingpracticewithmobileanalytics} and test code \cite{zhang2022studyingloggingpractice}.
+\\
+These studies provide important empirical knowledge concerning how developers implement
+and maintain logging. The developer study in this thesis complements this research 
+by examining developers' experiences across logging implementation, log analysis, 
+fault localisation, root cause analysis and associated challenges.
+
+\subsection{Research on Logging Guidelines}
+
+Previous work has investigated several decisions for which developers may require guidance.
+\\
+Fu et al.\ studied where developers introduce logging statements in industrial software 
+and highlighted the importance of informed decisions regarding both where and what to log \cite{fu2014wheredodeveloperslog}.
+\\
+Pecchia et al.\ investigated event-logging practices in an industrial context 
+and examined the runtime information recorded through logging \cite{peccia2015industrypracticesandeventlogging}.
+\\
+Other research has attempted to support logging decisions automatically.
+Approaches that derive logging patterns from existing software have been proposed to help
+developers make logging decisions \cite{zhu2015learningtolog}. 
+Subsequent studies have examined logging locations in greater detail and proposed more specific
+recommendations for placing logging statements \cite{li2021whereshallwelog}.
+\\
+Recent work has also investigated generating complete logging statements. 
+For example, LANCE addresses logging location, logging level and message generation \cite{mastropaolo2022usingdeeplearning}. 
+More recent studies have explored generating logging statements for code blocks \cite{fu2024endtoendlogstatement} 
+and using broader program context to improve logging statement generation \cite{li2024gostatic}.
+\\
+These approaches focus on particular logging decisions or on automatically supporting logging instrumentation and demonstrate continued research interest in this area. 
+However, this thesis has a different objective. Rather than proposing another automated recommendation technique, 
+it identifies logging recommendations in academic literature, uses literature-derived classifications as the initial analytical framework, 
+and constructs a consolidated catalogue from logging guidance documented in open-source repositories. 
+The academic recommendations are subsequently compared with the consolidated open-source catalogue.
+
+\subsection{Research on Logging Quality and Analysis}
+
+Researchers then use the generated logs for a range of analysis activities. 
+Automated log-analysis research includes areas such as parsing, anomaly detection, failure prediction 
+and diagnosis \cite{he2021asurveyonautomatedloganalysis}.
+\\
+Log parsing has received particularly extensive attention. 
+Zhu et al.\ evaluated tools and benchmarks for automated log parsing \cite{zhu2019toolsandbenchmarksforautomatedlogparsing}, 
+while Logram uses $n$-gram dictionaries for efficient parsing \cite{dai2022logram}. 
+Other approaches, such as UniParser, address heterogeneous log data \cite{liu2022uniparser}.
+\\
+Research has also shown that preprocessing decisions can affect downstream analysis. 
+Fu et al.\ empirically examined the effect of different log parsers on anomaly-detection performance \cite{fu2022anempiricalstudy}.
+\\
+From the perspective of this thesis, this literature is relevant 
+because the usefulness of later analysis partly depends on earlier logging decisions. 
+Chen and Jiang explicitly emphasise that the effectiveness of log-management and analysis techniques depends 
+strongly on the quality of instrumented logging code \cite{chen2021asurveyofsoftwareloginstrumentation}.
+\\
+Consequently, logging guidelines can influence not only the process of implementing logging 
+but also the usefulness and analysability of the generated log information.
+
 \section{Research Gap}
+\label{sec:research_gap}
 
-
-
+Existing research provides substantial knowledge concerning software logging. 
+Empirical studies describe how developers introduce and maintain logging statements, 
+while other research investigates individual logging decisions and automated techniques 
+for supporting log instrumentation \cite{chen2021asurveyofsoftwareloginstrumentation,gu2023loggingpracticesinsoftwareengineering}.
+\\
+Research has also documented a range of remaining practical challenges related 
+to logging instrumentation, storage, configuration, and log preparation for further analysis \cite{batoun2024aliteraturereview}.
+\\
+However, logging knowledge comes from different sources. Academic publications contain
+empirical findings, recommendations and proposed techniques, while practical logging guidance may
+also be documented directly within software projects, technical documentation, development instructions
+and other practical sources.
+\\
+These sources can differ in terminology, scope, level of detail and intended context. 
+In particular, recommendations contained within open-source repositories can be distributed across README files,
+development documentation, coding instructions, configuration material and source files rather 
+than appearing in dedicated guideline documents.
+\\
+Within the literature and sources examined in this thesis, this creates an opportunity to identify academic logging recommendations,
+organise practical open-source logging guidance in a structured, and traceable catalogue,
+and examine how the recommendations identified in academic research are represented in the collected open-source guidance.
+\\
+This thesis therefore addresses the research problem from four complementary perspectives.
+\\
+First, a developer study investigates current practices and challenges associated
+with logging implementation, log analysis and fault localisation.
+\\
+Second, the thesis analyses academic literature to identify actionable logging recommendations
+and literature-derived classifications relevant to the principal logging decisions.
+\\
+Third, logging guidance documented in open-source repositories is identified, 
+extracted, normalised, and consolidated to construct a structured, traceable catalogue of practical logging recommendations.
+\\
+Finally, the resulting open-source guideline catalogue is classified and analysed to identify recurring themes.
+At the same time, the academic recommendation set is compared with the consolidated catalogue to examine how research-based
+recommendations are represented within the collected practical guidance.
+\\
+Together, these activities connect developers' reported experiences, 
+academic logging research and practical open-source guidance while preserving their distinct roles within the study.
