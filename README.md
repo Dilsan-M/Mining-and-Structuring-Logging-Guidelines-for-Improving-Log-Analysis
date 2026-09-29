@@ -11,6 +11,8 @@ The Excel workbook should be used when the underlying catalogue data or mappings
 
 This repository contains the research artefacts, processing scripts, and catalogue developed for the Master's thesis “Mining and Structuring Logging Guidelines for Improving Log Analysis.”
 
+## Overview
+
 The project investigates how logging is performed in practice, which logging recommendations appear in academic literature and open-source repositories, and how these recommendations can be structured into a reusable logging guideline catalogue.
 Overview
 
@@ -39,7 +41,7 @@ The thesis is organized around four main research questions:
 
     RQ4 — Catalogue themes: Which themes and characteristics are represented within the resulting logging guideline catalogue?
 
-Methodology
+## Methodology
 
 The study follows a multi-stage pipeline.
 1. Developer Study
@@ -144,7 +146,7 @@ Manual validation is used to inspect:
 
     examples retained from code or configuration.
 
-Logging Guideline Catalogue
+## Logging Guideline Catalogue
 
 The final catalogue organizes logging recommendations by dimension and theme.
 What to log
@@ -234,7 +236,7 @@ Open-Source Sources -> Content Extraction
                            v
                   Analysis and Discussion
 
-Reproducibility
+## Reproducibility
 
 The processing workflow uses Python-based scripts and spreadsheet outputs for intermediate inspection.
 
