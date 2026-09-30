@@ -1742,6 +1742,13 @@ occurrences were separated. If another canonical guideline already represented t
 the occurrence was reassigned to that guideline rather than creating a duplicate canonical recommendation. 
 A new canonical guideline was retained only where no sufficiently equivalent existing guideline was identified.
 \\
+As part of the final validation, consolidated guidelines whose source-level
+occurrences had previously been associated with different dimensions or themes
+were re-examined against their underlying Content. Each canonical guideline
+was assigned to the single high-level logging dimension and theme that most
+specifically represented its primary recommendation. Earlier source-level
+classifications were retained in the consolidation mapping for traceability.
+\\
 For example, one initially consolidated error-related guideline contained source occurrences related to
 several distinct concepts, including error logging, stack traces, correlation identifiers, structured 
 error representation, and diagnostic configuration. During manual validation, these occurrences were 
@@ -1755,27 +1762,35 @@ occurrence to exactly one canonical guideline.
 
 \subsection{Distribution Across Logging Categories}
 
-Following the final thematic validation, the 2.289 valid source-level guideline
-occurrences resulted in 2.293 assignments across the four high-level logging
-dimensions. The number of assignments is slightly higher than the number of
-source-level guideline occurrences because a small number of guidelines genuinely
-addressed more than one logging dimension and therefore retained multiple
-dimension assignments.
+Following the final thematic validation, each of the 2.289 valid source-level
+guideline occurrences was associated with exactly one final high-level logging
+dimension. These source-level occurrences represent the individual instances of
+logging guidance identified across the collected sources. The final classification
+therefore contained 2.289 source-level dimension assignments.
 \\
-The largest dimension was \textit{How to log}, with 923 source-level assignments
-(40.3\%). \textit{What to log} contained 646 assignments (28.2\%),
-\textit{Log levels and verbosity} contained 391 assignments (17.1\%), and
-\textit{Where to log} contained 333 assignments (14.5\%).
+Semantic consolidation grouped source-level occurrences representing the same
+underlying recommendation while preserving the mapping to their sources.
+As a result, the 2.289 source-level occurrences were represented by 2.127 final
+canonical guidelines. Each canonical guideline was assigned to exactly one
+high-level logging dimension and one corresponding theme. The source-level counts
+therefore describe how frequently guidance belonging to each dimension occurred in
+the collected corpus. In contrast,the consolidated counts describe the number of
+distinct canonical recommendations retained in the final catalogue.
 \\
-The distribution shows that practical open-source guidance addressed
-\textit{How to log} most frequently, although its share was lower after final
-validation than in the initial classification. Reassigning guidelines
-from broad themes such as \textit{Logging approach} increased the representation
-of the other logging dimensions.
+At source level, \textit{How to log} formed the largest dimension, with 921
+occurrences (40.2\%). \textit{What to log} contained 644 occurrences (28.1\%),
+\textit{Log levels and verbosity} contained 391 occurrences (17.1\%), and
+\textit{Where to log} contained 333 occurrences (14.5\%).
 \\
-The detailed thematic classification within these four dimensions is presented in
+At the consolidated level, \textit{How to log} contained 865 canonical guidelines,
+followed by \textit{What to log} with 603, \textit{Log levels and verbosity} with
+337, and \textit{Where to log} with 322. The differences between the source-level
+and consolidated counts reflect the consolidation of semantically equivalent
+recommendations that occurred independently in different sources.
+\\
+The detailed distribution of source-level occurrences and consolidated guidelines
+across dimensions and themes is presented in
 Section~\ref{sec:results-themes}.
-
 
 \subsection{Answer to RQ3}
 
@@ -1886,37 +1901,65 @@ After final validation, each of the 2.289 valid source-level occurrences remaine
 mapped to exactly one canonical guideline. The final catalogue contained 2.127
 canonical guidelines.
 \\
-At theme level, a small number of guidelines genuinely addressed more than one
-logging dimension or thematic concept. The 2.289 source-level occurrences therefore
-resulted in 2.293 final source-level dimension assignments. This distinction is
-maintained in the following tables so that multi-dimensional recommendations are
-not artificially forced into a single category.
+Each canonical guideline was assigned to one final high-level logging
+dimension and corresponding theme. Consequently, the 2.289 valid source-level
+occurrences resulted in 2.289 final source-level dimension assignments.
+Earlier source-level classifications that associated content with more than
+one logging dimension were retained in the consolidation mapping for
+traceability but were not counted as multiple final thematic assignments.
 
 \begin{table}[H]
     \centering
+    \resizebox{0.9\textwidth}{!}{%
+        \begin{tabular}{lrrrr}
+            \toprule
+            \textbf{Dimension} &
+            \textbf{Source-level} &
+            \textbf{Source-level \%} &
+            \textbf{Consolidated} &
+            \textbf{Consolidated \%} \\
+            \midrule
 
-    \begin{tabular}{lrr}
-        \toprule
-        \textbf{Dimension} &
-        \textbf{Source-level assignments} &
-        \textbf{Percentage} \\
-        \midrule
-        What to log & 646 & 28.2\% \\
-        Where to log & 333 & 14.5\% \\
-        How to log & 923 & 40.3\% \\
-        Log levels and verbosity & 391 & 17.1\% \\
-        \midrule
-        \textbf{Total assignments} & \textbf{2.293} & \textbf{100.0\%} \\
-        \bottomrule
-    \end{tabular}
+            What to log
+            & 644 & 28.1\%
+            & 603 & 28.4\% \\
 
-    \caption{Distribution of final source-level assignments across the four
-    logging dimensions.}
+            Where to log
+            & 333 & 14.5\%
+            & 322 & 15.1\% \\
+
+            How to log
+            & 921 & 40.2\%
+            & 865 & 40.7\% \\
+
+            Log levels and verbosity
+            & 391 & 17.1\%
+            & 337 & 15.8\% \\
+
+            \midrule
+
+            \textbf{Total}
+            & \textbf{2.289} & \textbf{100.0\%}
+            & \textbf{2.127} & \textbf{100.0\%} \\
+
+            \bottomrule
+        \end{tabular}
+    }
+
+    \caption{Distribution of source-level guideline occurrences and final
+    consolidated guidelines across the four logging dimensions.}
+
     \label{tab:dimension-distribution}
 \end{table}
-
+Percentages may not sum to exactly 100\% due to rounding.
+\\ 
+Source-level assignments ($n=2.289$) represent the individual occurrences
+identified in the collected sources, while consolidated guidelines
+($n=2.127$) represent the final canonical recommendations after semantic
+consolidation and validation.
+\\
 At the dimension level, \textit{How to log} remained the largest category after final
-validation, accounting for 923 source-level assignments. The remaining assignments
+validation, accounting for 921 source-level assignments. The remaining assignments
 were distributed across \textit{What to log}, \textit{Log levels and verbosity},
 and \textit{Where to log}. The following subsections present the detailed
 distribution of the validated themes within these four dimensions.
@@ -1937,12 +1980,12 @@ themes originated from the deductive literature-based codebook, while
         \textbf{Source-level} &
         \textbf{Consolidated} \\
         \midrule
-        State dump & Deductive & 256 & 246 \\
+        State dump & Deductive & 254 & 245 \\
         Execution tracing & Deductive & 24 & 20 \\
         Event reporting & Deductive & 337 & 309 \\
         Sensitive-data exclusion & Inductive & 29 & 29 \\
         \midrule
-        \textbf{Total} & & \textbf{646} & \textbf{604} \\
+        \textbf{Total} & & \textbf{644} & \textbf{603} \\
         \bottomrule
     \end{tabularx}
 
@@ -2030,6 +2073,13 @@ storage, rotation or retention of generated logging information.
 instances, while \textit{Logging configuration location} described where logging
 configuration should be defined or maintained.
 \\
+For \textit{Logger placement and reuse}, the consolidated count is one higher
+than the source-level count. This difference results from a canonical guideline
+being reassigned to this theme during final validation, while the corresponding
+source-level occurrence retained its earlier classification in the source-level
+mapping used for the occurrence-based distribution. The source-level and
+consolidated counts therefore reflect different units of analysis.
+\\
 The literature-derived program-location themes were represented much less
 frequently. \textit{Logic-branch logging} contained 12 source-level occurrences,
 \textit{Observing-point logging} six, \textit{Exception logging} 16 and
@@ -2062,13 +2112,13 @@ It contained six themes: three deductive and three inductive.
         \textbf{Consolidated} \\
         \midrule
         Logging approach & Deductive & 374 & 360 \\
-        Logging utility integration & Deductive & 217 & 202 \\
+        Logging utility integration & Deductive & 215 & 201 \\
         Logging code composition & Deductive & 242 & 218 \\
         Log lifecycle management & Inductive & 53 & 52 \\
         Logging verification & Inductive & 16 & 16 \\
         Sensitive-data protection & Inductive & 21 & 18 \\
         \midrule
-        \textbf{Total} & & \textbf{923} & \textbf{866} \\
+        \textbf{Total} & & \textbf{921} & \textbf{865} \\
         \bottomrule
     \end{tabularx}
 
@@ -2090,7 +2140,7 @@ recommended action, technical context, conditions and restrictions.
 covered recommendations concerning how log statements, messages, fields, and
 structured records should be constructed.
 \\
-\textit{Logging utility integration} contained 217 occurrences and represented
+\textit{Logging utility integration} contained 215 occurrences and represented
 guidance concerning the integration and configuration of logging frameworks,
 handlers, appenders, middleware and related utilities.
 \\
@@ -2246,24 +2296,22 @@ high-level logging dimensions. Seventeen themes were derived deductively from th
 academic literature, while 11 additional themes were identified inductively from
 recurring concepts in the collected open-source guideline corpus.
 \\
-Of the 28 themes, 27 appeared in at least one source-level guideline.
+Of the 28 themes, 27 appeared in at least one canonical guideline.
 The deductive theme \textit{Assertion-check logging} was retained in the
 literature-derived codebook but was not observed in the collected open-source
 corpus.
 \\
-Following final validation, the 2.289 source-level guideline occurrences resulted
-in 2.293 source-level dimension assignments because a small number of guidelines
-genuinely addressed more than one logging dimension. \textit{How to log} remained
-the largest dimension, with 923 assignments (40.3\%), followed by
-\textit{What to log} with 646 assignments (28.2\%),
-\textit{Log levels and verbosity} with 391 assignments (17.1\%), and
-\textit{Where to log} with 333 assignments (14.5\%).
+Following final validation and consolidation, the catalogue contained 2,127
+canonical guidelines, each assigned to one final dimension and one final theme.
+\textit{How to log} remained the largest dimension, with 865 canonical guidelines
+(40.7\%), followed by \textit{What to log} with 603 guidelines (28.3\%),
+\textit{Log levels and verbosity} with 337 guidelines (15.8\%), and
+\textit{Where to log} with 322 guidelines (15.1\%).
 \\
 Within the final validated classification, \textit{Logging approach} remained the
-largest individual theme, with 374 source-level assignments and 360 canonical
-assignments. Its final size was substantially lower than in the initial
-classification because guidelines better represented by other
-themes were reassigned during manual validation.
+largest individual theme, containing 360 canonical guidelines. Its final size was
+substantially lower than in the initial classification because guidelines that were
+better represented by more specific themes were reassigned during manual validation.
 \\
 The inductive analysis extended the initial literature-derived structure in several
 areas. Additional themes captured sensitive-data exclusion and protection, logging

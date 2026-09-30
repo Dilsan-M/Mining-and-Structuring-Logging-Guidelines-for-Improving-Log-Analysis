@@ -1141,10 +1141,15 @@ Leave the NO_GUIDELINES empty for Theme and Theme Basis
 \label{lst:prompt_theme_classification}
 \end{listing}
 
-The theme assignment was based on the semantic meaning of the normalised guideline.
-The original Content and Content Tag remained available as contextual information when
-additional interpretation was required. The Content Tag itself was not automatically
-treated as a Theme.
+The theme assignment was based on the semantic meaning of the normalised
+guideline. Each guideline was assigned to one final high-level logging
+dimension and one corresponding theme. Where a guideline or its underlying
+source content had previously been associated with more than one dimension,
+the original Content was consulted, and the guideline was assigned to the
+dimension that most specifically represented its primary recommendation.
+The original Content, Content Tag and source-level classifications remained
+available for contextual interpretation and traceability. The Content Tag
+itself was not automatically treated as a Theme.
 \\
 After the initial classification, inductively generated themes were reviewed across
 the catalogue. Overlapping inductive themes representing the same concept were merged, and their names standardised, while distinct concepts were retained separately. The
@@ -1171,6 +1176,17 @@ recommended action, the logging concern to which the action referred and any con
 or restrictions attached to the recommendation. Guidelines addressing a similar topic
 but containing a distinct recommendation, condition or restriction were retained
 separately. Uncertain cases were also kept separate.
+\\
+When semantically equivalent source-level guidelines occurred under different
+dimensions or themes, their original Content was compared before consolidation
+to determine whether the apparent equivalence resulted from normalisation or
+represented the same underlying recommendation. Where consolidation was
+appropriate, the resulting canonical guideline was assigned to the single
+dimension and theme that most specifically represented its primary
+recommendation. The original source-level dimension and theme assignments were
+retained in the consolidation mapping for traceability. Where the underlying
+recommendations were meaningfully different, or the equivalence remained
+uncertain, the guidelines were retained separately.
 \\
 Due to the number of guidelines contained in the catalogue, AI-assisted semantic
 comparison using GPT-5.6 Sol was used to support the identification and consolidation
@@ -1303,6 +1319,13 @@ canonical guideline, and every canonical guideline remained linked to the source
 guideline or guidelines from which it had been derived. Example Reasons originating
 from code, configuration, usage, implementation or output examples remained separately
 linked to the corresponding consolidated guideline.
+\\
+The final validation additionally checked that each canonical guideline was
+assigned to one final high-level logging dimension and corresponding theme.
+Where consolidation had combined equivalent source occurrences with different
+earlier classifications, the most specific classification supported by the
+underlying recommendation was retained as the final assignment, while the
+original classifications remained traceable in the mapping.
 \\
 The resulting catalogue therefore preserves the relationship between the 
 source content, contextual Content Tag, normalised source-level guideline, assigned
