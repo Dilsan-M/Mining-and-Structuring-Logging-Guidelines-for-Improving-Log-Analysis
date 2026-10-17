@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logging Guidelines Assistant</title>
+<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<aside class="sidebar">
+    <h1>Logging Guidelines</h1>
+    <p class="status" id="status">connecting…</p>
+
+    <label for="docType">Source type</label>
+    <select id="docType">
+        <option value="">All sources</option>
+        <option value="guideline">Guidelines</option>
+        <option value="example">Examples</option>
+        <option value="theme">Theme definitions</option>
+        <option value="literature">Academic literature</option>
+    </select>
+
+    <label for="theme">Theme</label>
+    <select id="theme">
+        <option value="">All themes</option>
+    </select>
+
+    <label for="dimension">Dimension</label>
+    <select id="dimension">
+        <option value="">All dimensions</option>
+        <option value="What to log">What to log</option>
+        <option value="Where to log">Where to log</option>
+        <option value="How to log">How to log</option>
+        <option value="Log verbosity">Log verbosity</option>
+    </select>
+
+    <label for="topK">Context items: <span id="topKValue">8</span></label>
+    <input type="range" id="topK" min="3" max="20" value="8">
+
+    <div class="examples">
+        <p>Try asking</p>
+        <button class="example">When should I use ERROR instead of WARN?</button>
+        <button class="example">How should sensitive data be handled in logs?</button>
+        <button class="example">Where should log statements be placed?</button>
+        <button class="example">What belongs in a structured log record?</button>
+    </div>
+
+    <div class="history">
+        <div class="history-head">
+            <p>Saved chats</p>
+            <div class="history-actions">
+                <button id="saveCurrent" type="button" class="history-clear">Save current</button>
+                <button id="exportHistory" type="button" class="history-clear">Export</button>
+                <button id="importHistory" type="button" class="history-clear">Import</button>
+                <button id="clearHistory" type="button" class="history-clear">Clear all</button>
+                <input id="importHistoryFile" type="file" accept="application/json" hidden>
+            </div>
+        </div>
+        <input id="historySearch" class="history-search" type="text" placeholder="Search saved chats">
+        <div id="historyList" class="history-list"></div>
+    </div>
+
+    <button id="clear" class="clear">Clear conversation</button>
+</aside>
+
+<main class="chat">
+    <div id="messages" class="messages">
+        <div class="empty">
+            <h2>Ask about logging practices</h2>
+            <p>Answers are grounded in the consolidated guideline catalogue and cite
+               the retrieved items by number.</p>
+        </div>
+    </div>
+
+    <form id="composer" class="composer">
+        <textarea id="input" rows="1" placeholder="Ask a question…  (Enter to send, Shift+Enter for newline)"></textarea>
+        <button type="submit" id="send">Send</button>
+    </form>
+</main>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

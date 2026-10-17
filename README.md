@@ -9,6 +9,10 @@ There are two main ways to inspect the final logging guideline catalogue:
 
 The Excel workbook should be used when the underlying catalogue data or mappings need to be examined directly, while `logging_catalogue` provides the corresponding visual representation.
 
+## Local Agentic App
+
+The repository also includes a local retrieval-augmented chat app for exploring the catalogue. See [agenticapp/README.md](agenticapp/README.md) for installation and setup. The required workbooks, generated search index, and local model are not included in the repository.
+
 This repository contains the research artefacts, processing scripts, and catalogue developed for the Master's thesis “Mining and Structuring Logging Guidelines for Improving Log Analysis.”
 
 ## Overview
