@@ -1,0 +1,118 @@
+[project]
+name = "memex"
+version = "0.0.0"
+description = "Take notes and long-term memory for LLMs"
+authors = [
+  {name="Jasper Ginn", email="jasperginn@gmail.com"}
+]
+requires-python = ">=3.12"
+readme = "README.md"
+dependencies = [
+    "memex_core",
+    "memex_cli",
+    "memex_mcp",
+    "memex_common",
+    "memex_eval",
+]
+
+[tool.uv.sources]
+memex_core = { workspace = true }
+memex_cli = { workspace = true }
+memex_mcp = { workspace = true }
+memex_common = { workspace = true }
+memex_eval = { workspace = true }
+hermes-agent = { git = "https://github.com/NousResearch/hermes-agent.git", branch = "main" }
+
+[tool.uv.workspace]
+members = [
+    "packages/cli",
+    "packages/common",
+    "packages/core",
+    "packages/eval",
+    "packages/hermes-plugin",
+    "packages/mcp",
+]
+
+[tool.uv]
+package = false
+required-version = "~=0.10.0"
+keyring-provider = "subprocess"
+index-strategy = "first-index"
+
+[tool.ruff]
+lint.ignore = ["E501"]
+lint.extend-ignore = ["E402"]
+lint.select = ["E", "F", "W", "LOG"]
+extend-exclude = [
+  "__pycache__",
+  ".eggs",
+  ".git",
+  ".venv",
+  "build",
+  "dist",
+  "notebooks",
+  ".cache"
+]
+line-length = 100
+indent-width = 4
+
+# Logging policy: new code should use structlog.get_logger() instead of
+# logging.getLogger(). Existing logging.getLogger() calls will be converted
+# opportunistically. The LOG rule set is enabled above to catch common
+# logging anti-patterns (e.g. LOG001: direct use of logging.WARN).
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
+
+[tool.mypy]
+plugins = ['pydantic.mypy']
+follow_imports = "silent"
+explicit_package_bases = true
+
+[tool.pytest.ini_options]
+# Hard per-test timeout so a hung test can't lock CI for six hours.
+# Thread method is compatible with asyncio tests and forces a traceback
+# on the stuck thread at exit.
+addopts = "--timeout=300 --timeout-method=thread"
+markers = [
+  "integration: marks integration tests",
+  "llm: marks tests that require LLM calls",
+  "llm_mock: marks tests using the mock_dspy_lm fixture (no real LLM)",
+  "benchmark: marks performance benchmark tests",
+]
+pythonpath = ["packages/mcp/tests"]
+cache_dir = "/home/vscode/.cache/pytest"
+asyncio_mode = "auto"
+
+[dependency-groups]
+hermes-integration = [
+    "hermes-agent",
+]
+dev = [
+    "nest-asyncio>=1.6.0",
+    "prek>=0.2.25",
+    "ipykernel>=6.29.5",
+    "pytest>=8.4.2",
+    "pytest-asyncio>=1.2.0",
+    "pytest-httpx>=0.27.0",
+    "pytest-async>=0.1.1",
+    "pytest-timeout>=2.3",
+    "testcontainers>=4.14.0",
+    "pytest-rerunfailures>=16.1",
+    "pyinstrument>=5.1.2",
+    "ruff>=0.14.14",
+    "pytest-cov>=7.0.0",
+    "metaphone>=0.6",
+    "hypothesis>=6.151.9",
+    "pytest-benchmark>=5.2.3",
+    "s3fs>=2024.6.0",
+    "gcsfs>=2024.6.0",
+    "minio>=7.2.0",
+    "types-dateparser>=1.3.0.20260211",
+    "matplotlib>=3.10.8",
+    "seaborn>=0.13.2",
+]
+docs = [
+    "zensical>=0.0.25",
+]

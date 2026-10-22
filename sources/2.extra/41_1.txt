@@ -1,0 +1,146 @@
+Developer
+Introduction
+Logging is a window into what is going on in an application, it provides details on the procedures that are taking place within the application. The details that are obtained can vary, this can be recording unusual circumstances or errors that may be occurring in the program. Sometimes, we want a lot of details regarding the issue, other times we want to track that everything is running smoothly. Logging can give the reader a real-time look into the current status of an application as well as the history of what has gone on while the application was live, if done correctly.
+Once you have an application in production, log messages are often your only lifeline to discover why something in your application isn’t working as expected. <what_to_log>It is important to log as much relevant, contextual information as possible when we log.</what_to_log> The purpose of this blog is to explain the best practices and importance when it comes to logging. We will look at how we can enhance our logging to help with speedy and more accurate debugging.
+Why is it important?
+I have worked on projects where the logging sometimes looked like this:
+q
+.logger.info “Processing results”;
+.[+;input;{.logger.error x; ‘x}];
+2020.08.03D00:26:14.870645000 GMT | Processing results
+2020.08.03D00:26:14.870645000 GMT | type
+In this example, there is no context being logged making it almost impossible to determine where the error would have come from and what may be going on inside the application. As mentioned earlier logging is often one of the few lifelines available in production so you want to log as much relevant, contextual data as possible. In this blog we will look at my guiding principles on doing that.
+Five Levels of Logging Explained
+Below are the five main levels of logging according to industry standards and when to use them, ranking from highest to lowest priority.
+Fatal
+<log_verbosity>This represents a catastrophic situation in the application. This is the worst-case scenario and should be used when the application is about to abort to prevent some sort of serious problem or corruption. Ideally, we shouldn’t have many of these types of logs. This should only be used when a process is about to terminate itself by calling exit 1 /2.
+.z.exit
+is useful in this situation.</log_verbosity>
+Error
+<log_verbosity>Error represents a failure occurring within the application. Here we could have something like a connection going down or a file missing, that will typically require attention from someone sooner or later. Unlike Fatal, an error does not usually lead to the application going down but rather the application operating suboptimally until remedial action is taken.</log_verbosity>
+Warn
+<log_verbosity>Warn should be used to indicate a possible problem or an unusual circumstance, perhaps the application tried to connect to a service and failed before finally reconnecting after some automatic retries. It typically means the application remains fully functional but should be investigated to ensure it isn’t indicative of a more serious problem.</log_verbosity>
+Info
+<log_verbosity>As a window into the application status and progress, Info level should be the predominant logging level, detailing normal application behavior. During regular operations, we won’t be too concerned about these. However, when a higher priority level log comes in such as a Warn, Error or Fatal then Info should provide supporting context and insight in tracing what happened leading up to and after a problem.</log_verbosity>
+Debug
+<log_verbosity>Debug This level is mostly used for development to provide more granular, diagnostic information. Here you will provide more detail than you’d generally want in production. Highly detailed tracing that can be used for development and for fellow developers. These should generally be removed from the production application.</log_verbosity>
+Logging More Details with Diagnostic Contexts
+Having determined that we want to log as much relevant information as possible, we need to make this information easy to read for maintenance teams. <how_to_log><what_to_log>This is where the use of a well-thought-out banner comes in. Every log message should include the uniform banner to make it easy to read and understand for all team members. Here are some of the things that should be included in a good log banner.</what_to_log></how_to_log>
+Date and Time (include time zone!)
+q
+2020.08.03D00:26:14.870645000 GMT|process name|info|0|jmckeown|121.3 KiB/4.0 GiB (0.0%)|log message
+<what_to_log><how_to_log>Keeping track of the date and the time of each log is important. Every log message should display the date and time to the millisecond (or better if possible) along with the time zone. Not including the time zone is a common mistake, unfortunately, and reduces the value of the information.</how_to_log></what_to_log>
+Process name
+q
+2020.08.03D00:26:14.870645000 GMT|process name|info|0|jmckeown|121.3 KiB/4.0 GiB (0.0%)|log message
+<what_to_log><how_to_log>This one is pretty self-explanatory. When looking at multiple log files and switching between them, you can lose track of where you are. Being able to quickly and easily see the process name that you are using makes investigation easier and avoids looking at the wrong log file. A combination of
+.Q.opt
+and
+.z.X
+is one way to find the name of the process that is currently logging.</how_to_log></what_to_log>
+Log level type
+q
+2020.08.03D00:26:14.870645000 GMT|process name|info|0|jmckeown|121.3 KiB/4.0 GiB (0.0%)|log message
+As explained above the levels of logging are important and provide insight from the developer’s perspective on what they consider the severity of the problem being logged and how urgently it should be addressed.
+Handle (.z.w)
+q
+2020.08.03D00:26:14.870645000 GMT|process name|info|0|jmckeown|121.3 KiB/4.0 GiB (0.0%)|log message
+<what_to_log><how_to_log>It can be useful to see the handle if one has been opened in order to debug issues related to a certain handle using
+.z.w
+.</how_to_log></what_to_log>
+User (.z.u)
+q
+2020.08.03D00:26:14.870645000 GMT|process name|info|0|jmckeown|121.3 KiB/4.0 GiB (0.0%)|log message
+<what_to_log><how_to_log>Tracking the users in the logs is very important. By using
+.z.u
+, we can easily see who is querying the system and can be useful in tracking down issues. For example, if a client complains that they cannot access a certain process, we can check the logs and can clearly see that a particular user who has been querying for large sets of data causes the process to hang. As a result of our appropriate logging, we can now take the steps to stop that user from sending bad queries and have remedied the problem quickly and effectively.</how_to_log></what_to_log>
+Memory usage
+q
+2020.08.03D00:26:14.870645000 GMT|process name|info|0|jmckeown|121.3 KiB/4.0 GiB (0.0%)|log message
+<what_to_log><how_to_log>Memory usage is a key component for any high-frequency database system and one of the most common problems that can cause issues in production. It can be relatively difficult to know what the memory usage was at a time in the past. For this reason, it can be extremely helpful to log the memory usage in the logs with
+.Q.w
+. Striking the balance between human-readable and machine-readable is important. In this example, it is very easy for a human to see this when the memory limit has been reached, however, this is not easily parsable for a machine. Discussion around this with team members is important to outweigh the pros and cons for the project in question.</how_to_log></what_to_log>
+Log message
+q
+2020.08.03D00:26:14.870645000 GMT|process name|info|0|jmckeown|121.3 KiB/4.0 GiB (0.0%)|log message
+<what_to_log>Finally, the log message which contains the information regarding the status of the application, this is the part that will add color to the history of what has occurred in the application.</what_to_log>
+Real life examples of good logging
+Let’s return to the piece of code from earlier in the blog and assume it is referring to a really important function in our process.
+q
+.logger.info “Processing results”;
+.[+;input;{.logger.error x; ‘x}];
+We want to use what we have learned and apply it to this function as illustrated in this oversimplified example:
+<how_to_log><what_to_log>q
+.importantFunc.adder:{[input1; input2]
+.logger.info "adder: Running important add function, input1: ", (string input1), " input2: ", (string input2);
+result: .[+;input1,input2;{.logger.error x, " error. Expected type long, int, short. float...";}];
+.logger.info "adder: function completed with result of ", string result;
+: result}
+</what_to_log></how_to_log>
+Now let’s run our important function, one time where it is valid and one time when it is not:
+q
+q).importantFunc.adder[3;7]
+q).importantFunc.adder[3;`a]
+And looking at the log file:
+q
+2020.08.03D01:19:34.184222000 GMT|process name|info|0|jmckeown|122.7 KiB/4.0 GiB (0.0%)|adder: Running important add function, input1: 3 input2: 7
+2020.08.03D01:19:34.184222000 GMT|process name|info|0|jmckeown|122.7 KiB/4.0 GiB (0.0%)|adder: function completed with result of 10
+2020.08.03D01:19:50.728397000 GMT|process name|info|0|jmckeown|122.8 KiB/4.0 GiB (0.0%)|adder: Running important add function, input1: 3 input2: a
+2020.08.03D01:19:50.728397000 GMT|process name|error|0|jmckeown|122.8 KiB/4.0 GiB (0.0%)|type error. Expected type long, int, short. float...
+2020.08.03D01:19:50.728397000 GMT|process name|info|0|jmckeown|122.7 KiB/4.0 GiB (0.0%)|adder: function completed with result of ::
+<how_to_log>This is much better! We can now see exactly what has happened in each call of the function. The context is clear that we are in the adder function and we can see what input1 and input2 are. This makes debugging much easier, as we can see where the error came from and why. Adopting these logging principles will be invaluable when it comes to real-life production debugging.</how_to_log>
+To further help readers of the logs, <how_to_log><log_verbosity>I have added some color highlighting to the logs. This is a simple way to bring attention to higher priority logs.</log_verbosity></how_to_log>
+How much is too much?
+As demonstrated in the earlier sections of the blog we now know that logging as much contextual information as possible is important. That being said, it is possible to overload your resources. It would be counterproductive to have all this great logging and it takes a couple of minutes to open or parse the file.
+<log_verbosity>One major benefit of following the levels of logging principles is that in production we can now turn off some of the noise in the log files such as debug messages, that while they were helpful in development stages they can be overburdensome for production. I have provided a simple example of how this can be achieved in my script:</log_verbosity>
+q
+local.utc:1b; //1b for UTC, 0b for local
+.logger.colourOn: 1b; // toggle coloured logging messages
+.logger.debugOn: 0b;
+.logger.environment: `dev;
+.logger.init:{[]
+$[.logger.utc;
+[.logger.tz:"UTC";.logger.p:{string .z.p}];
+[.logger.tz:first system"date +%Z";.logger.p:{string .z.P}]
+];
+// ability toggle debug message on/off to save on resources
+if[.logger.environment=`dev; .logger.debugOn:1b];
+};
+.logger.debug:{[message]
+if[.logger.debugOn; -1 .logger.message[message; `debug]];
+: message;
+};
+<how_to_log>In addition to writing well-structured logs  we also want to be able to parse them easily in order  to get to the source of any issue faster. For example, if a particular user is known for sending bad queries to a gateway we can quickly grep our log file and see their activity.</how_to_log>
+q
+$ grep badUser logFile.log
+2020.08.03D01:19:34.184222000 GMT|gateway|info|0|proid|122.7 KiB/4.0 GiB (0.0%)| New connection: badUser
+2020.08.03D01:19:34.184222000 GMT|gateway|info|12|badUser|3.8 GiB/4.0 GiB (95.0%)|getData: (`stocks; 2000.01.01; 2020.01.01)
+<how_to_log>Right away we can see the issue because the logs are easily parsed. Thinking about what kind of issues are likely to occur in production should be at the forefront of your mind while writing the logging statements.</how_to_log>
+A further step to save some space would be to remove the last three digits on the timestamp as most machines only have a clock to microseconds, this would also save on width on-screen to help readers.
+<how_to_log><log_verbosity>q
+q)data:("PSSJS**";"|")0:`:log.log
+q)flip `time`process`level`handle`user`memory`message!data
+time process level handle user memory message
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+2020.08.03D01:19:34.184222000 process name info 0 Jamie McKeown "122.7 KiB/4.0 GiB (0.0%)" "adder: Running important add function, input1: 3 input2: 7"
+2020.08.03D01:19:34.184222000 process name info 0 Jamie McKeown "122.7 KiB/4.0 GiB (0.0%)" "adder: function completed with result of 10"
+2020.08.03D01:19:50.728397000 process name info 0 Jamie McKeown "122.8 KiB/4.0 GiB (0.0%)" "adder: Running important add function, input1: 3 input2: a"
+2020.08.03D01:19:50.728397000 process name error 0 Jamie McKeown "122.8 KiB/4.0 GiB (0.0%)" "type error. Expected type long, int, short. float..."
+2020.08.03D01:19:50.728397000 process name info 0 Jamie McKeown "122.7 KiB/4.0 GiB (0.0%)" "adder: function completed with result of ::"
+2020.08.03D01:20:42.925005000 process name info 0 Jamie McKeown "122.7 KiB/4.0 GiB (0.0%)" "adder: Running important add function, input1: 3 input2: 7"
+2020.08.03D01:20:42.925005000 process name info 0 Jamie McKeown "122.7 KiB/4.0 GiB (0.0%)" "adder: function completed with result of 10 "</log_verbosity></how_to_log>
+One benefit of our well-structured log messages is that we can easily parse the log file into a kdb+ table, as seen above. <how_to_log>This can be useful for speedy querying of the logs,  and especially true for large files. When a file is very large it can take minutes to open and can be very difficult to scroll through, so having the ability to log your file into a kdb+ table is a great way to make it easier.</how_to_log>
+The intention of this blog is to demonstrate how some core principles and good logging practice can pay great dividends and save many headaches in the production world. I hope you found it useful in some way. A full version of log.q can be found on
+Github
+.
+Useful links
+Kx platform:
+https://code.kx.com/platform/api/Logging/
+https://code.kx.com/platform/monitoring/log-scraping/
+Prometheus exporter for gathering metrics:
+https://code.kx.com/q/interfaces/prom/exporter/
+Existing libraries:
+https://github.com/BuaBook/kdb-common/blob/master/src/log.q
+https://github.com/prodrive11/log4q
+https://github.com/simongarland/dotz
+https://github.com/AquaQAnalytics/TorQ/blob/ec720f88e0c47ecce7e300111b54a14dd978789e/torq.q

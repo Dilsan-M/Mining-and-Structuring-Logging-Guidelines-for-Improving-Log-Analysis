@@ -1,0 +1,133 @@
+Top 6 Golang Logging Best Practices
+Lane Wagner
+Boot.dev co-founder and backend engineer
+Last published
+January 7, 2020
+Let's discuss a few rules of thumb for logging in Go, as well as some features you may not have heard of that can make debugging easier. Best practices for logging in Go are not so obvious and sometimes we need to look closer to see what is the best choice, considering the unique situation of error handling in Go.
+<how_to_log>Use Errors Where Appropriate, Not Strings</how_to_log>
+Wrap Errors
+Use Formatters Like fmt.Errorf()
+Format Structs Where Appropriate
+Use the variadic forms of functions like fmt.Println()
+Use the Built-in Log Package
+#1 - <how_to_log>Use Errors Where Appropriate, Not Strings</how_to_log>
+Go has a built-in
+error
+type, which allows developers to easily differentiate errors from "normal" strings and check to make sure functions exit without a problem in a more explicit way. The
+error
+type is an
+interface
+that simply requires the type in question to define an
+Error()
+function that prints itself as a string.
+type error interface {
+Error() string
+}
+<how_to_log>Never use a normal string where an error is appropriate!</how_to_log>
+When a string is returned from your function you imply to other developers that when the string isn't empty it's just "business as usual". The
+error
+type makes it clear that something is wrong when the error isn't
+nil
+.
+For example, let's pretend we have a function that divides two numbers safely and returns a result.
+func divide(a, b float64) (float64, string) {
+if b == 0 {
+return 0.0, "can't divide by zero"
+}
+return a / b, ""
+}
+This will work perfectly. In fact, anywhere an error type works a string
+could
+be used instead. However, if we're interested in writing code that other developers can more quickly understand and make contributions to, <how_to_log>we should use an
+error
+type:</how_to_log>
+func divide(a, b float64) (float64, error) {
+if b == 0 {
+return 0.0, errors.New("can't divide by zero")
+}
+return a / b, nil
+}
+#2 - <how_to_log>Wrap Errors</how_to_log>
+Often times out of laziness we simply pass errors up a call chain. For example, let's look at this function that formats hours and minutes into a time message:
+func formatTimeWithMessage(hours, minutes int) (string, error) {
+formatted, err := formatTime(hours, minutes)
+if err != nil {
+return "", err
+}
+return "It is " + formatted + " o'clock", nil
+}
+The problem here is that the
+formatTime
+function can be called many other places within our application or library. If all we do is pass along the raw error, when the error is eventually printed, it gets really hard to tell where exactly the error originated from. Instead, let's do the following:
+func formatTimeWithMessage(hours, minutes int) (string, error) {
+formatted, err := formatTime(hours, minutes)
+if err != nil {
+return "", fmt.Errorf("formatTimeWithMessage: %v", err)
+}
+return "It is " + formatted + " o'clock", nil
+}
+Additionally, <how_to_log>if you are working in Go 1.13 or later, then you can look into the more explicit
+Unwrap
+method for error chains.</how_to_log>
+#3 - <how_to_log>Use Formatters Like fmt.Errorf()</how_to_log>
+fmt.Errorf()
+is similar to
+fmt.Printf()
+, but returns an
+error
+instead of a
+string
+. You may have done this in the past:
+err := errors.New("Bad thing happened! " + oldErr.Error())
+<how_to_log>This can be accomplished more succinctly using fmt.Errorf():</how_to_log>
+err := fmt.Errorf("Bad thing happened! %v", oldError)
+The difference in readability becomes even more obvious when the formatting in question is more complicated and includes more variables.
+#4 - <how_to_log>Format Structs Where Appropriate</how_to_log>
+Printing structs can be quite ugly and unreadable. For example, the following code:
+func main() {
+make := "Toyota"
+myCar := Car{year:1996, make: &make}
+fmt.Println(myCar)
+}
+Will print something like:
+{1996 0x40c138}
+We likely want to get the value in the pointer, and we probably want to see the keys of the struct. <how_to_log>So we can implement a default
+String()
+method on our struct. If we do so, then the Go compiler will use that method when printing.</how_to_log>
+func (c Car)String() string{
+return fmt.Sprintf("{make:%s, year:%d}", *c.make, c.year)
+}
+func main() {
+make := "Toyota"
+myCar := Car{year:1996, make: &make}
+fmt.Println(myCar)
+}
+Which will print something like:
+{make:Toyota, year:1996}
+#5 - <how_to_log>Use the variadic forms of functions like fmt.Println()</how_to_log>
+In the past, I've often done the following when logging:
+fmt.Printf("%s beat %s in the game\n", playerOne, playerTwo)
+<how_to_log>Turns out, it is much easier to just use the
+fmt.Println()
+function's ability to add spacing:</how_to_log>
+fmt.Println(playerOne, "beat", playerTwo, "in the game")
+#6 - <how_to_log>Use the Built-in Log Package</how_to_log>
+<how_to_log>It's often tempting to roll your own logging package, but I would advise that in most cases, the
+standard log package
+is
+probably
+all you need.</how_to_log> The standard library defines a type,
+Logger
+, <how_to_log>which you can use to customize your logging in an idiomatic way.</how_to_log> <how_to_log><where_to_log>If you don't want that much power and responsibility, you can do what I
+usually
+do and use the standard
+Print
+and
+Fatal
+functions which just print to standard output along with a formatted date and time prefix.</where_to_log></how_to_log>
+Best Practices
+Glad you've made it this far! Learning to properly handle errors in Go is one of the things that sets advanced developers apart from newcomers. Striving to improve the readability and developer usability of your code will make you a better
+computer scientist
+, and help you find more
+worthwhile jobs
+in the future.

@@ -1,0 +1,92 @@
+# Logging Discussion Document
+:toc:
+:tocplacement!:
+After an introductory discussion setting the scene, "what is logging?", "what _is not_ logging?", and some chat, we expand on the terms and definitions in the scope and try to form a set of parameters for defining what we want from logging and how we might go about getting it.
+toc::[]
+:numbered:
+## Preamble and Introduction
+
+### Ambit
+Logging here refers to the output of a server process that is
+
+
+[arabic]
+
+. the output of an
+.. identifiable,
+.. discretionary,
+.. developer added,
+<what_to_log>.. with the intention of creating a durable record of an event or state</what_to_log>
+<where_to_log>. output to a streaming service such as a file system, network, or DBMS</where_to_log>
+<where_to_log>. not part of the UI</where_to_log>
+. not covered by a requirement in a specification
+<how_to_log>. text in ASCII or UTF-8</how_to_log>
+
+
+
+### Logging Disambiguation
+Developers and others use the word 'logging' in many ways, most of which are both vague and ambiguous. Before offering help on logging choices it is as well to reduce the vagueness and ambiguity.
+With that in mind, this section discusses what is, and what is not, meant here by 'logging'.
+There is also a small note on the origin of the term.
+
+### Exclusions
+Logs of the following kind are not part of this discussion:
+
+. Database Logs (transaction logs)
+. Access Control Logs (logins)
+. Functional Logs such as telemetry data, weather, bore hole, and so on (borehole logs)
+. Critical information for System Operators or Administrators (exceptions and failures)
+
+
+### Best Practice?
+Not wishing to hide behind thought-stopping clich&#233;s we shall not discuss 'best practice' beyond refusing to entertain the idea and providing a word or two on why.
+
+For there to exist any 'best practice' there must be:
+
+. specific, explicit requirements that must be met
+. proof, or at least substantial evidence that the above requirements match the requirements at hand
+. an enumeration of all practices that could apply
+. an agreed, non-contentious, metric, that can and has provided an order relation on all practices
+. proof or at least substantial evidence that the 'best practice' has been assessed by the agreed metric and found to be superior to all other practices
+
+
+
+### Etymology
+.Etymology
+[%collapsible]
+=====
+As an aside and for interest only, a brief description of how the word 'log' came to be so confused.
+
+A sailor would throw a wood log overboard near the bow of a ship and the time it took to pass a given point aft would indicate the speed of the ship through the water.
+Over time, this became a special purpose piece of wood attached to a knotted rope that would be payed out for a set time and the number of knots that were payed out indicated the speed, in knots, of the ship.
+
+The speed would be recorded in a log book and would help reckon the distance travelled. Note that this kind of log book is unrelated to a book of logs, or log tables; 'log' there, coming from 'logarithm' with an entirely different etymology.
+=====
+
+
+### The logging context
+<how_to_log>Almost all server process _can_ be user configured to create text output relating to the ongoing life of the process in such a way that it does not alter the function of the process.</how_to_log>
+Developers of user applications have always added some print statements to their code for their own benefit, for example to help diagnose a problem or to help understand how to make a change.
+So as a developer you may be looking for information about logging that may make your coding life easier.
+However, logging is not well covered, if at all, in the serious accademic literature. For example, there is almost nothing in any of the following:
+
+* "Design Patterns"footnote:["Design Patterns: elements of reusable object-oriented software" Gamma, Erich, et al] 
+* "Structure and Interpretation of Computer Programs"footnote:["Structure and Interpretation of Computer Programs" Abelson, Harold et al]
+* "The Mythical Man-month"footnote:["The Mythical Man-month" Brooks, Frederick P. Jr]
+* "No Silver Bullet"footnote:["No Silver Bullet" Brooks, Frederick P. Jr]
+* "The Elements of Programming Style"footnote:["The Elements of Programming Style" Kernighan, Brian]
+
+This small list in this respect is representative of so many written about software in the large or small, and from practical or theoretical points of view. So "Where Angels Fear to Tread" many far less well qualified commentators and influencers have rushed in.
+
+There are "N best practices for logging", "Logging Patterns", and of course "Logging Anti-Patterns", "Patterns for Micro-Services Enterprise Logging", and so on. 
+
+Much of the advice is hopeless or actually harmful. 
+
+### Purpose of this document
+I hope that this document provides a quick, curated, entry point to help developers select, build, and configure, their logging solution so that it works for them and those they work with.
+It is not intended to be a specification for the design of libraries and services to meet all needs without the developer having to think for themselves. There are other sources of that 'information' - good luck.
+
+## Expanding the preamble
+
+### The Ambit
+What follows is an explanation of the restrictions shown in the Ambit section above. Some restrictions may raise eyebrows but I hope I can convince you that they are mostly useful.
